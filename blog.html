@@ -126,5 +126,8 @@
     const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.style.animationPlayState='running';obs.unobserve(el.target);}}),{threshold:0.1});
     document.querySelectorAll('.fade-in').forEach(el => {el.style.animationPlayState='paused';obs.observe(el);});
   </script>
+  <!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <!-- End of HubSpot Embed Code -->
 </body>
 </html>
