@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <title>Next.js 15の新機能を徹底解説 - TechPulse</title>
+  <meta name="description" content="Next.js 15の新機能を実際のコード例で徹底解説。Turbopack安定版、新キャッシング戦略、Partial Prerenderingなど。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/nextjs-15-features.html">
+  <meta property="og:title" content="Next.js 15の新機能を徹底解説">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Next.js 15の新機能を徹底解説","datePublished":"2026-03-10","author":{"@type":"Organization","name":"TechPulse"}}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="../blog.html" class="active">ブログ</a></li>
+      <li><a href="../about.html">このサイトについて</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero">
+    <div class="article-container">
+      <span class="category">Web開発</span>
+      <h1>Next.js 15の新機能を徹底解説</h1>
+      <div class="article-meta-info">
+        <span>📅 2026年3月10日</span>
+        <span>🕐 約10分で読めます</span>
+        <span>🏷️ Next.js, React, フロントエンド</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-body">
+    <div class="article-wrapper">
+      <article class="article-content">
+        <nav class="toc">
+          <h3>📑 目次</h3>
+          <ol>
+            <li><a href="#turbopack">Turbopack安定版リリース</a></li>
+            <li><a href="#rsc">Server Componentsの進化</a></li>
+            <li><a href="#caching">新しいキャッシング戦略</a></li>
+            <li><a href="#ppr">Partial Prerendering</a></li>
+            <li><a href="#conclusion">まとめ</a></li>
+          </ol>
+        </nav>
+
+        <p>Vercelが開発するReactフレームワーク<strong>Next.js</strong>の最新バージョン「<strong>Next.js 15</strong>」がリリースされました。本記事ではパフォーマンスと開発体験を大きく向上させた新機能を、実際のコード例とともに徹底解説します。</p>
+
+        <div class="info-box info">
+          <div class="info-title">💡 この記事のポイント</div>
+          <p>Next.js 15ではTurbopackが安定版になり開発サーバーが最大<strong>76%高速化</strong>。Partial Prerenderingにより静的・動的コンテンツを1ページ内でシームレスに組み合わせ可能に。</p>
+        </div>
+
+        <h2 id="turbopack">1. Turbopack安定版リリース</h2>
+        <p>最大のハイライトは<strong>Turbopack</strong>の安定版リリースです。Rustで書かれたこのバンドラーは、開発サーバーの起動とHMRを劇的に高速化します。</p>
+
+        <ul>
+          <li><strong>開発サーバー起動</strong>：Webpack比で最大 <strong>76%高速</strong></li>
+          <li><strong>HMR</strong>：最大 <strong>96%高速</strong></li>
+          <li><strong>メモリ使用量</strong>：大規模プロジェクトで <strong>40%削減</strong></li>
+        </ul>
+
+        <pre data-lang="bash"><code># Next.js 15ではTurbopackがデフォルトで有効
+npx next dev
+
+# 明示的に指定する場合
+npx next dev --turbopack
+
+# プロダクションビルドでも利用可能に
+npx next build --turbopack</code></pre>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="rsc">2. React Server Componentsの進化</h2>
+        <p>Server Actions（サーバー上で直接実行される関数）の型安全性とエラーハンドリングが大幅に強化されました。</p>
+
+        <pre data-lang="typescript"><code>// app/actions.ts
+'use server'
+import { z } from 'zod'
+import { revalidatePath } from 'next/cache'
+
+const PostSchema = z.object({
+  title: z.string().min(1, 'タイトルは必須'),
+  content: z.string().min(10, '10文字以上'),
+})
+
+export async function createPost(formData: FormData) {
+  const validated = PostSchema.safeParse({
+    title: formData.get('title'),
+    content: formData.get('content'),
+  })
+  if (!validated.success) {
+    return { error: validated.error.flatten() }
+  }
+  await db.posts.create({ data: validated.data })
+  revalidatePath('/blog')
+  return { success: true }
+}</code></pre>
+
+        <h2 id="caching">3. 新しいキャッシング戦略</h2>
+        <p>Next.js 15では、キャッシュの仕組みが大幅にシンプル化されました。<strong>デフォルトでキャッシュしない</strong>方針に変更され、明示的な制御が必要になりました。</p>
+
+        <pre data-lang="typescript"><code>// Next.js 15: 明示的なキャッシュ制御
+
+// キャッシュしない（デフォルト）
+const data = await fetch('https://api.example.com/posts')
+
+// 明示的にキャッシュ + 1時間ごと再検証
+const cached = await fetch('https://api.example.com/posts', {
+  cache: 'force-cache',
+  next: { revalidate: 3600 }
+})</code></pre>
+
+        <div class="info-box warning">
+          <div class="info-title">⚠️ 破壊的変更</div>
+          <p><code>fetch()</code>のデフォルトが<code>no-store</code>に変更されました。移行時は<code>npx @next/codemod@latest find-implicit-caching</code>で該当箇所を検出できます。</p>
+        </div>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="ppr">4. Partial Prerendering (PPR)</h2>
+        <p><strong>Partial Prerendering</strong>は革新的な機能で、1つのページ内に<strong>静的な部分と動的な部分を共存</strong>させます。</p>
+
+        <pre data-lang="tsx"><code>// app/page.tsx - PPRの例
+import { Suspense } from 'react'
+
+export default function HomePage() {
+  return (
+    &lt;main&gt;
+      {/* 静的: ビルド時に生成、CDNから即配信 */}
+      &lt;h1&gt;TechPulse&lt;/h1&gt;
+
+      {/* 動的: リクエスト時にストリーミング */}
+      &lt;Suspense fallback={&lt;Skeleton /&gt;}&gt;
+        &lt;LatestArticles /&gt;
+      &lt;/Suspense&gt;
+
+      &lt;Suspense fallback={&lt;Skeleton /&gt;}&gt;
+        &lt;PersonalizedContent /&gt;
+      &lt;/Suspense&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+
+        <h2 id="conclusion">5. まとめ</h2>
+        <ul>
+          <li><strong>Turbopack安定版</strong>で開発速度が劇的に向上</li>
+          <li><strong>Server Actions強化</strong>で型安全なサーバー処理が容易に</li>
+          <li><strong>キャッシュのシンプル化</strong>でデバッグが容易に</li>
+          <li><strong>PPR</strong>で静的・動的の良いとこ取り</li>
+        </ul>
+        <p>移行は<code>npx @next/codemod@latest upgrade latest</code>で自動化できます。積極的にアップグレードを検討してみてください。</p>
+
+        <div class="share-section">
+          <h4>この記事が役に立ったらシェアしよう</h4>
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/nextjs-15-features.html&text=Next.js 15の新機能を徹底解説" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/nextjs-15-features.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+          </div>
+        </div>
+        <div class="article-nav">
+          <a href="ai-trends-2026.html"><div class="nav-label">← 前の記事</div><div class="nav-title">2026年のAIトレンド予測</div></a>
+          <a href="github-actions-cicd.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">GitHub Actions入門：CI/CD構築</div></a>
+        </div>
+      </article>
+      <aside class="article-sidebar">
+        <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="ai-trends-2026.html">2026年のAIトレンド予測</a></li><li><a href="github-actions-cicd.html">GitHub Actions入門</a></li></ul></div>
+        <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">Next.js</a></li><li><a href="../blog.html">React</a></li><li><a href="../blog.html">フロントエンド</a></li></ul></div>
+        <div class="ad-space">広告</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信。</p></div>
+      <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div>
+  </div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+</body>
+</html>

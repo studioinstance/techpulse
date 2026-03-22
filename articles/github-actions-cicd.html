@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <title>GitHub Actions入門：CI/CDを30分で構築 - TechPulse</title>
+  <meta name="description" content="GitHub Actionsを使ってCI/CDパイプラインを30分で構築する方法をステップバイステップで解説。テスト自動化からデプロイまでワークフロー付き。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/github-actions-cicd.html">
+  <meta property="og:title" content="GitHub Actions入門：CI/CDを30分で構築">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"GitHub Actions入門：CI/CDを30分で構築","datePublished":"2026-02-15","author":{"@type":"Organization","name":"TechPulse"}}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="../blog.html" class="active">ブログ</a></li>
+      <li><a href="../about.html">このサイトについて</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero">
+    <div class="article-container">
+      <span class="category">DevOps</span>
+      <h1>GitHub Actions入門：CI/CDを30分で構築</h1>
+      <div class="article-meta-info">
+        <span>📅 2026年2月15日</span>
+        <span>🕐 約12分で読めます</span>
+        <span>🏷️ GitHub Actions, CI/CD, DevOps</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-body">
+    <div class="article-wrapper">
+      <article class="article-content">
+        <nav class="toc">
+          <h3>📑 目次</h3>
+          <ol>
+            <li><a href="#what">GitHub Actionsとは？</a></li>
+            <li><a href="#workflow">ワークフローの基本構造</a></li>
+            <li><a href="#test">テスト自動化の実装</a></li>
+            <li><a href="#deploy">自動デプロイの設定</a></li>
+            <li><a href="#tips">実践Tips</a></li>
+          </ol>
+        </nav>
+
+        <p>GitHub Actionsは、GitHubに統合されたCI/CD（継続的インテグレーション/継続的デリバリー）プラットフォームです。本記事では、<strong>30分でCI/CDパイプラインを構築</strong>する方法をステップバイステップで解説します。</p>
+
+        <div class="info-box info">
+          <div class="info-title">💡 この記事のポイント</div>
+          <p>GitHubリポジトリがあれば<strong>追加料金なし</strong>でCI/CDが始められます。パブリックリポジトリは無制限、プライベートでも月2,000分のビルド時間が無料です。</p>
+        </div>
+
+        <h2 id="what">1. GitHub Actionsとは？</h2>
+        <p>GitHub Actionsは「コードをpushしたら自動でテスト・ビルド・デプロイする」仕組みです。</p>
+
+        <h3>主要な用語</h3>
+        <ul>
+          <li><strong>Workflow（ワークフロー）</strong>：自動化プロセス全体。YAML形式で定義</li>
+          <li><strong>Job（ジョブ）</strong>：ワークフロー内の実行単位。並列・直列実行可能</li>
+          <li><strong>Step（ステップ）</strong>：ジョブ内の個別コマンドまたはAction</li>
+          <li><strong>Action（アクション）</strong>：再利用可能な処理の部品。Marketplaceで共有</li>
+          <li><strong>Runner（ランナー）</strong>：ワークフローを実行するサーバー</li>
+        </ul>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="workflow">2. ワークフローの基本構造</h2>
+        <p>ワークフローは <code>.github/workflows/</code> ディレクトリにYAMLファイルとして配置します。</p>
+
+        <pre data-lang="yaml"><code># .github/workflows/ci.yml
+name: CI Pipeline
+
+# トリガー: mainブランチへのpushまたはPR時
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    steps:
+      # 1. コードをチェックアウト
+      - uses: actions/checkout@v4
+
+      # 2. Node.jsのセットアップ
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # 3. 依存関係のインストール
+      - run: npm ci
+
+      # 4. Lintの実行
+      - run: npm run lint
+
+      # 5. テストの実行
+      - run: npm test
+
+      # 6. ビルドの確認
+      - run: npm run build</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-title">✅ ポイント</div>
+          <p><code>strategy.matrix</code>を使えば、複数のNode.jsバージョンで並列テストが可能です。互換性を保証したい場合に非常に便利です。</p>
+        </div>
+
+        <h2 id="test">3. テスト自動化の実装</h2>
+        <p>PRが作成されたら自動でテストを実行し、結果をPRにコメントする実践的なワークフローです。</p>
+
+        <pre data-lang="yaml"><code># .github/workflows/test-report.yml
+name: Test with Coverage Report
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm test -- --coverage --coverageReporters=text
+
+      # テスト結果をPRにコメント
+      - name: Comment Coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = '✅ テスト完了！';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverage
+            })</code></pre>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="deploy">4. 自動デプロイの設定</h2>
+        <p>mainブランチにマージされたら自動で本番デプロイするワークフローです。</p>
+
+        <pre data-lang="yaml"><code># .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # testジョブが成功した後にのみ実行
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run build
+
+      # GitHub Pagesにデプロイ
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+      # Slack通知
+      - name: Notify on Success
+        if: success()
+        run: |
+          echo "✅ デプロイ完了！"</code></pre>
+
+        <h2 id="tips">5. 実践Tips</h2>
+
+        <h3>キャッシュで高速化</h3>
+        <pre data-lang="yaml"><code># npm依存関係のキャッシュ（自動）
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+    cache: 'npm'  # これだけでキャッシュ有効化</code></pre>
+
+        <h3>シークレットの管理</h3>
+        <p>APIキーやパスワードは<strong>GitHub Secrets</strong>に保存し、ワークフローから安全に参照できます。</p>
+        <ol>
+          <li>リポジトリの Settings → Secrets and variables → Actions</li>
+          <li>「New repository secret」をクリック</li>
+          <li>名前と値を入力して保存</li>
+          <li>ワークフローから <code>${{ secrets.SECRET_NAME }}</code> で参照</li>
+        </ol>
+
+        <div class="info-box warning">
+          <div class="info-title">⚠️ セキュリティ注意</div>
+          <p>シークレットは<strong>ログに出力しない</strong>ようにしましょう。GitHub Actionsは自動的にマスクしますが、Base64エンコード等で間接的に漏洩するケースがあります。</p>
+        </div>
+
+        <h3>まとめ</h3>
+        <p>GitHub Actionsを使えば、以下のCI/CDパイプラインが30分で構築できます：</p>
+        <ol>
+          <li><strong>PR作成時</strong>：自動テスト + カバレッジレポート</li>
+          <li><strong>マージ時</strong>：自動ビルド + 自動デプロイ</li>
+          <li><strong>エラー時</strong>：Slack/メール通知</li>
+        </ol>
+        <p>まずは小さなワークフローから始めて、徐々に拡張していきましょう。</p>
+
+        <div class="share-section">
+          <h4>この記事が役に立ったらシェアしよう</h4>
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/github-actions-cicd.html&text=GitHub Actions入門：CI/CDを30分で構築" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/github-actions-cicd.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+          </div>
+        </div>
+        <div class="article-nav">
+          <a href="nextjs-15-features.html"><div class="nav-label">← 前の記事</div><div class="nav-title">Next.js 15の新機能を徹底解説</div></a>
+          <a href="../blog.html" class="next"><div class="nav-label">一覧に戻る →</div><div class="nav-title">ブログ記事一覧</div></a>
+        </div>
+      </article>
+      <aside class="article-sidebar">
+        <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="ai-trends-2026.html">2026年のAIトレンド予測</a></li><li><a href="nextjs-15-features.html">Next.js 15の新機能</a></li></ul></div>
+        <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">GitHub Actions</a></li><li><a href="../blog.html">CI/CD</a></li><li><a href="../blog.html">DevOps</a></li></ul></div>
+        <div class="ad-space">広告</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信。</p></div>
+      <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div>
+  </div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+</body>
+</html>
