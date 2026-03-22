@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechPulse - テクノロジーの最新トレンドを発信</title>
+  <meta name="description" content="TechPulseはテクノロジーの最新トレンド、Web開発、AI、クラウドに関する情報を発信するテックブログです。初心者からプロまで役立つ記事を提供します。">
+  <meta name="keywords" content="テクノロジー, Web開発, AI, プログラミング, クラウド, テックブログ">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TechPulse - テクノロジーの最新トレンドを発信">
+  <meta property="og:description" content="テクノロジーの最新トレンド、Web開発、AI、クラウドに関する情報を発信するテックブログ。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TechPulse - テクノロジーの最新トレンドを発信">
+  <meta name="twitter:description" content="テクノロジーの最新トレンド、Web開発、AI、クラウドに関する情報を発信。">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "TechPulse",
+    "url": "https://studioinstance.github.io/techpulse/",
+    "description": "テクノロジーの最新トレンドを発信するテックブログ",
+    "inLanguage": "ja",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://studioinstance.github.io/techpulse/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">⚡ TechPulse</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">ホーム</a></li>
+        <li><a href="blog.html">ブログ</a></li>
+        <li><a href="about.html">このサイトについて</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニューを開く">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content fade-in">
+      <span class="hero-badge">🚀 Tech Blog</span>
+      <h1>テクノロジーの未来を<br>ここから探求しよう</h1>
+      <p>Web開発、AI、クラウドなど、最新のテクノロジートレンドをわかりやすく解説。初心者からプロまで、すべてのエンジニアに役立つ情報を発信しています。</p>
+      <div class="hero-buttons">
+        <a href="blog.html" class="btn btn-primary">記事を読む →</a>
+        <a href="about.html" class="btn btn-secondary">サイトについて</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="section" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item fade-in">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">公開記事数</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">月間読者数</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">カテゴリ</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-number">3年</div>
+          <div class="stat-label">運営実績</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">カテゴリ</span>
+        <h2>扱っているテーマ</h2>
+        <p>テクノロジーの様々な分野をカバーしています</p>
+      </div>
+      <div class="cards-grid">
+        <article class="card fade-in">
+          <div class="card-icon">🌐</div>
+          <h3>Web開発</h3>
+          <p>HTML/CSS/JavaScriptの基礎から、React、Next.jsなどのモダンフレームワークまで、Web開発に必要な知識を幅広く解説します。</p>
+        </article>
+        <article class="card fade-in">
+          <div class="card-icon">🤖</div>
+          <h3>AI・機械学習</h3>
+          <p>ChatGPTやGeminiなどの最新AIツールの活用法から、機械学習の基礎理論まで、AIの世界を探求します。</p>
+        </article>
+        <article class="card fade-in">
+          <div class="card-icon">☁️</div>
+          <h3>クラウド</h3>
+          <p>AWS、GCP、Azureなどのクラウドサービスの使い方やベストプラクティスを初心者向けにわかりやすく解説します。</p>
+        </article>
+        <article class="card fade-in">
+          <div class="card-icon">🔒</div>
+          <h3>セキュリティ</h3>
+          <p>Webアプリケーションのセキュリティ対策や、最新のサイバーセキュリティトレンドについて解説します。</p>
+        </article>
+        <article class="card fade-in">
+          <div class="card-icon">📱</div>
+          <h3>モバイル開発</h3>
+          <p>React NativeやFlutterを使ったクロスプラットフォーム開発、Swift/Kotlinでのネイティブ開発を紹介します。</p>
+        </article>
+        <article class="card fade-in">
+          <div class="card-icon">⚡</div>
+          <h3>DevOps</h3>
+          <p>CI/CD、コンテナ技術、自動化ツールなど、開発効率を最大化するためのDevOpsプラクティスを共有します。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Articles Preview -->
+  <section class="section" id="latest-articles" style="background: rgba(30,41,59,0.5);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">最新記事</span>
+        <h2>新しく公開された記事</h2>
+        <p>最新のテクノロジートレンドをチェックしよう</p>
+      </div>
+      <div class="cards-grid">
+        <article class="article-card fade-in">
+          <div class="article-card-image">🤖</div>
+          <div class="article-card-body">
+            <div class="article-meta">
+              <span class="category">AI</span>
+              <span>2026年3月15日</span>
+            </div>
+            <h3><a href="blog.html">2026年のAIトレンド予測：生成AIの次に来るもの</a></h3>
+            <p>生成AIブームの次に来る技術トレンドとは？エージェントAI、マルチモーダルAIなど注目分野を解説。</p>
+            <a href="blog.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
+        <article class="article-card fade-in">
+          <div class="article-card-image" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">🌐</div>
+          <div class="article-card-body">
+            <div class="article-meta">
+              <span class="category">Web開発</span>
+              <span>2026年3月10日</span>
+            </div>
+            <h3><a href="blog.html">Next.js 15の新機能を徹底解説</a></h3>
+            <p>Next.js 15で追加された新機能と改善点を実際のコード例とともに詳しく解説します。</p>
+            <a href="blog.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
+        <article class="article-card fade-in">
+          <div class="article-card-image" style="background: linear-gradient(135deg, #22c55e, #06b6d4);">☁️</div>
+          <div class="article-card-body">
+            <div class="article-meta">
+              <span class="category">クラウド</span>
+              <span>2026年3月5日</span>
+            </div>
+            <h3><a href="blog.html">Google Cloud Run入門：コンテナを簡単にデプロイ</a></h3>
+            <p>Google Cloud Runを使ってコンテナアプリを簡単にデプロイする方法をステップバイステップで紹介。</p>
+            <a href="blog.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="blog.html" class="btn btn-secondary">すべての記事を見る →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section" id="cta">
+    <div class="container" style="text-align: center;">
+      <div class="section-header">
+        <h2>テクノロジーの最前線を追いかけよう</h2>
+        <p>TechPulseで最新の技術トレンドをキャッチアップ。</p>
+      </div>
+      <a href="blog.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 36px;">ブログを読む 🚀</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">⚡ TechPulse</a>
+          <p>テクノロジーの最新トレンドを初心者からプロまでわかりやすく発信するテックブログです。</p>
+        </div>
+        <div class="footer-col">
+          <h4>ナビゲーション</h4>
+          <ul>
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="blog.html">ブログ</a></li>
+            <li><a href="about.html">このサイトについて</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>カテゴリ</h4>
+          <ul>
+            <li><a href="blog.html">Web開発</a></li>
+            <li><a href="blog.html">AI・機械学習</a></li>
+            <li><a href="blog.html">クラウド</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>リンク</h4>
+          <ul>
+            <li><a href="sitemap.xml">サイトマップ</a></li>
+            <li><a href="robots.txt">robots.txt</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TechPulse. All rights reserved.</span>
+        <span>Made with ❤️</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Scroll Animation (Intersection Observer)
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

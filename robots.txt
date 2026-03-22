@@ -1,0 +1,8 @@
+# TechPulse - https://studioinstance.github.io/techpulse/
+# Allow all crawlers to access all pages
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://studioinstance.github.io/techpulse/sitemap.xml
