@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Docker入門：コンテナ技術を30分で理解する - TechPulse</title>
+  <meta name="description" content="Docker初心者向け完全ガイド。コンテナの概念、Dockerfile、docker-compose、主要コマンドを30分で理解できる実践的な入門記事です。">
+  <meta name="keywords" content="Docker, コンテナ, docker-compose, Dockerfile, DevOps, 仮想化">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/docker-introduction.html">
+  <meta property="og:title" content="Docker入門：コンテナ技術を30分で理解する">
+  <meta property="og:description" content="Docker初心者向け完全ガイド。コンテナの概念からdocker-composeまで30分で理解。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/docker-introduction.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Docker入門：コンテナ技術を30分で理解する","datePublished":"2026-03-18","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Docker初心者向け完全ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/docker-introduction.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">DevOps</span>
+    <h1>Docker入門：コンテナ技術を30分で理解する</h1>
+    <div class="article-meta-info"><span>📅 2026年3月18日</span><span>🕐 約10分で読めます</span><span>🏷️ Docker, コンテナ, DevOps</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#what">Dockerとは？</a></li>
+        <li><a href="#install">インストールと初期設定</a></li>
+        <li><a href="#commands">基本コマンド</a></li>
+        <li><a href="#dockerfile">Dockerfileの書き方</a></li>
+        <li><a href="#compose">docker-composeで複数コンテナ管理</a></li>
+        <li><a href="#bestpractice">ベストプラクティス</a></li>
+      </ol></nav>
+
+      <p>「自分の環境では動くのに…」というフレーズは、開発者にとって古くからの悩みです。<strong>Docker</strong>は、この「環境差異」の問題を根本的に解決するコンテナ技術です。本記事では、<strong>Dockerの概念から実践的な使い方</strong>まで、30分で理解できるように解説します。</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 この記事のポイント</div>
+        <p>Dockerは「軽量な仮想環境」です。アプリケーションとその実行環境をまるごとパッケージ化し、どこでも同じ動作を保証します。</p>
+      </div>
+
+      <h2 id="what">1. Dockerとは？</h2>
+      <p>Dockerは<strong>コンテナ型仮想化技術</strong>のプラットフォームです。従来の仮想マシン（VM）と比較して、軽量かつ高速に起動できます。</p>
+
+      <h3>VMとコンテナの違い</h3>
+      <ul>
+        <li><strong>仮想マシン</strong>：OS全体を仮想化 → 重い（GBレベル）、起動に分単位</li>
+        <li><strong>コンテナ</strong>：アプリ + 依存関係のみ → 軽い（MBレベル）、起動は秒単位</li>
+      </ul>
+
+      <h3>Dockerの主要概念</h3>
+      <ul>
+        <li><strong>イメージ</strong>：コンテナの設計図（テンプレート）</li>
+        <li><strong>コンテナ</strong>：イメージから作られた実行環境</li>
+        <li><strong>Dockerfile</strong>：イメージを構築するための設定ファイル</li>
+        <li><strong>Docker Hub</strong>：イメージを共有するレジストリ</li>
+      </ul>
+
+      <h2 id="install">2. インストールと初期設定</h2>
+      <pre data-lang="bash"><code># macOS（Homebrew）
+brew install --cask docker
+
+# Windows（winget）
+winget install Docker.DockerDesktop
+
+# Linux（Ubuntu）
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+
+# インストール確認
+docker --version
+# Docker version 26.x.x
+docker run hello-world</code></pre>
+
+      <h2 id="commands">3. 基本コマンド</h2>
+      <pre data-lang="bash"><code># イメージの取得
+docker pull node:20-slim
+
+# コンテナの起動
+docker run -d --name my-app -p 3000:3000 node:20-slim
+
+# 実行中のコンテナ一覧
+docker ps
+
+# すべてのコンテナ一覧（停止含む）
+docker ps -a
+
+# コンテナのログ確認
+docker logs my-app
+
+# コンテナ内でコマンド実行
+docker exec -it my-app bash
+
+# コンテナの停止・削除
+docker stop my-app
+docker rm my-app
+
+# 不要なリソースを一括削除
+docker system prune -a</code></pre>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="dockerfile">4. Dockerfileの書き方</h2>
+      <p>Node.jsアプリケーションの実践的なDockerfileを見てみましょう。</p>
+
+      <pre data-lang="dockerfile"><code># ベースイメージの指定
+FROM node:20-slim AS builder
+
+# 作業ディレクトリ
+WORKDIR /app
+
+# 依存関係のインストール（キャッシュ活用）
+COPY package*.json ./
+RUN npm ci
+
+# アプリケーションコードのコピー
+COPY . .
+
+# ビルド
+RUN npm run build
+
+# 本番用ステージ（マルチステージビルド）
+FROM node:20-slim AS production
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY package*.json ./
+
+# 非rootユーザーで実行
+USER node
+
+EXPOSE 3000
+CMD ["node", "dist/server.js"]</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ 実践のヒント</div>
+        <p>マルチステージビルドを使用すると、ビルドツール（TypeScriptコンパイラ等）が本番イメージに含まれず、最終的なイメージサイズを大幅に削減できます。</p>
+      </div>
+
+      <h2 id="compose">5. docker-composeで複数コンテナ管理</h2>
+      <p>実際の開発では、アプリ + DB + Redis のように複数のサービスを同時に動かします。<code>docker-compose</code>を使えば、ワンコマンドで全サービスを起動できます。</p>
+
+      <pre data-lang="yaml"><code># docker-compose.yml
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/mydb
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/app          # ホットリロード用
+      - /app/node_modules
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+
+volumes:
+  pgdata:</code></pre>
+
+      <pre data-lang="bash"><code># 全サービスの起動
+docker compose up -d
+
+# ログの確認
+docker compose logs -f app
+
+# 全サービスの停止
+docker compose down
+
+# データも含めて完全削除
+docker compose down -v</code></pre>
+
+      <h2 id="bestpractice">6. ベストプラクティス</h2>
+      <ul>
+        <li><strong>軽量ベースイメージ</strong>：<code>-slim</code>や<code>-alpine</code>を使う</li>
+        <li><strong>.dockerignore</strong>を設定：<code>node_modules</code>、<code>.git</code>等を除外</li>
+        <li><strong>レイヤーキャッシュ</strong>を活用：変更頻度の低いものを先にCOPY</li>
+        <li><strong>非rootユーザー</strong>で実行：セキュリティ向上</li>
+        <li><strong>ヘルスチェック</strong>を設定：コンテナの健全性監視</li>
+        <li><strong>マルチステージビルド</strong>：本番イメージの最小化</li>
+      </ul>
+
+      <p>Dockerは現代のソフトウェア開発に欠かせないツールです。まずはシンプルなプロジェクトからDockerを使い始めて、徐々にdocker-composeやCI/CDとの連携に進んでいきましょう。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/docker-introduction.html&text=Docker入門：コンテナ技術を30分で理解する" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/docker-introduction.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+
+      <div class="article-nav">
+        <a href="react-native-vs-flutter.html"><div class="nav-label">← 前の記事</div><div class="nav-title">React Native vs Flutter 選定ガイド</div></a>
+        <a href="typescript-guide.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">TypeScript入門ガイド</div></a>
+      </div>
+    </article>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul>
+        <li><a href="google-cloud-run.html">Google Cloud Run入門</a></li>
+        <li><a href="github-actions-cicd.html">GitHub Actions入門</a></li>
+      </ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul>
+        <li><a href="../blog.html">Docker</a></li>
+        <li><a href="../blog.html">コンテナ</a></li>
+        <li><a href="../blog.html">DevOps</a></li>
+      </ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div>
+    <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+    <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div>
+  </div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G0K0FCE368');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157"
+       crossorigin="anonymous"></script>
+
+  <title>Google Cloud Run入門：コンテナを簡単にデプロイ - TechPulse</title>
+  <meta name="description" content="Google Cloud Runの使い方を初心者向けに徹底解説。コンテナのデプロイ方法、料金体系、スケーリングの仕組みを15分で理解できる実践ガイドです。">
+  <meta name="keywords" content="Google Cloud Run, GCP, コンテナ, Docker, デプロイ, サーバーレス, クラウド">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html">
+  <meta property="og:title" content="Google Cloud Run入門：コンテナを簡単にデプロイ">
+  <meta property="og:description" content="初心者でも15分で始められるCloud Runの実践ガイド。料金体系やスケーリングも解説。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Google Cloud Run入門：コンテナを簡単にデプロイ",
+    "datePublished": "2026-03-05",
+    "dateModified": "2026-03-28",
+    "author": {"@type": "Organization", "name": "TechPulse"},
+    "publisher": {"@type": "Organization", "name": "TechPulse"},
+    "description": "Google Cloud Runの使い方を初心者向けに徹底解説",
+    "mainEntityOfPage": "https://studioinstance.github.io/techpulse/articles/google-cloud-run.html"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="../blog.html" class="active">ブログ</a></li>
+      <li><a href="../about.html">このサイトについて</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero">
+    <div class="article-container">
+      <span class="category">クラウド</span>
+      <h1>Google Cloud Run入門：コンテナを簡単にデプロイ</h1>
+      <div class="article-meta-info">
+        <span>📅 2026年3月5日</span>
+        <span>🕐 約10分で読めます</span>
+        <span>🏷️ GCP, コンテナ, サーバーレス</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-body">
+    <div class="article-wrapper">
+      <article class="article-content">
+        <nav class="toc">
+          <h3>📑 目次</h3>
+          <ol>
+            <li><a href="#what-is">Cloud Runとは？</a></li>
+            <li><a href="#setup">環境セットアップ</a></li>
+            <li><a href="#first-deploy">最初のデプロイ</a></li>
+            <li><a href="#pricing">料金体系</a></li>
+            <li><a href="#scaling">オートスケーリング</a></li>
+            <li><a href="#tips">実践的なTips</a></li>
+          </ol>
+        </nav>
+
+        <p>Webアプリケーションをデプロイしたいけれど、サーバー管理やインフラの設定は避けたい——そんなエンジニアに最適なのが<strong>Google Cloud Run</strong>です。Dockerコンテナさえ用意すれば、あとはCloud Runが自動でスケーリング、HTTPS対応、ロードバランシングまで面倒を見てくれます。</p>
+
+        <div class="info-box info">
+          <div class="info-title">💡 この記事のポイント</div>
+          <p>Cloud Runは「コンテナをサーバーレスで実行できるサービス」です。リクエストが来たときだけ課金され、トラフィックがない時はコスト0円。初心者でも15分でデプロイまで完了できます。</p>
+        </div>
+
+        <h2 id="what-is">1. Cloud Runとは？</h2>
+        <p>Cloud Runは、Googleが提供する<strong>フルマネージドなサーバーレスコンテナ実行環境</strong>です。従来のサーバーレス（Cloud Functionsなど）と異なり、<strong>任意の言語・フレームワーク</strong>をコンテナとして実行できる点が大きな特徴です。</p>
+
+        <h3>Cloud Runの主な特徴</h3>
+        <ul>
+          <li><strong>サーバーレス</strong>：インフラ管理不要、リクエストベース課金</li>
+          <li><strong>コンテナベース</strong>：Docker対応、言語・フレームワーク自由</li>
+          <li><strong>自動スケーリング</strong>：0から1000インスタンスまで自動調整</li>
+          <li><strong>HTTPS標準</strong>：SSL証明書の自動管理</li>
+          <li><strong>カスタムドメイン</strong>：独自ドメインの簡単設定</li>
+        </ul>
+
+        <h3>Cloud Functions vs Cloud Run</h3>
+        <p>よく比較される2つのサービスの違いを整理します：</p>
+        <ul>
+          <li><strong>Cloud Functions</strong>：関数単位のデプロイ、言語制限あり、軽量処理向き</li>
+          <li><strong>Cloud Run</strong>：コンテナ単位のデプロイ、言語自由、Webアプリ全般向き</li>
+        </ul>
+
+        <h2 id="setup">2. 環境セットアップ</h2>
+        <p>Cloud Runを使い始めるには、以下の準備が必要です。</p>
+
+        <h3>前提条件</h3>
+        <ol>
+          <li>Googleアカウント（GCPの無料トライアルで$300のクレジットあり）</li>
+          <li>Google Cloud SDKのインストール</li>
+          <li>Dockerのインストール</li>
+        </ol>
+
+        <pre data-lang="bash"><code># Google Cloud SDKのインストール（macOS）
+brew install --cask google-cloud-sdk
+
+# 初期設定
+gcloud init
+
+# プロジェクトの作成
+gcloud projects create my-cloudrun-app --name="My Cloud Run App"
+gcloud config set project my-cloudrun-app
+
+# 必要なAPIを有効化
+gcloud services enable run.googleapis.com
+gcloud services enable cloudbuild.googleapis.com</code></pre>
+
+        <h2 id="first-deploy">3. 最初のデプロイ</h2>
+        <p>Node.jsの簡単なWebサーバーをCloud Runにデプロイしてみましょう。</p>
+
+        <h3>Step 1: アプリケーションの作成</h3>
+        <pre data-lang="javascript"><code>// server.js
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Hello from Cloud Run! 🚀',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});</code></pre>
+
+        <h3>Step 2: Dockerfileの作成</h3>
+        <pre data-lang="dockerfile"><code># Dockerfile
+FROM node:20-slim
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+
+EXPOSE 8080
+CMD ["node", "server.js"]</code></pre>
+
+        <h3>Step 3: デプロイ実行</h3>
+        <pre data-lang="bash"><code># ソースからそのままデプロイ（Dockerビルドも自動）
+gcloud run deploy my-app \
+  --source . \
+  --region asia-northeast1 \
+  --allow-unauthenticated
+
+# デプロイ完了！URLが表示されます
+# Service URL: https://my-app-xxxxx-an.a.run.app</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-title">✅ 実践のヒント</div>
+          <p><code>--source .</code>オプションを使えば、Dockerfileさえあればローカルでのビルド不要です。Cloud Buildが自動でイメージをビルドしてくれます。</p>
+        </div>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="pricing">4. 料金体系</h2>
+        <p>Cloud Runの料金は<strong>使った分だけ</strong>の従量課金制です。トラフィックがなければ料金は発生しません。</p>
+
+        <h3>無料枠（毎月）</h3>
+        <ul>
+          <li><strong>200万リクエスト</strong>まで無料</li>
+          <li><strong>CPU</strong>：180,000 vCPU秒（約50時間）</li>
+          <li><strong>メモリ</strong>：360,000 GiB秒</li>
+          <li><strong>ネットワーク</strong>：北米内1GBまで無料</li>
+        </ul>
+
+        <p>個人ブログやAPI程度なら、<strong>無料枠内で十分運用可能</strong>です。月間PVが数万程度のサイトでも、ほぼ無料に収まるケースが多いです。</p>
+
+        <div class="info-box warning">
+          <div class="info-title">⚠️ 注意</div>
+          <p>CPU常時割り当てモード（always-on）を使用すると、リクエストがない時間も課金されます。コスト重視の場合は、デフォルトの「リクエスト時のみ」モードを使いましょう。</p>
+        </div>
+
+        <h2 id="scaling">5. オートスケーリング</h2>
+        <p>Cloud Runの最大の魅力の一つが<strong>自動スケーリング</strong>です。トラフィックに応じてインスタンス数が自動的に調整されます。</p>
+
+        <h3>スケーリングの仕組み</h3>
+        <ul>
+          <li><strong>ゼロスケール</strong>：トラフィックがない場合、インスタンスを0まで縮小</li>
+          <li><strong>水平スケール</strong>：リクエスト増加に応じてインスタンスを追加</li>
+          <li><strong>同時実行制御</strong>：1インスタンスあたりの同時リクエスト数を制限可能</li>
+        </ul>
+
+        <pre data-lang="bash"><code># 最小/最大インスタンス数の設定
+gcloud run services update my-app \
+  --min-instances 1 \          # コールドスタート回避
+  --max-instances 100 \        # コスト制御
+  --concurrency 80 \           # 同時リクエスト数
+  --region asia-northeast1</code></pre>
+
+        <h2 id="tips">6. 実践的なTips</h2>
+
+        <h3>コールドスタート対策</h3>
+        <p>Cloud Runはゼロスケールが可能ですが、インスタンスが0の状態から起動する「コールドスタート」には数秒かかることがあります。</p>
+        <ul>
+          <li><strong>最小インスタンスを1に設定</strong>：常に1インスタンス稼働（月額約$5〜10）</li>
+          <li><strong>軽量なベースイメージを使用</strong>：<code>node:20-slim</code>や<code>python:3.12-slim</code></li>
+          <li><strong>起動時の処理を最小化</strong>：初期化処理はリクエスト時に遅延実行</li>
+        </ul>
+
+        <h3>CI/CDとの連携</h3>
+        <p>GitHub Actionsと組み合わせることで、pushごとに自動デプロイが可能です。</p>
+
+        <pre data-lang="yaml"><code># .github/workflows/deploy.yml
+name: Deploy to Cloud Run
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: my-app
+          region: asia-northeast1
+          source: .</code></pre>
+
+        <p>Cloud Runは、<strong>「とりあえずコンテナを動かしたい」</strong>というニーズに最適なサービスです。サーバー管理の煩わしさから解放され、アプリケーション開発に集中できます。ぜひ無料枠を活用して、まずは小さなプロジェクトから試してみてください。</p>
+
+        <!-- Share -->
+        <div class="share-section">
+          <h4>この記事が役に立ったらシェアしよう</h4>
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html&text=Google Cloud Run入門：コンテナを簡単にデプロイ" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+          </div>
+        </div>
+
+        <div class="article-nav">
+          <a href="../blog.html">
+            <div class="nav-label">← 戻る</div>
+            <div class="nav-title">ブログ記事一覧</div>
+          </a>
+          <a href="owasp-security.html" class="next">
+            <div class="nav-label">次の記事 →</div>
+            <div class="nav-title">OWASP Top 10 Webセキュリティ入門</div>
+          </a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="sidebar-card">
+          <h4>📌 関連記事</h4>
+          <ul>
+            <li><a href="github-actions-cicd.html">GitHub Actions入門：CI/CDを30分で構築</a></li>
+            <li><a href="docker-introduction.html">Docker入門：コンテナ技術を30分で理解する</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>🏷️ タグ</h4>
+          <ul>
+            <li><a href="../blog.html">GCP</a></li>
+            <li><a href="../blog.html">コンテナ</a></li>
+            <li><a href="../blog.html">サーバーレス</a></li>
+          </ul>
+        </div>
+        <div class="ad-space">広告</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div>
+      <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+      <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div>
+  </div></footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
+  </script>
+  <!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <!-- End of HubSpot Embed Code -->
+</body>
+</html>

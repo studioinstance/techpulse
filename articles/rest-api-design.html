@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>REST API設計のベストプラクティス - TechPulse</title>
+  <meta name="description" content="RESTful API設計の実践的なベストプラクティス。エンドポイント命名規則、HTTPメソッド、ステータスコード、認証、バージョニングを解説します。">
+  <meta name="keywords" content="REST API, API設計, HTTP, エンドポイント, バックエンド, Web開発">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/rest-api-design.html">
+  <meta property="og:title" content="REST API設計のベストプラクティス">
+  <meta property="og:description" content="実践的なREST API設計ガイド。命名規則からバージョニングまで。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/rest-api-design.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"REST API設計のベストプラクティス","datePublished":"2026-03-12","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"RESTful API設計の実践的なベストプラクティス","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/rest-api-design.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">Web開発</span>
+    <h1>REST API設計のベストプラクティス</h1>
+    <div class="article-meta-info"><span>📅 2026年3月12日</span><span>🕐 約10分で読めます</span><span>🏷️ REST API, バックエンド, 設計</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#principles">RESTの基本原則</a></li>
+        <li><a href="#naming">エンドポイント命名規則</a></li>
+        <li><a href="#methods">HTTPメソッドの正しい使い方</a></li>
+        <li><a href="#status">ステータスコードの使い分け</a></li>
+        <li><a href="#auth">認証とセキュリティ</a></li>
+        <li><a href="#versioning">バージョニング戦略</a></li>
+      </ol></nav>
+
+      <p>REST APIはほぼすべてのWebサービスの基盤です。しかし、「動く」APIと「良い」APIには大きな違いがあります。本記事では、<strong>保守性が高く、使いやすいREST API</strong>を設計するための実践的なベストプラクティスを解説します。</p>
+
+      <h2 id="principles">1. RESTの基本原則</h2>
+      <ul>
+        <li><strong>リソース指向</strong>：URLはリソース（名詞）を表し、操作（動詞）はHTTPメソッドで表現</li>
+        <li><strong>ステートレス</strong>：各リクエストは独立しており、サーバーにセッション状態を持たない</li>
+        <li><strong>統一インターフェース</strong>：一貫した規約に従い、予測可能なAPIを提供</li>
+        <li><strong>HATEOAS</strong>：レスポンスに次に取れるアクションのリンクを含める</li>
+      </ul>
+
+      <h2 id="naming">2. エンドポイント命名規則</h2>
+      <pre data-lang="text"><code># ✅ 良い例（リソース名は複数形の名詞）
+GET    /api/v1/users          # ユーザー一覧
+GET    /api/v1/users/123      # ユーザー詳細
+POST   /api/v1/users          # ユーザー作成
+PUT    /api/v1/users/123      # ユーザー更新（全体）
+PATCH  /api/v1/users/123      # ユーザー更新（部分）
+DELETE /api/v1/users/123      # ユーザー削除
+
+# ✅ ネストされたリソース
+GET    /api/v1/users/123/posts      # ユーザーの投稿一覧
+GET    /api/v1/users/123/posts/456  # 特定の投稿
+
+# ❌ 悪い例（動詞を使っている）
+GET    /api/v1/getUsers
+POST   /api/v1/createUser
+DELETE /api/v1/deleteUser/123
+
+# ❌ 悪い例（camelCase、単数形）
+GET    /api/v1/userList
+GET    /api/v1/user/123</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ 命名のルール</div>
+        <p>URLにはkebab-case（ハイフン区切り）を使い、クエリパラメータにはcamelCaseを使うのが一般的です。例：<code>/api/v1/blog-posts?sortBy=createdAt</code></p>
+      </div>
+
+      <h2 id="methods">3. HTTPメソッドの正しい使い方</h2>
+      <pre data-lang="javascript"><code>// Express.jsでの実装例
+const express = require('express');
+const router = express.Router();
+
+// GET - リソースの取得（冪等・安全）
+router.get('/users', async (req, res) => {
+  const { page = 1, limit = 20, sortBy = 'createdAt' } = req.query;
+  const users = await User.find()
+    .sort(sortBy)
+    .skip((page - 1) * limit)
+    .limit(limit);
+
+  res.json({
+    data: users,
+    pagination: { page, limit, total: await User.countDocuments() }
+  });
+});
+
+// POST - リソースの作成（冪等ではない）
+router.post('/users', async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(201).json({ data: user });
+});
+
+// PUT - リソースの全体更新（冪等）
+router.put('/users/:id', async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true, runValidators: true
+  });
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.json({ data: user });
+});
+
+// DELETE - リソースの削除（冪等）
+router.delete('/users/:id', async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.status(204).send();
+});</code></pre>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="status">4. ステータスコードの使い分け</h2>
+      <ul>
+        <li><strong>200 OK</strong> — リクエスト成功（GET、PUT、PATCH）</li>
+        <li><strong>201 Created</strong> — リソース作成成功（POST）</li>
+        <li><strong>204 No Content</strong> — 成功だがレスポンスボディなし（DELETE）</li>
+        <li><strong>400 Bad Request</strong> — バリデーションエラー</li>
+        <li><strong>401 Unauthorized</strong> — 認証が必要</li>
+        <li><strong>403 Forbidden</strong> — 権限不足</li>
+        <li><strong>404 Not Found</strong> — リソースが見つからない</li>
+        <li><strong>409 Conflict</strong> — リソースの競合（重複Eメール等）</li>
+        <li><strong>422 Unprocessable Entity</strong> — バリデーションエラー（詳細）</li>
+        <li><strong>429 Too Many Requests</strong> — レート制限</li>
+        <li><strong>500 Internal Server Error</strong> — サーバーエラー</li>
+      </ul>
+
+      <h3>統一的なエラーレスポンス</h3>
+      <pre data-lang="json"><code>{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "入力データにエラーがあります",
+    "details": [
+      { "field": "email", "message": "有効なメールアドレスを入力してください" },
+      { "field": "password", "message": "パスワードは8文字以上必要です" }
+    ]
+  }
+}</code></pre>
+
+      <h2 id="auth">5. 認証とセキュリティ</h2>
+      <pre data-lang="javascript"><code>// JWT認証ミドルウェア
+const jwt = require('jsonwebtoken');
+
+const authenticate = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1]; // Bearer TOKEN
+  if (!token) {
+    return res.status(401).json({ error: { code: 'UNAUTHORIZED' }});
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: { code: 'INVALID_TOKEN' }});
+  }
+};
+
+// レート制限
+const rateLimit = require('express-rate-limit');
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,  // 15分間
+  max: 100,                   // 最大100リクエスト
+  standardHeaders: true,
+  legacyHeaders: false,
+});</code></pre>
+
+      <h2 id="versioning">6. バージョニング戦略</h2>
+      <ul>
+        <li><strong>URLパスバージョニング</strong>（推奨）：<code>/api/v1/users</code> → <code>/api/v2/users</code></li>
+        <li><strong>ヘッダーバージョニング</strong>：<code>Accept: application/vnd.myapi.v2+json</code></li>
+        <li><strong>クエリパラメータ</strong>：<code>/api/users?version=2</code></li>
+      </ul>
+
+      <p>良いAPI設計は、<strong>チームの生産性とシステムの保守性</strong>を大きく左右します。この記事のベストプラクティスを参考に、使いやすく拡張性の高いAPIを目指してください。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html&text=REST API設計のベストプラクティス" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+      <div class="article-nav">
+        <a href="vscode-extensions.html"><div class="nav-label">← 前の記事</div><div class="nav-title">VS Code拡張機能おすすめ20選</div></a>
+        <a href="git-github-guide.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">Git/GitHub完全入門ガイド</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="owasp-security.html">OWASP Top 10 セキュリティ入門</a></li><li><a href="typescript-guide.html">TypeScript入門ガイド</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">REST API</a></li><li><a href="../blog.html">バックエンド</a></li><li><a href="../blog.html">設計</a></li></ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div><div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div><div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

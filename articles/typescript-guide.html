@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>TypeScript入門：JavaScriptエンジニアのための完全ガイド - TechPulse</title>
+  <meta name="description" content="TypeScript入門ガイド。型システム、インターフェース、ジェネリクス、ユーティリティ型をJavaScript経験者向けにわかりやすく解説します。">
+  <meta name="keywords" content="TypeScript, JavaScript, 型安全, インターフェース, ジェネリクス, Web開発">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/typescript-guide.html">
+  <meta property="og:title" content="TypeScript入門：JavaScriptエンジニアのための完全ガイド">
+  <meta property="og:description" content="JavaScriptエンジニア向けTypeScript完全入門。型システムからジェネリクスまで。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/typescript-guide.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"TypeScript入門：JavaScriptエンジニアのための完全ガイド","datePublished":"2026-03-20","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"JavaScript経験者向けTypeScript完全入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/typescript-guide.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">Web開発</span>
+    <h1>TypeScript入門：JavaScriptエンジニアのための完全ガイド</h1>
+    <div class="article-meta-info"><span>📅 2026年3月20日</span><span>🕐 約12分で読めます</span><span>🏷️ TypeScript, JavaScript, Web開発</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#why">なぜTypeScriptを学ぶべきか</a></li>
+        <li><a href="#basics">基本の型</a></li>
+        <li><a href="#interface">インターフェースと型エイリアス</a></li>
+        <li><a href="#generics">ジェネリクス</a></li>
+        <li><a href="#utility">ユーティリティ型</a></li>
+        <li><a href="#migration">JSからTSへの移行戦略</a></li>
+      </ol></nav>
+
+      <p>TypeScriptは<strong>JavaScriptに型システムを追加した言語</strong>で、2026年現在、フロントエンド・バックエンド問わず、もはやデファクトスタンダードとなっています。本記事では、JavaScript経験者がスムーズにTypeScriptに移行するための完全ガイドを提供します。</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 この記事のポイント</div>
+        <p>TypeScriptは「型のあるJavaScript」です。既存のJavaScriptコードはそのままTypeScriptとして動作するため、段階的に導入できます。</p>
+      </div>
+
+      <h2 id="why">1. なぜTypeScriptを学ぶべきか</h2>
+      <ul>
+        <li><strong>バグの早期発見</strong>：コンパイル時に型エラーを検出（実行前に約15%のバグを防止）</li>
+        <li><strong>優れたDX</strong>：IDEの補完機能・リファクタリングが大幅に向上</li>
+        <li><strong>ドキュメント代わり</strong>：型定義がコードの仕様書になる</li>
+        <li><strong>業界標準</strong>：npm上位パッケージの90%以上がTS対応</li>
+      </ul>
+
+      <h2 id="basics">2. 基本の型</h2>
+      <pre data-lang="typescript"><code>// プリミティブ型
+let name: string = "TechPulse";
+let age: number = 3;
+let isActive: boolean = true;
+
+// 配列
+let tags: string[] = ["AI", "Web", "Cloud"];
+let numbers: Array&lt;number&gt; = [1, 2, 3];
+
+// オブジェクト型
+let article: {
+  title: string;
+  views: number;
+  published: boolean;
+} = {
+  title: "TypeScript入門",
+  views: 1500,
+  published: true
+};
+
+// Union型（複数の型を許容）
+let id: string | number = "abc123";
+id = 42; // これもOK
+
+// リテラル型
+type Category = "AI" | "Web" | "Cloud" | "DevOps";
+let category: Category = "AI"; // この4つ以外はエラー
+
+// Optional型
+function greet(name: string, greeting?: string): string {
+  return `${greeting ?? "こんにちは"}, ${name}さん！`;
+}</code></pre>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="interface">3. インターフェースと型エイリアス</h2>
+      <pre data-lang="typescript"><code>// インターフェース（拡張可能）
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: "admin" | "editor" | "viewer";
+}
+
+interface Admin extends User {
+  role: "admin";
+  permissions: string[];
+}
+
+// 型エイリアス（Union型に便利）
+type ApiResponse&lt;T&gt; =
+  | { status: "success"; data: T }
+  | { status: "error"; message: string };
+
+// 使用例
+function fetchUser(id: number): ApiResponse&lt;User&gt; {
+  // ...
+  return { status: "success", data: user };
+}
+
+const result = fetchUser(1);
+if (result.status === "success") {
+  console.log(result.data.name); // 型安全！
+  // result.messageにはアクセスできない（コンパイルエラー）
+}</code></pre>
+
+      <h2 id="generics">4. ジェネリクス</h2>
+      <p>ジェネリクスは<strong>型の再利用性</strong>を高める仕組みです。</p>
+
+      <pre data-lang="typescript"><code>// ジェネリック関数
+function getFirst&lt;T&gt;(items: T[]): T | undefined {
+  return items[0];
+}
+
+const firstNumber = getFirst([1, 2, 3]);      // number | undefined
+const firstString = getFirst(["a", "b", "c"]); // string | undefined
+
+// ジェネリック型制約
+interface HasId {
+  id: number;
+}
+
+function findById&lt;T extends HasId&gt;(items: T[], id: number): T | undefined {
+  return items.find(item =&gt; item.id === id);
+}
+
+// ジェネリッククラス
+class Repository&lt;T extends HasId&gt; {
+  private items: T[] = [];
+
+  add(item: T): void {
+    this.items.push(item);
+  }
+
+  findById(id: number): T | undefined {
+    return this.items.find(item =&gt; item.id === id);
+  }
+
+  getAll(): T[] {
+    return [...this.items];
+  }
+}</code></pre>
+
+      <h2 id="utility">5. ユーティリティ型</h2>
+      <p>TypeScriptには便利な組み込みユーティリティ型が豊富にあります。</p>
+
+      <pre data-lang="typescript"><code>interface Article {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  publishedAt: Date;
+}
+
+// Partial - すべてのプロパティをオプショナルに
+type ArticleUpdate = Partial&lt;Article&gt;;
+
+// Pick - 特定のプロパティだけ抽出
+type ArticleSummary = Pick&lt;Article, "id" | "title" | "author"&gt;;
+
+// Omit - 特定のプロパティを除外
+type NewArticle = Omit&lt;Article, "id"&gt;;
+
+// Record - キーと値の型を指定
+type CategoryCount = Record&lt;Category, number&gt;;
+
+// Readonly - すべてのプロパティを読み取り専用に
+type ImmutableArticle = Readonly&lt;Article&gt;;</code></pre>
+
+      <h2 id="migration">6. JSからTSへの移行戦略</h2>
+      <ol>
+        <li><strong>tsconfig.jsonの作成</strong>：<code>strict: false</code>で始め、段階的に厳格化</li>
+        <li><strong>ファイル名変更</strong>：<code>.js</code> → <code>.ts</code>を1ファイルずつ</li>
+        <li><strong>any型の許容</strong>：最初は<code>any</code>で通し、後から型を付ける</li>
+        <li><strong>strictモード有効化</strong>：チームの理解が進んだら<code>strict: true</code>に</li>
+      </ol>
+
+      <pre data-lang="json"><code>// tsconfig.json（段階的移行向け）
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "strict": false,          // 最初はfalse
+    "allowJs": true,          // JSファイルも許容
+    "checkJs": false,         // JSの型チェックはoff
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}</code></pre>
+
+      <p>TypeScriptは<strong>一度学べば生産性が飛躍的に向上する</strong>技術です。まずは小さなプロジェクトから導入し、型の恩恵を実感してみてください。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html&text=TypeScript入門：JavaScriptエンジニアのための完全ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+
+      <div class="article-nav">
+        <a href="docker-introduction.html"><div class="nav-label">← 前の記事</div><div class="nav-title">Docker入門</div></a>
+        <a href="python-data-analysis.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">Pythonで始めるデータ分析入門</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="nextjs-15-features.html">Next.js 15の新機能</a></li><li><a href="react-native-vs-flutter.html">React Native vs Flutter</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">TypeScript</a></li><li><a href="../blog.html">JavaScript</a></li><li><a href="../blog.html">Web開発</a></li></ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div><div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div><div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Git/GitHub完全入門ガイド - TechPulse</title>
+  <meta name="description" content="Git/GitHub初心者向け完全入門ガイド。基本コマンド、ブランチ戦略、プルリクエスト、コンフリクト解決をわかりやすく解説します。">
+  <meta name="keywords" content="Git, GitHub, バージョン管理, ブランチ, プルリクエスト, 入門">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/git-github-guide.html">
+  <meta property="og:title" content="Git/GitHub完全入門ガイド">
+  <meta property="og:description" content="Git/GitHub初心者向け完全入門。基本コマンドからプルリクエストまで。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/git-github-guide.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Git/GitHub完全入門ガイド","datePublished":"2026-03-08","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Git/GitHub初心者向け完全入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/git-github-guide.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">DevOps</span>
+    <h1>Git/GitHub完全入門ガイド</h1>
+    <div class="article-meta-info"><span>📅 2026年3月8日</span><span>🕐 約12分で読めます</span><span>🏷️ Git, GitHub, バージョン管理</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#what">Gitとは？GitHubとは？</a></li>
+        <li><a href="#setup">初期設定</a></li>
+        <li><a href="#basics">基本コマンド</a></li>
+        <li><a href="#branch">ブランチ戦略</a></li>
+        <li><a href="#pr">プルリクエスト</a></li>
+        <li><a href="#conflict">コンフリクト解決</a></li>
+      </ol></nav>
+
+      <p>ソフトウェア開発において<strong>バージョン管理</strong>は最も重要なスキルの一つです。<strong>Git</strong>はその事実上の標準であり、<strong>GitHub</strong>はGitを活用したコラボレーションプラットフォームです。本記事では、ゼロからGit/GitHubを使いこなすための完全ガイドを提供します。</p>
+
+      <h2 id="what">1. Gitとは？GitHubとは？</h2>
+      <ul>
+        <li><strong>Git</strong>：分散型バージョン管理システム。ファイルの変更履歴を記録・管理するツール</li>
+        <li><strong>GitHub</strong>：Gitリポジトリのホスティングサービス。チーム開発のコラボレーション機能を提供</li>
+      </ul>
+
+      <h2 id="setup">2. 初期設定</h2>
+      <pre data-lang="bash"><code># Gitのインストール確認
+git --version
+
+# ユーザー名とメールアドレスの設定
+git config --global user.name "あなたの名前"
+git config --global user.email "your@email.com"
+
+# デフォルトブランチ名をmainに
+git config --global init.defaultBranch main
+
+# エディタの設定（VS Code）
+git config --global core.editor "code --wait"
+
+# 設定確認
+git config --list</code></pre>
+
+      <h2 id="basics">3. 基本コマンド</h2>
+      <pre data-lang="bash"><code># リポジトリの初期化
+git init
+
+# 変更状況の確認
+git status
+
+# ファイルをステージング
+git add index.html          # 特定ファイル
+git add .                    # すべての変更
+
+# コミット（変更を記録）
+git commit -m "feat: ヘッダーコンポーネントを追加"
+
+# コミット履歴の確認
+git log --oneline --graph -10
+
+# リモートリポジトリの追加と接続
+git remote add origin https://github.com/username/repo.git
+
+# プッシュ（リモートに送信）
+git push -u origin main
+
+# プル（リモートから取得＆マージ）
+git pull origin main
+
+# 変更を一時退避
+git stash
+git stash pop</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ コミットメッセージのベストプラクティス</div>
+        <p>Conventional Commitsの形式を推奨します：<code>feat:</code>（機能追加）、<code>fix:</code>（バグ修正）、<code>docs:</code>（ドキュメント）、<code>style:</code>（コード整形）、<code>refactor:</code>（リファクタリング）</p>
+      </div>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="branch">4. ブランチ戦略</h2>
+      <pre data-lang="bash"><code># ブランチの作成と切り替え
+git checkout -b feature/user-auth
+
+# ブランチ一覧
+git branch -a
+
+# ブランチの切り替え
+git checkout main
+
+# ブランチのマージ
+git checkout main
+git merge feature/user-auth
+
+# マージ済みブランチの削除
+git branch -d feature/user-auth</code></pre>
+
+      <h3>Git Flow（推奨ブランチ戦略）</h3>
+      <ul>
+        <li><strong>main</strong>：本番環境に対応、常にデプロイ可能な状態</li>
+        <li><strong>develop</strong>：開発ブランチ、次のリリースに向けた統合ブランチ</li>
+        <li><strong>feature/*</strong>：新機能開発用（developから分岐）</li>
+        <li><strong>hotfix/*</strong>：緊急修正用（mainから分岐）</li>
+        <li><strong>release/*</strong>：リリース準備用</li>
+      </ul>
+
+      <h2 id="pr">5. プルリクエスト</h2>
+      <p>プルリクエスト（PR）は<strong>コードレビューの仕組み</strong>です。直接mainにpushせず、PRを通じてレビューを受けることで、コードの品質を維持します。</p>
+
+      <h3>良いPRの書き方</h3>
+      <ol>
+        <li><strong>タイトル</strong>を明確に：「ユーザー認証機能の追加」</li>
+        <li><strong>概要</strong>を記載：何を変更したか、なぜ変更したか</li>
+        <li><strong>スクリーンショット</strong>を添付（UI変更の場合）</li>
+        <li><strong>変更が小さい</strong>こと：1PRにつき1機能</li>
+        <li><strong>テスト</strong>を含める</li>
+      </ol>
+
+      <h2 id="conflict">6. コンフリクト解決</h2>
+      <p>複数人が同じファイルを編集するとコンフリクトが発生します。</p>
+      <pre data-lang="bash"><code># コンフリクト発生時の表示
+<<<<<<< HEAD
+const greeting = "おはようございます";
+=======
+const greeting = "こんにちは";
+>>>>>>> feature/greeting-update
+
+# 解決方法：
+# 1. どちらかを選ぶ、または両方を統合する
+# 2. マーカー（<<<, ===, >>>）を削除
+# 3. ファイルを保存
+
+const greeting = "こんにちは"; # 正しい方を残す
+
+# 4. ステージングとコミット
+git add .
+git commit -m "fix: greetingのコンフリクトを解決"</code></pre>
+
+      <div class="info-box info">
+        <div class="info-title">💡 VS Codeでのコンフリクト解決</div>
+        <p>VS Codeにはコンフリクト解決の専用UIがあり、「Accept Current」「Accept Incoming」「Accept Both」ボタンでワンクリックで解決できます。</p>
+      </div>
+
+      <p>Git/GitHubは最初は複雑に感じますが、<strong>基本コマンドの7割は日常的に使う5〜6個</strong>です。まずはadd → commit → push → pullのサイクルをマスターし、徐々にブランチやPRの活用に進んでいきましょう。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html&text=Git/GitHub完全入門ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+      <div class="article-nav">
+        <a href="rest-api-design.html"><div class="nav-label">← 前の記事</div><div class="nav-title">REST API設計のベストプラクティス</div></a>
+        <a href="web-performance.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">Webパフォーマンス最適化テクニック</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="github-actions-cicd.html">GitHub Actions入門</a></li><li><a href="vscode-extensions.html">VS Code拡張機能おすすめ20選</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">Git</a></li><li><a href="../blog.html">GitHub</a></li><li><a href="../blog.html">バージョン管理</a></li></ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div><div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div><div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

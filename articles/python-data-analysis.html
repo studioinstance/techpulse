@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Pythonで始めるデータ分析入門 - TechPulse</title>
+  <meta name="description" content="Pythonを使ったデータ分析の入門ガイド。pandas、NumPy、Matplotlibの基本的な使い方を実践的なコード例で解説します。">
+  <meta name="keywords" content="Python, データ分析, pandas, NumPy, Matplotlib, データサイエンス">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html">
+  <meta property="og:title" content="Pythonで始めるデータ分析入門">
+  <meta property="og:description" content="pandas、NumPy、Matplotlibの基本を実践コードで学ぶ。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Pythonで始めるデータ分析入門","datePublished":"2026-03-22","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Pythonによるデータ分析入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/python-data-analysis.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">AI・データサイエンス</span>
+    <h1>Pythonで始めるデータ分析入門</h1>
+    <div class="article-meta-info"><span>📅 2026年3月22日</span><span>🕐 約12分で読めます</span><span>🏷️ Python, pandas, データ分析</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#why-python">なぜPythonでデータ分析か</a></li>
+        <li><a href="#setup">環境構築</a></li>
+        <li><a href="#pandas">pandasの基本操作</a></li>
+        <li><a href="#numpy">NumPyで数値計算</a></li>
+        <li><a href="#visualization">Matplotlibで可視化</a></li>
+        <li><a href="#project">実践プロジェクト</a></li>
+      </ol></nav>
+
+      <p>データ分析は、ビジネスの意思決定からAI開発まで幅広い領域で活用されています。<strong>Python</strong>はその中心的な言語であり、豊富なライブラリにより、初心者でも簡単にデータ分析を始められます。</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 この記事のポイント</div>
+        <p>pandas + NumPy + Matplotlib の3つのライブラリだけで、データの読み込み、加工、可視化まで一通りの分析が可能です。</p>
+      </div>
+
+      <h2 id="why-python">1. なぜPythonでデータ分析か</h2>
+      <ul>
+        <li><strong>豊富なライブラリ</strong>：pandas、NumPy、scikit-learn、TensorFlowなど</li>
+        <li><strong>コミュニティ</strong>：Stack Overflowでの質問数No.1</li>
+        <li><strong>可読性</strong>：コードが読みやすく、学習コストが低い</li>
+        <li><strong>Jupyter Notebook</strong>：インタラクティブな分析環境</li>
+      </ul>
+
+      <h2 id="setup">2. 環境構築</h2>
+      <pre data-lang="bash"><code># Pythonのインストール（推奨: 3.11以上）
+# Anaconda推奨だが、pipでも可
+
+# 仮想環境の作成
+python -m venv data-env
+source data-env/bin/activate  # macOS/Linux
+# data-env\Scripts\activate   # Windows
+
+# 必要なライブラリのインストール
+pip install pandas numpy matplotlib seaborn jupyter
+
+# Jupyter Notebookの起動
+jupyter notebook</code></pre>
+
+      <h2 id="pandas">3. pandasの基本操作</h2>
+      <p>pandasは<strong>表形式データの操作</strong>に特化したライブラリです。</p>
+
+      <pre data-lang="python"><code>import pandas as pd
+
+# CSVの読み込み
+df = pd.read_csv('sales_data.csv')
+
+# データの概要確認
+print(df.shape)          # (行数, 列数)
+print(df.info())          # データ型の確認
+print(df.describe())      # 統計量の要約
+print(df.head(10))        # 先頭10行
+
+# 列の選択
+revenue = df['revenue']
+subset = df[['product', 'revenue', 'quantity']]
+
+# フィルタリング
+high_revenue = df[df['revenue'] > 100000]
+tokyo_data = df[df['region'] == '東京']
+
+# グループ化と集計
+monthly_sales = df.groupby('month')['revenue'].agg(['sum', 'mean', 'count'])
+
+# 新しい列の追加
+df['profit_rate'] = (df['revenue'] - df['cost']) / df['revenue'] * 100
+
+# 欠損値の処理
+df['price'].fillna(df['price'].median(), inplace=True)
+df.dropna(subset=['product_name'], inplace=True)
+
+# ソート
+df_sorted = df.sort_values('revenue', ascending=False)</code></pre>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="numpy">4. NumPyで数値計算</h2>
+      <pre data-lang="python"><code>import numpy as np
+
+# 配列の作成
+arr = np.array([1, 2, 3, 4, 5])
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 統計計算
+print(f"平均: {np.mean(arr)}")       # 3.0
+print(f"標準偏差: {np.std(arr)}")     # 1.414
+print(f"中央値: {np.median(arr)}")    # 3.0
+print(f"最大値: {np.max(arr)}")       # 5
+
+# ベクトル演算（ループ不要で高速）
+prices = np.array([100, 200, 300, 400, 500])
+tax_included = prices * 1.10  # 全要素に一括演算
+
+# 乱数生成
+rng = np.random.default_rng(42)
+random_data = rng.normal(loc=50, scale=10, size=1000)  # 正規分布</code></pre>
+
+      <h2 id="visualization">5. Matplotlibで可視化</h2>
+      <pre data-lang="python"><code>import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['font.family'] = 'Noto Sans JP'
+
+# 折れ線グラフ
+months = ['1月', '2月', '3月', '4月', '5月', '6月']
+revenue = [120, 150, 180, 160, 200, 220]
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(months, revenue, marker='o', linewidth=2, color='#4f46e5')
+ax.set_title('月別売上推移', fontsize=16, fontweight='bold')
+ax.set_xlabel('月')
+ax.set_ylabel('売上（万円）')
+ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('revenue_chart.png', dpi=150)
+plt.show()
+
+# 棒グラフ + 円グラフを並列表示
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+categories = ['Web開発', 'AI', 'クラウド', 'モバイル']
+values = [45, 30, 15, 10]
+
+ax1.bar(categories, values, color=['#4f46e5', '#06b6d4', '#22c55e', '#f59e0b'])
+ax1.set_title('カテゴリ別記事数')
+
+ax2.pie(values, labels=categories, autopct='%1.1f%%', startangle=90)
+ax2.set_title('カテゴリ構成比')
+
+plt.tight_layout()
+plt.show()</code></pre>
+
+      <h2 id="project">6. 実践プロジェクト：Webサイトアクセスログ分析</h2>
+      <pre data-lang="python"><code># 実践例：アクセスログの分析
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# データ読み込み
+df = pd.read_csv('access_log.csv', parse_dates=['timestamp'])
+
+# 日別のPV数を集計
+daily_pv = df.groupby(df['timestamp'].dt.date).size()
+
+# 曜日別のアクセス傾向
+df['weekday'] = df['timestamp'].dt.day_name()
+weekday_avg = df.groupby('weekday').size().reindex(
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+)
+
+# 人気ページTop10
+popular_pages = df['page'].value_counts().head(10)
+
+# レポート出力
+print("=== アクセスログ分析レポート ===")
+print(f"分析期間: {df['timestamp'].min()} 〜 {df['timestamp'].max()}")
+print(f"総PV数: {len(df):,}")
+print(f"ユニークユーザー数: {df['user_id'].nunique():,}")
+print(f"平均日次PV: {daily_pv.mean():.0f}")
+print(f"\n人気ページTop5:")
+for page, count in popular_pages.head(5).items():
+    print(f"  {page}: {count:,} PV")</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ 次のステップ</div>
+        <p>基本を学んだら、scikit-learnで機械学習、Seabornで高度な可視化、Streamlitでダッシュボード作成に挑戦してみましょう。</p>
+      </div>
+
+      <p>Pythonでのデータ分析は、<strong>エンジニアのスキルセットを大きく広げる</strong>技術です。ぜひ自分のプロジェクトのデータを使って実践的に学んでみてください。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html&text=Pythonで始めるデータ分析入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+      <div class="article-nav">
+        <a href="typescript-guide.html"><div class="nav-label">← 前の記事</div><div class="nav-title">TypeScript入門ガイド</div></a>
+        <a href="vscode-extensions.html" class="next"><div class="nav-label">次の記事 →</div><div class="nav-title">VS Code拡張機能おすすめ20選</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="ai-trends-2026.html">2026年のAIトレンド予測</a></li><li><a href="git-github-guide.html">Git/GitHub完全入門ガイド</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">Python</a></li><li><a href="../blog.html">データ分析</a></li><li><a href="../blog.html">pandas</a></li></ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div><div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div><div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

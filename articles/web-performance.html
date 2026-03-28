@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Webパフォーマンス最適化の実践テクニック - TechPulse</title>
+  <meta name="description" content="Webサイトの表示速度を改善する実践的なテクニック。Core Web Vitals、画像最適化、遅延読み込み、キャッシュ戦略を解説します。">
+  <meta name="keywords" content="Webパフォーマンス, Core Web Vitals, 表示速度, 最適化, LCP, CLS, INP">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/web-performance.html">
+  <meta property="og:title" content="Webパフォーマンス最適化の実践テクニック">
+  <meta property="og:description" content="Core Web Vitals改善からキャッシュ戦略まで、実践的なWeb高速化テクニック。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/web-performance.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Webパフォーマンス最適化の実践テクニック","datePublished":"2026-03-01","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Webサイトの表示速度を改善する実践テクニック","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/web-performance.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">Web開発</span>
+    <h1>Webパフォーマンス最適化の実践テクニック</h1>
+    <div class="article-meta-info"><span>📅 2026年3月1日</span><span>🕐 約10分で読めます</span><span>🏷️ パフォーマンス, Core Web Vitals, 最適化</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 目次</h3><ol>
+        <li><a href="#cwv">Core Web Vitalsとは</a></li>
+        <li><a href="#lcp">LCPの改善</a></li>
+        <li><a href="#cls">CLSの改善</a></li>
+        <li><a href="#image">画像最適化</a></li>
+        <li><a href="#loading">遅延読み込み戦略</a></li>
+        <li><a href="#cache">キャッシュ戦略</a></li>
+      </ol></nav>
+
+      <p>Webサイトの表示速度はSEO・ユーザー体験・コンバージョン率に直結します。Googleの調査では、<strong>ページ読み込みが3秒を超えると53%のユーザーが離脱</strong>するとされています。本記事では、Core Web Vitalsを中心に、すぐに実践できるパフォーマンス最適化テクニックを解説します。</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 この記事のポイント</div>
+        <p>パフォーマンス改善は「計測 → 改善 → 計測」のサイクルが重要です。まずChrome DevToolsのLighthouseでスコアを確認してから取り組みましょう。</p>
+      </div>
+
+      <h2 id="cwv">1. Core Web Vitalsとは</h2>
+      <p>GoogleがWebページの品質を評価する3つの指標です。<strong>検索ランキングにも影響</strong>します。</p>
+
+      <ul>
+        <li><strong>LCP（Largest Contentful Paint）</strong>：最大コンテンツの表示時間 → <strong>2.5秒以内</strong>が良好</li>
+        <li><strong>INP（Interaction to Next Paint）</strong>：インタラクション応答速度 → <strong>200ms以内</strong>が良好</li>
+        <li><strong>CLS（Cumulative Layout Shift）</strong>：レイアウトのズレの累積 → <strong>0.1以下</strong>が良好</li>
+      </ul>
+
+      <h2 id="lcp">2. LCPの改善</h2>
+      <p>LCPはユーザーが「ページが表示された」と感じるまでの時間です。</p>
+
+      <h3>改善テクニック</h3>
+      <pre data-lang="html"><code>&lt;!-- 1. 重要なリソースのプリロード --&gt;
+&lt;link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin&gt;
+&lt;link rel="preload" href="/hero-image.webp" as="image"&gt;
+
+&lt;!-- 2. 外部リソースへの事前接続 --&gt;
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="dns-prefetch" href="https://analytics.example.com"&gt;
+
+&lt;!-- 3. クリティカルCSSのインライン化 --&gt;
+&lt;style&gt;
+  /* ファーストビューに必要な最小限のCSS */
+  body { margin: 0; font-family: system-ui; }
+  .hero { min-height: 100vh; display: flex; align-items: center; }
+&lt;/style&gt;
+
+&lt;!-- 4. 非クリティカルCSSの遅延読み込み --&gt;
+&lt;link rel="stylesheet" href="/style.css" media="print" onload="this.media='all'"&gt;</code></pre>
+
+      <div class="ad-space">広告</div>
+
+      <h2 id="cls">3. CLSの改善</h2>
+      <p>CLSはページのレイアウトが突然ズレる問題です。広告の遅延読み込みや画像のサイズ未指定が主な原因です。</p>
+
+      <pre data-lang="html"><code>&lt;!-- ❌ CLSを引き起こすコード --&gt;
+&lt;img src="photo.jpg"&gt;  &lt;!-- width/heightの指定なし --&gt;
+
+&lt;!-- ✅ CLSを防ぐコード --&gt;
+&lt;img src="photo.jpg" width="800" height="600" alt="説明"
+     style="aspect-ratio: 4/3; width: 100%; height: auto;"&gt;
+
+&lt;!-- ✅ 広告枠のスペース予約 --&gt;
+&lt;div style="min-height: 250px;"&gt;
+  &lt;!-- 広告コンテンツ --&gt;
+&lt;/div&gt;
+
+&lt;!-- ✅ Webフォントのfont-display設定 --&gt;
+&lt;style&gt;
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/fonts/custom.woff2') format('woff2');
+  font-display: swap; /* テキストの非表示時間を最小化 */
+}
+&lt;/style&gt;</code></pre>
+
+      <h2 id="image">4. 画像最適化</h2>
+      <p>画像は一般的にWebページの<strong>データ量の50%以上</strong>を占めます。</p>
+
+      <pre data-lang="html"><code>&lt;!-- 次世代フォーマット（WebP/AVIF）の活用 --&gt;
+&lt;picture&gt;
+  &lt;source srcset="image.avif" type="image/avif"&gt;
+  &lt;source srcset="image.webp" type="image/webp"&gt;
+  &lt;img src="image.jpg" alt="説明" width="800" height="600" loading="lazy"&gt;
+&lt;/picture&gt;
+
+&lt;!-- レスポンシブ画像 --&gt;
+&lt;img
+  srcset="image-400.webp 400w, image-800.webp 800w, image-1200.webp 1200w"
+  sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px"
+  src="image-800.webp"
+  alt="説明"
+  loading="lazy"
+  decoding="async"
+&gt;</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ 画像フォーマットの選び方</div>
+        <p><strong>AVIF</strong>が最も圧縮率が高い（JPEGの50%以下）。対応ブラウザが広い<strong>WebP</strong>をベースに、AVIFをプログレッシブエンハンスメントで提供するのが最適です。</p>
+      </div>
+
+      <h2 id="loading">5. 遅延読み込み戦略</h2>
+      <pre data-lang="javascript"><code>// 画像のネイティブ遅延読み込み（HTML属性）
+// loading="lazy" をimgタグに追加するだけ
+
+// JavaScriptの遅延読み込み（動的インポート）
+const loadChart = async () => {
+  const { Chart } = await import('chart.js');
+  // チャートの初期化
+};
+
+// Intersection Observerによる要素の遅延読み込み
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      observer.unobserve(img);
+    }
+  });
+}, { rootMargin: '200px' }); // 200px手前から読み込み開始
+
+// スクリプトの非同期読み込み
+// async: ダウンロード後すぐ実行（順序保証なし）
+// defer: HTML解析完了後に順序通り実行
+// &lt;script src="analytics.js" defer&gt;&lt;/script&gt;</code></pre>
+
+      <h2 id="cache">6. キャッシュ戦略</h2>
+      <pre data-lang="text"><code># .htaccess または nginx.conf でのキャッシュ設定例
+
+# 静的ファイルのブラウザキャッシュ
+# CSS/JS: ハッシュ付きファイル名なら長期キャッシュ
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML: 短いキャッシュ + 再検証
+Cache-Control: public, max-age=3600, must-revalidate
+
+# API: キャッシュなし
+Cache-Control: no-cache, no-store, must-revalidate</code></pre>
+
+      <h3>パフォーマンス計測ツール</h3>
+      <ul>
+        <li><strong>Lighthouse</strong>（Chrome DevTools内蔵）：総合スコアと改善提案</li>
+        <li><strong>PageSpeed Insights</strong>：実ユーザーデータ（CrUX）+ Lighthouse</li>
+        <li><strong>WebPageTest</strong>：詳細なウォーターフォール分析</li>
+        <li><strong>Chrome DevTools Performance</strong>：ランタイムパフォーマンス分析</li>
+      </ul>
+
+      <p>パフォーマンス最適化は<strong>小さな改善の積み重ね</strong>です。まずはLighthouseでスコアを確認し、最も影響の大きい項目から着手しましょう。1秒の高速化が<strong>コンバージョン率7%向上</strong>につながるケースもあります。</p>
+
+      <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/web-performance.html&text=Webパフォーマンス最適化の実践テクニック" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/web-performance.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+      </div></div>
+      <div class="article-nav">
+        <a href="git-github-guide.html"><div class="nav-label">← 前の記事</div><div class="nav-title">Git/GitHub完全入門ガイド</div></a>
+        <a href="../blog.html" class="next"><div class="nav-label">記事一覧 →</div><div class="nav-title">ブログ記事一覧</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 関連記事</h4><ul><li><a href="nextjs-15-features.html">Next.js 15の新機能</a></li><li><a href="google-cloud-run.html">Google Cloud Run入門</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ タグ</h4><ul><li><a href="../blog.html">パフォーマンス</a></li><li><a href="../blog.html">Core Web Vitals</a></li><li><a href="../blog.html">最適化</a></li></ul></div>
+      <div class="ad-space">広告</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div><div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div><div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>

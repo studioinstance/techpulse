@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>OWASP Top 10を理解するWebセキュリティ入門 - TechPulse</title>
+  <meta name="description" content="OWASP Top 10の主要なセキュリティリスクを初心者向けに解説。SQLインジェクション、XSS、CSRF等の攻撃手法と具体的な対策を実際のコード例と共に紹介します。">
+  <meta name="keywords" content="OWASP, セキュリティ, SQLインジェクション, XSS, CSRF, Web開発, セキュリティ対策">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/owasp-security.html">
+  <meta property="og:title" content="OWASP Top 10を理解するWebセキュリティ入門">
+  <meta property="og:description" content="主要なセキュリティリスクと対策をSQLインジェクション、XSS等の具体例で紹介。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/owasp-security.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"OWASP Top 10を理解するWebセキュリティ入門","datePublished":"2026-02-28","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"主要なセキュリティリスクと対策をコード例で紹介","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/owasp-security.html"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="../blog.html" class="active">ブログ</a></li>
+      <li><a href="../about.html">このサイトについて</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero">
+    <div class="article-container">
+      <span class="category">セキュリティ</span>
+      <h1>OWASP Top 10を理解するWebセキュリティ入門</h1>
+      <div class="article-meta-info">
+        <span>📅 2026年2月28日</span>
+        <span>🕐 約12分で読めます</span>
+        <span>🏷️ OWASP, セキュリティ, Web開発</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-body">
+    <div class="article-wrapper">
+      <article class="article-content">
+        <nav class="toc">
+          <h3>📑 目次</h3>
+          <ol>
+            <li><a href="#what-owasp">OWASPとTop 10とは</a></li>
+            <li><a href="#injection">インジェクション攻撃</a></li>
+            <li><a href="#auth">認証の不備</a></li>
+            <li><a href="#xss">クロスサイトスクリプティング（XSS）</a></li>
+            <li><a href="#csrf">CSRF攻撃と対策</a></li>
+            <li><a href="#checklist">セキュリティチェックリスト</a></li>
+          </ol>
+        </nav>
+
+        <p>Webアプリケーションを開発する上で、セキュリティは避けて通れない重要なテーマです。<strong>OWASP（Open Web Application Security Project）</strong>は、Webセキュリティのリスクを体系的に整理した「Top 10」を定期的に公開しています。本記事では、最も危険な脅威とその具体的な対策を、<strong>実際のコード例</strong>とともに解説します。</p>
+
+        <div class="info-box warning">
+          <div class="info-title">⚠️ 重要</div>
+          <p>本記事のコード例は教育目的です。実際の攻撃に利用することは法律で禁止されています。セキュリティ知識は防御のために活用してください。</p>
+        </div>
+
+        <h2 id="what-owasp">1. OWASPとTop 10とは</h2>
+        <p>OWASPは、<strong>Webアプリケーションのセキュリティ向上</strong>を目的とした非営利団体です。OWASP Top 10は、最も深刻なWebセキュリティリスクを10項目にまとめたもので、世界中の開発者・セキュリティエンジニアが参照する事実上の標準です。</p>
+
+        <h3>2025年版 OWASP Top 10 概要</h3>
+        <ol>
+          <li><strong>A01: アクセス制御の不備</strong> — 権限チェックの漏れ</li>
+          <li><strong>A02: 暗号化の失敗</strong> — データ暗号化の不適切な実装</li>
+          <li><strong>A03: インジェクション</strong> — SQL/NoSQL/OSコマンドインジェクション</li>
+          <li><strong>A04: 安全でない設計</strong> — アーキテクチャレベルの脆弱性</li>
+          <li><strong>A05: セキュリティ設定のミス</strong> — デフォルト設定の放置</li>
+          <li><strong>A06: 脆弱なコンポーネント</strong> — 古いライブラリの使用</li>
+          <li><strong>A07: 認証の不備</strong> — パスワード管理や認証フローの問題</li>
+          <li><strong>A08: ソフトウェアとデータの整合性</strong> — CI/CDやアップデートの脆弱性</li>
+          <li><strong>A09: セキュリティログの不足</strong> — 監視・ログ記録の欠如</li>
+          <li><strong>A10: SSRF</strong> — サーバーサイドリクエストフォージェリ</li>
+        </ol>
+
+        <h2 id="injection">2. インジェクション攻撃</h2>
+        <p>最も古典的かつ危険な攻撃手法の一つが<strong>SQLインジェクション</strong>です。ユーザー入力を直接SQLクエリに埋め込むことで、データベースを不正に操作されます。</p>
+
+        <h3>❌ 脆弱なコード</h3>
+        <pre data-lang="javascript"><code>// 危険！ユーザー入力を直接SQL文に結合
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  // 攻撃者が username に ' OR '1'='1' -- と入力すると…
+  const query = `SELECT * FROM users
+    WHERE username = '${username}'
+    AND password = '${password}'`;
+  db.query(query); // 全ユーザー情報が漏洩！
+});</code></pre>
+
+        <h3>✅ 安全なコード（パラメータバインド）</h3>
+        <pre data-lang="javascript"><code>// プリペアドステートメントを使用
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+  db.query(query, [username, password]); // 安全！
+});</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-title">✅ 対策のポイント</div>
+          <p>ORMを使用するとSQLインジェクションのリスクを大幅に軽減できます。Prisma、Sequelize、TypeORMなどのORMを積極的に活用しましょう。</p>
+        </div>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="auth">3. 認証の不備</h2>
+        <p>認証機能は多くのアプリケーションの要です。よくある脆弱性と対策を見てみましょう。</p>
+
+        <h3>よくある認証の問題</h3>
+        <ul>
+          <li><strong>弱いパスワードポリシー</strong>：「password123」を許可してしまう</li>
+          <li><strong>ブルートフォース対策なし</strong>：ログイン試行回数の制限がない</li>
+          <li><strong>セッション管理の不備</strong>：セッションIDの予測可能性</li>
+          <li><strong>JWTの不適切な使用</strong>：alg=noneの許可、秘密鍵の漏洩</li>
+        </ul>
+
+        <h3>安全な認証の実装例</h3>
+        <pre data-lang="javascript"><code>import bcrypt from 'bcrypt';
+import rateLimit from 'express-rate-limit';
+
+// ログイン試行回数の制限
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15分間
+  max: 5, // 最大5回
+  message: 'ログイン試行回数を超えました。15分後に再試行してください。'
+});
+
+app.post('/login', loginLimiter, async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findByEmail(email);
+
+  if (!user) {
+    // タイミング攻撃対策：ユーザーが存在しなくても同じ時間で応答
+    await bcrypt.compare(password, '$2b$10$invalidhashplaceholder');
+    return res.status(401).json({ error: '認証に失敗しました' });
+  }
+
+  const isValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isValid) {
+    return res.status(401).json({ error: '認証に失敗しました' });
+  }
+
+  // セッション作成（安全な設定）
+  req.session.userId = user.id;
+  req.session.cookie.httpOnly = true;
+  req.session.cookie.secure = true;
+  req.session.cookie.sameSite = 'strict';
+});</code></pre>
+
+        <h2 id="xss">4. クロスサイトスクリプティング（XSS）</h2>
+        <p><strong>XSS攻撃</strong>は、悪意のあるスクリプトをWebページに注入し、他のユーザーのブラウザで実行させる攻撃です。</p>
+
+        <h3>XSSの3つのタイプ</h3>
+        <ul>
+          <li><strong>Stored XSS</strong>：悪意のあるスクリプトがサーバーに保存される（掲示板、コメント欄）</li>
+          <li><strong>Reflected XSS</strong>：URLパラメータが反映されるページで発生</li>
+          <li><strong>DOM-based XSS</strong>：JavaScriptが動的にDOMを操作する際に発生</li>
+        </ul>
+
+        <h3>XSS対策</h3>
+        <pre data-lang="javascript"><code>// ❌ 危険：innerHTMLでユーザー入力を挿入
+element.innerHTML = userInput;
+
+// ✅ 安全：textContentを使用
+element.textContent = userInput;
+
+// ✅ サーバーサイドでのエスケープ
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+// ✅ Content Security Policy（CSP）ヘッダーの設定
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy',
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'");
+  next();
+});</code></pre>
+
+        <h2 id="csrf">5. CSRF攻撃と対策</h2>
+        <p><strong>CSRF（Cross-Site Request Forgery）</strong>は、ユーザーが意図しないリクエストを、認証済みのセッションを利用して送信させる攻撃です。</p>
+
+        <pre data-lang="javascript"><code>import csrf from 'csurf';
+
+// CSRFトークンの設定
+const csrfProtection = csrf({ cookie: true });
+
+app.get('/transfer', csrfProtection, (req, res) => {
+  res.render('transfer', { csrfToken: req.csrfToken() });
+});
+
+app.post('/transfer', csrfProtection, (req, res) => {
+  // CSRFトークンが有効な場合のみ処理が実行される
+  processTransfer(req.body);
+});</code></pre>
+
+        <div class="ad-space">広告</div>
+
+        <h2 id="checklist">6. セキュリティチェックリスト</h2>
+        <p>Webアプリケーションをリリースする前に、以下のチェックリストを確認しましょう：</p>
+
+        <ul>
+          <li>☑️ すべてのユーザー入力をバリデーション・サニタイズしているか</li>
+          <li>☑️ パラメータバインドを使用しているか（SQLインジェクション対策）</li>
+          <li>☑️ パスワードをbcrypt/argon2でハッシュ化しているか</li>
+          <li>☑️ HTTPSを強制しているか</li>
+          <li>☑️ CSPヘッダーを設定しているか</li>
+          <li>☑️ CSRFトークンを使用しているか</li>
+          <li>☑️ セッションCookieにHttpOnly, Secure, SameSiteを設定しているか</li>
+          <li>☑️ 依存パッケージの脆弱性を定期チェックしているか（<code>npm audit</code>）</li>
+          <li>☑️ エラーメッセージに機密情報を含めていないか</li>
+          <li>☑️ ログに不正アクセスの試行を記録しているか</li>
+        </ul>
+
+        <p>セキュリティは「一度対策すれば終わり」ではありません。新しい脆弱性は常に発見されるため、<strong>継続的な学習とアップデート</strong>が不可欠です。まずはこの記事で紹介した基本的な対策から始めて、徐々にセキュリティ知識を深めていきましょう。</p>
+
+        <div class="share-section">
+          <h4>この記事が役に立ったらシェアしよう</h4>
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/owasp-security.html&text=OWASP Top 10を理解するWebセキュリティ入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/owasp-security.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+          </div>
+        </div>
+
+        <div class="article-nav">
+          <a href="google-cloud-run.html">
+            <div class="nav-label">← 前の記事</div>
+            <div class="nav-title">Google Cloud Run入門</div>
+          </a>
+          <a href="react-native-vs-flutter.html" class="next">
+            <div class="nav-label">次の記事 →</div>
+            <div class="nav-title">React Native vs Flutter 2026年選定ガイド</div>
+          </a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="sidebar-card">
+          <h4>📌 関連記事</h4>
+          <ul>
+            <li><a href="rest-api-design.html">REST API設計のベストプラクティス</a></li>
+            <li><a href="github-actions-cicd.html">GitHub Actions入門：CI/CDを30分で構築</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>🏷️ タグ</h4>
+          <ul>
+            <li><a href="../blog.html">OWASP</a></li>
+            <li><a href="../blog.html">セキュリティ</a></li>
+            <li><a href="../blog.html">Web開発</a></li>
+          </ul>
+        </div>
+        <div class="ad-space">広告</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div>
+      <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+      <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">DevOps</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div>
+  </div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+</body>
+</html>
