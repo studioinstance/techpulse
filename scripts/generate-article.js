@@ -118,7 +118,7 @@ async function main() {
   blogHtml = blogHtml.replace(/<div class="cards-grid">/, `<div class="cards-grid">${cardSnippet}`);
   fs.writeFileSync(blogHtmlPath, blogHtml);
 
-  // sitemap.xml
+  // sitemap.xml (JP)
   const sitemapPath = 'sitemap.xml';
   let sitemapXml = fs.readFileSync(sitemapPath, 'utf8');
   const sitemapEntry = `
@@ -130,6 +130,34 @@ async function main() {
   </url>`;
   sitemapXml = sitemapXml.replace(/<urlset[^>]*>/, `$&${sitemapEntry}`);
   fs.writeFileSync(sitemapPath, sitemapXml);
+  console.log(`Updated sitemap.xml with JP url!`);
+
+  // ==== 英語サイト用 (i18n) の同時生成 ====
+  const enArticleUrl = `${SITE_URL}/en/articles/${FILE_NAME}`;
+  const enFilePath = `en/articles/${FILE_NAME}`;
+  
+  // hreflang対応とLangの変更、翻訳待ち状態としての出力
+  const enHtmlTemplate = htmlTemplate
+    .replace('lang="ja"', 'lang="en"')
+    .replace('<link rel="canonical" href="' + ARTICLE_URL + '">', 
+      `<link rel="canonical" href="${enArticleUrl}">\n  <link rel="alternate" hreflang="en" href="${enArticleUrl}" />\n  <link rel="alternate" hreflang="ja" href="${ARTICLE_URL}" />`)
+    .replace(/<title>.*?<\/title>/, `<title>EN translation pending: ${DATE_STR}</title>`)
+    .replace(/<p style="margin-top: 12px; font-size: 0.95rem;">(.*?)<\/p>/g, '<p style="margin-top: 12px; font-size: 0.95rem;">[English translation placeholder. Please translate contents via dashboard or AI agents]</p>');
+
+  fs.writeFileSync(enFilePath, enHtmlTemplate);
+  console.log(`Generated EN HTML: ${enFilePath}`);
+
+  // 英語URLもSitemapに追加
+  const enSitemapEntry = `
+  <url>
+    <loc>${enArticleUrl}</loc>
+    <lastmod>${DATE_STR}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+  let latestSitemapXml = fs.readFileSync(sitemapPath, 'utf8');
+  latestSitemapXml = latestSitemapXml.replace(/<urlset[^>]*>/, `$&${enSitemapEntry}`);
+  fs.writeFileSync(sitemapPath, latestSitemapXml);
 
   console.log('Updated blog.html and sitemap.xml successfully!');
 }

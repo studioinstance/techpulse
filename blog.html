@@ -39,6 +39,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <!-- i18n SEO (多言語対応) -->
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/blog.html" />
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/blog.html" />
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/blog.html" />
 </head>
 <body>
   <nav class="navbar"><div class="container">
@@ -47,7 +52,7 @@
       <li><a href="index.html">ホーム</a></li>
       <li><a href="blog.html" class="active">ブログ</a></li>
       <li><a href="about.html">このサイトについて</a></li>
-    </ul>
+    </ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/blog.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/blog.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div>
     <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div></nav>
 

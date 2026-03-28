@@ -17,9 +17,14 @@
     .error-sub { color: var(--color-text-muted); margin-bottom: 32px; }
     .error-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
   </style>
+
+  <!-- i18n SEO (多言語対応) -->
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/404.html" />
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/404.html" />
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/404.html" />
 </head>
 <body>
-  <nav class="navbar"><div class="container"><a href="index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="index.html">ホーム</a></li><li><a href="blog.html">ブログ</a></li><li><a href="about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+  <nav class="navbar"><div class="container"><a href="index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="index.html">ホーム</a></li><li><a href="blog.html">ブログ</a></li><li><a href="about.html">このサイトについて</a></li></ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/404.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/404.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
 
   <main class="error-page">
     <div>
