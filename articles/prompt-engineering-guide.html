@@ -56,6 +56,34 @@
     .badge-beginner{background:rgba(16,185,129,0.2);color:#10b981}
     .badge-intermediate{background:rgba(245,158,11,0.2);color:#f59e0b}
     .badge-advanced{background:rgba(239,68,68,0.2);color:#ef4444}
+    /* === ビジュアル図のスタイル === */
+    .flow-diagram{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:32px 0;padding:24px;background:rgba(139,92,246,0.03);border:1px solid rgba(139,92,246,0.15);border-radius:16px}
+    .flow-step{text-align:center;padding:16px 12px;min-width:110px;position:relative}
+    .flow-step .icon{font-size:2rem;margin-bottom:8px;display:block}
+    .flow-step .step-label{font-size:0.85rem;font-weight:700;color:#fff}
+    .flow-step .step-desc{font-size:0.7rem;color:#94a3b8;margin-top:4px}
+    .flow-arrow{font-size:1.5rem;color:#8b5cf6;padding:0 4px}
+    .model-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+    @media(max-width:768px){.model-card-grid{grid-template-columns:1fr}.flow-diagram{flex-direction:column}.flow-arrow{transform:rotate(90deg)}}
+    .model-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+    .model-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .model-card.gpt::before{background:linear-gradient(90deg,#10b981,#22c55e)}
+    .model-card.gemini::before{background:linear-gradient(90deg,#3b82f6,#06b6d4)}
+    .model-card.claude::before{background:linear-gradient(90deg,#8b5cf6,#ec4899)}
+    .model-card h4{font-size:1.1rem;color:#fff;margin-bottom:12px}
+    .model-card .model-tag{font-size:0.75rem;color:#94a3b8;margin-bottom:8px;display:block}
+    .model-card ul{padding-left:16px;margin:8px 0;font-size:0.9rem}
+    .model-card li{margin-bottom:4px}
+    .ctx-bar{height:24px;border-radius:6px;margin:8px 0;position:relative;overflow:hidden;background:rgba(255,255,255,0.05)}
+    .ctx-bar .fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:0.7rem;font-weight:bold;color:#000}
+    .news-box{background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(245,158,11,0.1));border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:20px;margin:24px 0}
+    .news-box h4{color:#ef4444;font-size:1rem;margin-bottom:12px}
+    .news-box ul{padding-left:20px;font-size:0.95rem}
+    .news-box li{margin-bottom:8px}
+    .checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
+    @media(max-width:600px){.checklist{grid-template-columns:1fr}}
+    .checklist-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;font-size:0.9rem}
+    .checklist-item::before{content:'☐ ';color:#8b5cf6;font-weight:bold}
   </style>
 </head>
 <body>
@@ -111,7 +139,31 @@
         💡 <strong>なぜ重要なのか？</strong> 同じAIモデルでも、プロンプトの書き方次第で出力品質は天と地ほど変わります。「AIが使えない」と感じる人の大半は、実はプロンプトの書き方が悪いだけなのです。
       </div>
 
+      <!-- 🔴 最新ニュースボックス -->
+      <div class="news-box">
+        <h4>🔴 2026年3月 最新アップデート</h4>
+        <ul>
+          <li><strong>GPT-5.4</strong>（3月5日リリース）— 「ネイティブPC操作」機能を搭載。スクリーンショットを理解しマウス/キーボードを自律操作。コンテキスト窓は<strong>100万トークン</strong>に拡大。</li>
+          <li><strong>Claude Opus 4.6</strong> — <strong>100万トークンのコンテキスト窓が一般公開</strong>（追加料金なし）。コーディングタスクで依然として最高峰。</li>
+          <li><strong>Gemini 3.1 Pro</strong> — ARC-AGI-2ベンチマークで<strong>77.1%</strong>を達成し抽象推論で業界トップ。Flash-Liteは100万入力トークンあたり$0.25と超低コスト。</li>
+          <li><strong>業界トレンド:</strong> 3社のフラグシップモデルの性能が収斂。「受動的なチャットボット」から「自律的に行動するAIエージェント」への移行が加速中。</li>
+        </ul>
+      </div>
+
       <h2 id="basics">2. 基本の5原則（すべてのAIに共通）</h2>
+
+      <!-- 🎨 フロー図：プロンプト設計の5ステップ -->
+      <div class="flow-diagram">
+        <div class="flow-step"><span class="icon">👤</span><span class="step-label">① 役割</span><span class="step-desc">Role Prompting</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="icon">📋</span><span class="step-label">② コンテキスト</span><span class="step-desc">背景情報の提供</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="icon">🎯</span><span class="step-label">③ タスク</span><span class="step-desc">具体的な指示</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="icon">📊</span><span class="step-label">④ 出力形式</span><span class="step-desc">JSON/表/箇条書き</span></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step"><span class="icon">🔒</span><span class="step-label">⑤ 制約</span><span class="step-desc">文字数/言語/禁止事項</span></div>
+      </div>
       
       <h3>原則①：役割を与える（Role Prompting）</h3>
       <span class="badge badge-beginner">初級</span>
@@ -266,15 +318,58 @@
       <span class="badge badge-advanced">上級</span>
       <p>ユーザー入力をAIに渡すシステムでは、悪意のある「プロンプトインジェクション」攻撃への防御が不可欠です。入力のサニタイズとsystem promptでの制約宣言が防御の基本です。</p>
 
-      <h2 id="compare">5. ChatGPT vs Gemini vs Claude：プロンプトの違い</h2>
+      <h2 id="compare">5. GPT-5.4 vs Gemini 3.1 vs Claude Opus 4.6：プロンプトの違い</h2>
+      <p style="margin-bottom:20px;">2026年3月時点の最新モデルを徹底比較します。3社のフラグシップモデルは性能が収斂しつつありますが、プロンプトの書き方で引き出せる能力が異なります。</p>
+
+      <!-- 🎨 モデル比較カード -->
+      <div class="model-card-grid">
+        <div class="model-card gpt">
+          <span class="model-tag">OpenAI</span>
+          <h4>🟢 GPT-5.4</h4>
+          <ul>
+            <li>🖥️ <strong>PC自律操作</strong>が可能</li>
+            <li>🎯 GDPval正答率<strong>83%</strong></li>
+            <li>🔧 Tool Searchで動的ツール読み込み</li>
+            <li>💡 簡潔・明確なプロンプトが最適</li>
+          </ul>
+          <p style="font-size:0.8rem;color:#94a3b8;margin-top:8px;">コンテキスト窓</p>
+          <div class="ctx-bar"><div class="fill" style="width:100%;background:linear-gradient(90deg,#10b981,#22c55e);">1M tokens</div></div>
+        </div>
+        <div class="model-card gemini">
+          <span class="model-tag">Google DeepMind</span>
+          <h4>🔵 Gemini 3.1 Pro</h4>
+          <ul>
+            <li>🧠 ARC-AGI-2で<strong>77.1%</strong>（抽象推論トップ）</li>
+            <li>💰 Flash-Lite: $0.25/1M入力トークン</li>
+            <li>🌐 Google検索とのネイティブ統合</li>
+            <li>📊 段階的・具体的なプロンプトが最適</li>
+          </ul>
+          <p style="font-size:0.8rem;color:#94a3b8;margin-top:8px;">コンテキスト窓</p>
+          <div class="ctx-bar"><div class="fill" style="width:100%;background:linear-gradient(90deg,#3b82f6,#06b6d4);">10M+ tokens</div></div>
+        </div>
+        <div class="model-card claude">
+          <span class="model-tag">Anthropic</span>
+          <h4>🟣 Claude Opus 4.6</h4>
+          <ul>
+            <li>💻 <strong>コーディング精度No.1</strong></li>
+            <li>📖 100万トークン窓が標準料金で利用可</li>
+            <li>🤖 Agentic Workflowに最適化</li>
+            <li>📝 詳細・文脈豊富なプロンプトが最適</li>
+          </ul>
+          <p style="font-size:0.8rem;color:#94a3b8;margin-top:8px;">コンテキスト窓</p>
+          <div class="ctx-bar"><div class="fill" style="width:100%;background:linear-gradient(90deg,#8b5cf6,#ec4899);">1M tokens</div></div>
+        </div>
+      </div>
+
+      <!-- 詳細比較表 -->
       <table class="vs-table">
-        <tr><th>特性</th><th>ChatGPT (GPT-4o)</th><th>Gemini 2.5</th><th>Claude 4</th></tr>
-        <tr><td>得意分野</td><td>汎用的なタスク、コード生成</td><td>マルチモーダル、検索連携</td><td>長文理解、論理的推論</td></tr>
-        <tr><td>最適なプロンプトスタイル</td><td>明確・簡潔</td><td>具体的・段階的</td><td>詳細・文脈豊富</td></tr>
-        <tr><td>コンテキスト窓</td><td>128K</td><td>1M+</td><td>200K</td></tr>
-        <tr><td>Few-Shot効果</td><td>高い</td><td>高い</td><td>非常に高い</td></tr>
-        <tr><td>System Prompt</td><td>最も効果的</td><td>効果的</td><td>非常に効果的</td></tr>
-        <tr><td>JSON出力安定性</td><td>高い</td><td>中〜高</td><td>非常に高い</td></tr>
+        <tr><th>比較項目</th><th>GPT-5.4</th><th>Gemini 3.1 Pro</th><th>Claude Opus 4.6</th></tr>
+        <tr><td>最強の用途</td><td>デスクトップ/オフィス業務</td><td>抽象推論・コスパ最強</td><td>コーディング・長文処理</td></tr>
+        <tr><td>Few-Shot効果</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>System Prompt</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>JSON出力安定性</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>エージェント適性</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>コスト効率</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td></tr>
       </table>
 
       <h2 id="mistakes">6. よくある失敗パターンと改善法</h2>
@@ -289,15 +384,27 @@
       <p>特にフォーマット指定がある場合、「こういう形式で」と1つでも具体例を示すだけで出力品質が2倍以上になります。</p>
 
       <h2 id="future">7. 2026年以降のプロンプトエンジニアリングの未来</h2>
-      <p>プロンプトエンジニアリングは「一時的なスキル」ではありません。以下のトレンドにより、むしろ重要性は増しています：</p>
+      <p>プロンプトエンジニアリングは「一時的なスキル」ではありません。2026年3月現在、以下の3大トレンドにより重要性はむしろ急上昇しています：</p>
       <ul>
-        <li><strong>AIエージェントの台頭：</strong> 自律的に動くAIエージェントの「初期指示（System Prompt）」設計は、今後最も需要が高いスキルの一つになります。</li>
-        <li><strong>マルチモーダル化：</strong> テキスト+画像+音声を組み合わせたプロンプト設計が標準になります。</li>
-        <li><strong>自動最適化（DSPy等）：</strong> プロンプトの自動チューニングツールが登場。人間はゴール設計、AIが最適なプロンプトを自動探索する時代が近づいています。</li>
+        <li><strong>🤖 AIエージェントの台頭：</strong> GPT-5.4のPC操作機能やClaude Codeの登場により、「受動的チャットボット」から「自律的に行動するAIエージェント」へのパラダイムシフトが現実に。エージェントに与える「初期指示（System Prompt）」の設計が、最も需要が高いスキルになりつつあります。</li>
+        <li><strong>🔄 コンテキストエンジニアリング：</strong> 単純な「プロンプトのコツ」から進化し、RAG（検索拡張生成）で取得した大量のデータを<strong>どう構造化してAIに渡すか</strong>が重要に。IBMを始めとしたエンタープライズ企業が注力する新領域です。</li>
+        <li><strong>✅ Chain-of-Verification (CoVe)：</strong> AIに回答させた後、「自分の回答を検証する質問を自分で生成 → 回答を修正」させる新手法。ハルシネーション（嘘の出力）を大幅に削減できます。</li>
       </ul>
 
+      <!-- 🎨 プロンプトチェックリスト -->
+      <h3>📋 2026年版 プロンプト品質チェックリスト</h3>
+      <p>あなたのプロンプトを送信する前に、以下を確認しましょう：</p>
+      <div class="checklist">
+        <div class="checklist-item">出力形式の契約がある？（JSON、表、箇条書き等）</div>
+        <div class="checklist-item">推論が構造化されている？（ステップバイステップ等）</div>
+        <div class="checklist-item">成功基準が定義されている？（文字数、トーン等）</div>
+        <div class="checklist-item">1プロンプト = 1タスクになっている？</div>
+        <div class="checklist-item">具体例（Few-Shot）が含まれている？</div>
+        <div class="checklist-item">禁止事項（Do NOT）が明記されている？</div>
+      </div>
+
       <div class="highlight-box">
-        🚀 <strong>結論：</strong> プロンプトエンジニアリングは「AIと対話するための新しいプログラミング言語」です。基本の5原則をマスターし、パターンを使いこなすことで、あなたのAI活用力は劇的に向上します。
+        🚀 <strong>結論：</strong> プロンプトエンジニアリングは「AIと対話するための新しいプログラミング言語」です。2026年の最新フレームワーク（6要素構造 + CoVe + Agentic設計）をマスターし、パターンを使いこなすことで、あなたのAI活用力は劇的に向上します。
       </div>
 
     </div>
