@@ -199,11 +199,14 @@
     // ===== Firebaseから最近の訪問ログを取得 =====
     async function fetchRecentVisits() {
       try {
-        const res = await fetch(`${FIREBASE_DB}/visits.json?orderBy="timestamp"&limitToLast=30`);
+        const res = await fetch(`${FIREBASE_DB}/visits.json`);
         const data = await res.json();
         if (!data) return [];
-        return Object.values(data).sort((a, b) => b.timestamp - a.timestamp);
-      } catch (e) { return []; }
+        // フロントでソートして最新30件を返す
+        return Object.values(data)
+          .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+          .slice(0, 30);
+      } catch (e) { console.error('visits fetch error:', e); return []; }
     }
 
     // ===== 自分の位置を検出 =====
@@ -278,7 +281,9 @@
       } else {
         const sessionId = sessionStorage.getItem('tp_session');
         listEl.innerHTML = allVisitors.slice(0, 25).map(v => {
-          const info = COUNTRY_COORDS[v.country] || { flag: '🌐', name: v.countryName || v.country || '不明' };
+          const cc = v.country || 'XX';
+          const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: v.countryName || cc };
+          const displayName = info.name || v.countryName || cc;
           const isMe = v.sessionId === sessionId || v.id === sessionId;
           const youBadge = isMe ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px;font-size:0.65rem;margin-left:6px;">YOU</span>' : '';
           const time = v.timestamp ? new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
@@ -286,7 +291,7 @@
             <div class="visitor-item">
               <div class="visitor-flag">${info.flag}</div>
               <div class="visitor-info">
-                <div class="country">${info.name}${v.city ? ' / ' + v.city : ''}${youBadge}</div>
+                <div class="country">${displayName}${v.city ? ' / ' + v.city : ''}${youBadge}</div>
                 <div class="detail">${v.page || '/'} | ${v.device || ''}</div>
               </div>
               <div class="visitor-time">${time}</div>
@@ -294,10 +299,13 @@
         }).join('');
       }
 
-      // 地域分布
+      // 地域分布（countryNameをキーにして集約）
       const regionData = {};
+      const regionNames = {};
       allVisitors.forEach(v => {
-        regionData[v.country] = (regionData[v.country] || 0) + 1;
+        const cc = v.country || 'XX';
+        regionData[cc] = (regionData[cc] || 0) + 1;
+        if (!regionNames[cc] && v.countryName) regionNames[cc] = v.countryName;
       });
       const barEl = document.getElementById('regionBars');
       const sortedRegions = Object.entries(regionData).sort((a, b) => b[1] - a[1]);
@@ -307,11 +315,12 @@
         const maxCount = Math.max(...sortedRegions.map(r => r[1]), 1);
         const colors = ['#06b6d4', '#8b5cf6', '#ec4899', '#f59e0b', '#22c55e', '#ef4444', '#3b82f6'];
         barEl.innerHTML = sortedRegions.slice(0, 10).map(([cc, count], i) => {
-          const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: cc };
+          const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: regionNames[cc] || cc };
+          const displayName = info.name || regionNames[cc] || cc;
           const pct = (count / maxCount * 100).toFixed(0);
           return `
             <div class="region-bar">
-              <div class="name">${info.flag} ${info.name}</div>
+              <div class="name">${info.flag} ${displayName}</div>
               <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${colors[i % colors.length]}">${count}</div></div>
               <div class="count">${pct}%</div>
             </div>`;
