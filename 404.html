@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <title>ページが見つかりません - TechPulse</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .error-page { min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+    .error-code { font-size: 8rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+    .error-message { font-size: 1.5rem; margin: 16px 0 8px; color: var(--color-text); }
+    .error-sub { color: var(--color-text-muted); margin-bottom: 32px; }
+    .error-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="index.html">ホーム</a></li><li><a href="blog.html">ブログ</a></li><li><a href="about.html">このサイトについて</a></li></ul><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+
+  <main class="error-page">
+    <div>
+      <div class="error-code">404</div>
+      <h1 class="error-message">ページが見つかりません</h1>
+      <p class="error-sub">お探しのページは移動したか、削除された可能性があります。</p>
+      <div class="error-links">
+        <a href="index.html" class="btn btn-primary">ホームに戻る</a>
+        <a href="blog.html" class="btn btn-secondary">ブログ記事一覧</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span><span>Made with ❤️</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+</body>
+</html>

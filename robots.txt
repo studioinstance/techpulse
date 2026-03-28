@@ -4,5 +4,6 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap and RSS Feed
 Sitemap: https://studioinstance.github.io/techpulse/sitemap.xml
+Sitemap: https://studioinstance.github.io/techpulse/feed.xml
