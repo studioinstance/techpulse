@@ -9,6 +9,24 @@
     <atom:link href="https://studioinstance.github.io/techpulse/feed.xml" rel="self" type="application/rss+xml"/>
 
     <item>
+      <title>2026年最新版：Next.js 15 App Router 完全マスターガイド【保存版】</title>
+      <link>https://studioinstance.github.io/techpulse/articles/nextjs-15-master-guide.html</link>
+      <description>Next.js 15の全貌を徹底解説。React Server Components、Server Actions、PPR、Turbopackまで網羅した保存版ガイド。</description>
+      <pubDate>Sat, 28 Mar 2026 15:00:00 +0900</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/articles/nextjs-15-master-guide.html</guid>
+      <category>Web開発</category>
+    </item>
+
+    <item>
+      <title>今週のテックトレンドまとめ（2026-03-28）</title>
+      <link>https://studioinstance.github.io/techpulse/articles/tech-trend-2026-03-28.html</link>
+      <description>最新の技術トレンド情報をピックアップしてご紹介します。今週の注目記事をまとめました。</description>
+      <pubDate>Sat, 28 Mar 2026 14:00:00 +0900</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/articles/tech-trend-2026-03-28.html</guid>
+      <category>トレンド</category>
+    </item>
+
+    <item>
       <title>VS Code拡張機能おすすめ20選【2026年版】</title>
       <link>https://studioinstance.github.io/techpulse/articles/vscode-extensions.html</link>
       <description>生産性を爆上げするVS Code拡張機能を20個厳選。AI補完、Git、フロントエンド開発、テーマなどカテゴリ別に紹介します。</description>
