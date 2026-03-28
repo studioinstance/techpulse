@@ -38,6 +38,9 @@ jobs:
       - name: Run Keyword Analyzer (sample mode)
         run: python scripts/keyword-analyzer.py
 
+      - name: Firebase Data Cleanup (free tier protection)
+        run: node scripts/firebase-cleanup.js
+
       - name: Move reports to public directory
         run: |
           mkdir -p reports

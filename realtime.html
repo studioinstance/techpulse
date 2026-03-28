@@ -96,7 +96,7 @@
       <div class="stat-card">
         <div class="label">📱 あなたの地域</div>
         <div class="value" id="yourLocation" style="font-size:1.2rem">検出中...</div>
-        <div class="sub" id="yourIp">地域情報を取得中</div>
+        <div class="sub" id="yourIp">IPアドレス取得中</div>
       </div>
     </div>
 
@@ -158,8 +158,7 @@
     // ===== Firebase設定 =====
     const FIREBASE_DB = 'https://techpulse-analytics-default-rtdb.asia-southeast1.firebasedatabase.app';
     const ACTIVE_THRESHOLD = 5 * 60 * 1000; // 5分以内 = アクティブ
-    const POLL_INTERVAL = 10000; // 10秒ごとにデータ取得（API呼び出し削減）
-    const CLEANUP_THRESHOLD = 24 * 60 * 60 * 1000; // 24時間以上古いデータは削除
+    const POLL_INTERVAL = 5000; // 5秒ごとにデータ取得
 
     const COUNTRY_COORDS = {
       'JP':{x:688,y:115,flag:'🇯🇵',name:'日本'},'US':{x:150,y:130,flag:'🇺🇸',name:'アメリカ'},
@@ -207,47 +206,16 @@
       } catch (e) { return []; }
     }
 
-    // XSSサニタイズ
-    function esc(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
-
-    // ===== 自分の位置を検出（IPアドレスは表示しない） =====
+    // ===== 自分の位置を検出 =====
     async function detectMyLocation() {
       try {
         const res = await fetch('https://ipapi.co/json/');
         const data = await res.json();
         document.getElementById('yourLocation').textContent = `${data.country_code === 'JP' ? '🇯🇵' : '🌐'} ${data.city || ''}, ${data.country_name || ''}`;
-        document.getElementById('yourIp').textContent = `${data.region || ''}, ${data.country_name || ''}`;
+        document.getElementById('yourIp').textContent = `IP: ${data.ip} | ${data.org || ''}`;
       } catch (e) {
         document.getElementById('yourLocation').textContent = '🌐 検出中...';
       }
-    }
-
-    // ===== 古いデータの自動クリーンアップ（24時間以上） =====
-    async function cleanupOldData() {
-      try {
-        // 古いアクティブセッションを削除
-        const activeRes = await fetch(`${FIREBASE_DB}/active.json`);
-        const activeData = await activeRes.json();
-        if (activeData) {
-          const now = Date.now();
-          for (const [id, v] of Object.entries(activeData)) {
-            if (!v.lastActive || (now - v.lastActive) > CLEANUP_THRESHOLD) {
-              await fetch(`${FIREBASE_DB}/active/${encodeURIComponent(id)}.json`, { method: 'DELETE' });
-            }
-          }
-        }
-        // 古い訪問ログを削除（最新50件以外）
-        const visitsRes = await fetch(`${FIREBASE_DB}/visits.json?orderBy="timestamp"&limitToFirst=100`);
-        const visitsData = await visitsRes.json();
-        if (visitsData) {
-          const now = Date.now();
-          for (const [id, v] of Object.entries(visitsData)) {
-            if (v.timestamp && (now - v.timestamp) > CLEANUP_THRESHOLD) {
-              await fetch(`${FIREBASE_DB}/visits/${encodeURIComponent(id)}.json`, { method: 'DELETE' });
-            }
-          }
-        }
-      } catch (e) { /* silent fail */ }
     }
 
     // ===== 地図にドットを描画 =====
@@ -316,12 +284,12 @@
           const time = v.timestamp ? new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
           return `
             <div class="visitor-item">
-              <div class="visitor-flag">${esc(info.flag)}</div>
+              <div class="visitor-flag">${info.flag}</div>
               <div class="visitor-info">
-                <div class="country">${esc(info.name)}${v.city ? ' / ' + esc(v.city) : ''}${youBadge}</div>
-                <div class="detail">${esc(v.page || '/')} | ${esc(v.device || '')}</div>
+                <div class="country">${info.name}${v.city ? ' / ' + v.city : ''}${youBadge}</div>
+                <div class="detail">${v.page || '/'} | ${v.device || ''}</div>
               </div>
-              <div class="visitor-time">${esc(time)}</div>
+              <div class="visitor-time">${time}</div>
             </div>`;
         }).join('');
       }
@@ -382,10 +350,6 @@
     detectMyLocation();
     refresh();
     setInterval(refresh, POLL_INTERVAL);
-    // 初回ロード時に古いデータを自動削除
-    cleanupOldData();
-    // 1時間ごとに古いデータをクリーンアップ
-    setInterval(cleanupOldData, 60 * 60 * 1000);
   </script>
 </body>
 </html>

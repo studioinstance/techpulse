@@ -1,70 +1,70 @@
 // TechPulse Real-time Visitor Tracking via Firebase
-// セキュリティ強化版: レート制限・データサイズ制御・プライバシー保護
+// セキュリティ強化版: レート制限、データサイズ制御、プライバシー保護
 (function() {
   'use strict';
+
   const FIREBASE_DB = 'https://techpulse-analytics-default-rtdb.asia-southeast1.firebasedatabase.app';
   const GEO_API = 'https://ipapi.co/json/';
   const SESSION_KEY = 'tp_session';
-  const RATE_KEY = 'tp_rate';
-  const VISIT_COUNT_KEY = 'tp_vc';
-  const HEARTBEAT_INTERVAL = 60000; // 60秒ごと（元30秒→書き込み量を半減）
-  const MAX_VISITS_PER_SESSION = 20; // 1セッションあたり最大20回の訪問記録
-  const MIN_INTERVAL_MS = 5000; // 最低5秒間隔で書き込み（スパム防止）
+  const HEARTBEAT_INTERVAL = 60000; // 60秒ごと（API負荷軽減）
+  const RATE_LIMIT_KEY = 'tp_last_write';
+  const RATE_LIMIT_MS = 10000; // 最低10秒間隔で書き込み（DDoS防止）
+  const MAX_VISITS_PER_SESSION = 20; // 1セッションあたり最大20件の訪問ログ
+  const VISIT_COUNT_KEY = 'tp_visit_count';
 
-  // ボット・クローラーの除外
-  if (/bot|crawl|spider|slurp|googlebot|bingbot/i.test(navigator.userAgent)) return;
-
-  // セッションIDを生成/取得
-  function getSessionId() {
-    let sid = sessionStorage.getItem(SESSION_KEY);
-    if (!sid) {
-      sid = 'v_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-      sessionStorage.setItem(SESSION_KEY, sid);
-      sessionStorage.setItem(VISIT_COUNT_KEY, '0');
-    }
-    return sid;
+  // ===== レート制限チェック =====
+  function isRateLimited() {
+    const last = parseInt(sessionStorage.getItem(RATE_LIMIT_KEY) || '0', 10);
+    if (Date.now() - last < RATE_LIMIT_MS) return true;
+    sessionStorage.setItem(RATE_LIMIT_KEY, Date.now().toString());
+    return false;
   }
 
-  // レート制限チェック
-  function checkRateLimit() {
-    const last = parseInt(sessionStorage.getItem(RATE_KEY) || '0', 10);
-    const now = Date.now();
-    if (now - last < MIN_INTERVAL_MS) return false;
-    sessionStorage.setItem(RATE_KEY, now.toString());
-    return true;
-  }
-
-  // 訪問カウントチェック（1セッションあたりの上限）
-  function checkVisitLimit() {
+  // ===== 訪問ログ上限チェック =====
+  function canLogVisit() {
     const count = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY) || '0', 10);
     if (count >= MAX_VISITS_PER_SESSION) return false;
     sessionStorage.setItem(VISIT_COUNT_KEY, (count + 1).toString());
     return true;
   }
 
-  // ジオロケーション情報を取得（キャッシュ付き・1セッション1回のみ）
+  // ===== セッションID生成（セキュア） =====
+  function getSessionId() {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      // crypto APIで安全なランダムID生成
+      const arr = new Uint8Array(8);
+      crypto.getRandomValues(arr);
+      sid = 'v_' + Array.from(arr, b => b.toString(36)).join('').substr(0, 12);
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  }
+
+  // ===== ジオロケーション取得（キャッシュ付き・タイムアウト付き） =====
   async function getGeoInfo() {
     const cached = sessionStorage.getItem('tp_geo');
     if (cached) return JSON.parse(cached);
     try {
-      const res = await fetch(GEO_API);
-      if (!res.ok) throw new Error('Geo API error');
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000); // 5秒タイムアウト
+      const res = await fetch(GEO_API, { signal: controller.signal });
+      clearTimeout(timeout);
       const data = await res.json();
-      // プライバシー: IPアドレスは保存しない、緯度経度は都市レベルに丸める
+      // 最小限のデータのみ保存（プライバシー保護: IPアドレスは保存しない）
       const geo = {
-        country: (data.country_code || 'XX').substring(0, 2),
-        countryName: (data.country_name || 'Unknown').substring(0, 30),
-        city: (data.city || '').substring(0, 30),
-        region: (data.region || '').substring(0, 30),
+        country: (data.country_code || 'XX').substr(0, 3),
+        countryName: (data.country_name || 'Unknown').substr(0, 30),
+        city: (data.city || '').substr(0, 30),
       };
       sessionStorage.setItem('tp_geo', JSON.stringify(geo));
       return geo;
     } catch (e) {
-      return { country: 'XX', countryName: 'Unknown', city: '', region: '' };
+      return { country: 'XX', countryName: 'Unknown', city: '' };
     }
   }
 
-  // デバイスタイプを検出
+  // ===== デバイスタイプ検出 =====
   function getDeviceType() {
     const ua = navigator.userAgent;
     if (/tablet|ipad/i.test(ua)) return 'tablet';
@@ -72,85 +72,95 @@
     return 'desktop';
   }
 
-  // 文字列を安全にサニタイズ（XSS・インジェクション防止）
+  // ===== サニタイズ（XSS防止） =====
   function sanitize(str, maxLen) {
     if (typeof str !== 'string') return '';
-    return str.replace(/[<>"'&\\]/g, '').substring(0, maxLen || 50);
+    return str.replace(/[<>"'&]/g, '').substr(0, maxLen || 100);
   }
 
-  // Firebaseに訪問データを書き込む
+  // ===== Firebaseに書き込み（データ検証付き） =====
   async function recordVisit() {
-    if (!checkRateLimit()) return;
-    if (!checkVisitLimit()) return;
-
+    if (isRateLimited()) return;
     const sid = getSessionId();
     const geo = await getGeoInfo();
-    const rawPath = window.location.pathname.replace(/\.html$/, '').replace(/^\/techpulse/, '') || '/';
-    const page = sanitize(rawPath, 100);
+    const pagePath = sanitize(
+      window.location.pathname.replace(/\.html$/, '').replace(/^\/techpulse/, '') || '/',
+      200
+    );
 
     const data = {
-      country: sanitize(geo.country, 2),
+      country: sanitize(geo.country, 3),
       countryName: sanitize(geo.countryName, 30),
       city: sanitize(geo.city, 30),
-      page: page,
+      page: pagePath,
       device: getDeviceType(),
       timestamp: Date.now(),
       lastActive: Date.now(),
     };
-    // プライバシー: referrer, IPアドレス, 詳細な緯度経度は送信しない
 
     try {
-      await fetch(`${FIREBASE_DB}/active/${encodeURIComponent(sid)}.json`, {
+      // アクティブセッションを更新
+      await fetch(`${FIREBASE_DB}/active/${sid}.json`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
-      // 訪問ログにも追記
-      await fetch(`${FIREBASE_DB}/visits.json`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, sessionId: sid }),
-      });
+      // 訪問ログ追記（上限チェック付き）
+      if (canLogVisit()) {
+        await fetch(`${FIREBASE_DB}/visits.json`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, sessionId: sid }),
+        });
+      }
     } catch (e) { /* silent fail */ }
   }
 
-  // ハートビート（アクティブ状態を維持）
+  // ===== ハートビート（アクティブ状態の維持のみ） =====
   async function heartbeat() {
-    if (!checkRateLimit()) return;
+    if (isRateLimited()) return;
     const sid = getSessionId();
-    const page = sanitize(
+    const pagePath = sanitize(
       window.location.pathname.replace(/\.html$/, '').replace(/^\/techpulse/, '') || '/',
-      100
+      200
     );
     try {
-      // 1回のリクエストでまとめて更新（元2リクエスト→1リクエストに削減）
-      await fetch(`${FIREBASE_DB}/active/${encodeURIComponent(sid)}.json`, {
+      // lastActiveとpageを一度に更新（API呼び出し回数削減）
+      await fetch(`${FIREBASE_DB}/active/${sid}.json`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lastActive: Date.now(), page: page }),
+        body: JSON.stringify({ lastActive: Date.now(), page: pagePath }),
       });
     } catch (e) { /* silent fail */ }
   }
 
-  // ページ離脱時にアクティブセッションを期限切れに
+  // ===== ページ離脱時にアクティブセッションを期限切れに =====
   function cleanup() {
     const sid = getSessionId();
     const data = JSON.stringify({ lastActive: 0 });
     try {
       navigator.sendBeacon(
-        `${FIREBASE_DB}/active/${encodeURIComponent(sid)}.json`,
+        `${FIREBASE_DB}/active/${sid}.json`,
         new Blob([data], { type: 'application/json' })
       );
     } catch (e) { /* silent fail */ }
   }
 
-  // 初期化
-  recordVisit();
-  setInterval(heartbeat, HEARTBEAT_INTERVAL);
-  window.addEventListener('beforeunload', cleanup);
-  window.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden') cleanup();
-    else if (document.visibilityState === 'visible') recordVisit();
-  });
+  // ===== Bot/クローラー検出（不要なデータの排除） =====
+  function isBot() {
+    const ua = navigator.userAgent.toLowerCase();
+    return /bot|crawl|spider|slurp|lighthouse|pagespeed|headless/i.test(ua);
+  }
+
+  // ===== 初期化 =====
+  if (!isBot()) {
+    recordVisit();
+    setInterval(heartbeat, HEARTBEAT_INTERVAL);
+    window.addEventListener('beforeunload', cleanup);
+    window.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') cleanup();
+      else if (document.visibilityState === 'visible') recordVisit();
+    });
+  }
 })();
