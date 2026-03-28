@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+
+  <title>Docker for Beginners: Understand Container Technology in 30 Minutes - TechPulse</title>
+  <meta name="description" content="A complete Docker guide for beginners. Understand container concepts, Dockerfile, docker-compose, and essential commands in 30 minutes.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html">
+  <meta property="og:title" content="Docker for Beginners: Understand Container Technology in 30 Minutes">
+  <meta property="og:description" content="Complete Docker beginner's guide: from container concepts to docker-compose in 30 minutes.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Docker for Beginners: Understand Container Technology in 30 Minutes","datePublished":"2026-03-18","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}
+  </script>
+
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html" />
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/docker-introduction.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul>
+    <div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;">
+      <a href="../../articles/docker-introduction.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a>
+      <span style="color:#666;">|</span>
+      <a href="docker-introduction.html" style="color:var(--color-accent);text-decoration:none;">EN</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">DevOps</span>
+    <h1>Docker for Beginners: Understand Container Technology in 30 Minutes</h1>
+    <div class="article-meta-info"><span>📅 March 18, 2026</span><span>🕐 10 min read</span><span>🏷️ Docker, Container, DevOps</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol>
+        <li><a href="#what">What is Docker?</a></li>
+        <li><a href="#install">Installation & Setup</a></li>
+        <li><a href="#commands">Essential Commands</a></li>
+        <li><a href="#dockerfile">Writing a Dockerfile</a></li>
+        <li><a href="#compose">Multi-Container with docker-compose</a></li>
+        <li><a href="#bestpractice">Best Practices</a></li>
+      </ol></nav>
+
+      <p>"It works on my machine..." is a phrase that has plagued developers for ages. <strong>Docker</strong> fundamentally solves this "environment inconsistency" problem with container technology. This article explains <strong>Docker from concept to practical usage</strong> — all in 30 minutes.</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 Key Takeaway</div>
+        <p>Docker is a "lightweight virtual environment." It packages your application and its entire runtime environment together, guaranteeing identical behavior anywhere.</p>
+      </div>
+
+      <h2 id="what">1. What is Docker?</h2>
+      <p>Docker is a <strong>container-based virtualization</strong> platform. Compared to traditional Virtual Machines (VMs), containers are lightweight and start up much faster.</p>
+
+      <h3>VMs vs. Containers</h3>
+      <ul>
+        <li><strong>Virtual Machines</strong>: Virtualize the entire OS → Heavy (GB-level), minutes to boot</li>
+        <li><strong>Containers</strong>: App + dependencies only → Light (MB-level), seconds to start</li>
+      </ul>
+
+      <h3>Core Docker Concepts</h3>
+      <ul>
+        <li><strong>Image</strong>: A blueprint (template) for containers</li>
+        <li><strong>Container</strong>: A running instance created from an image</li>
+        <li><strong>Dockerfile</strong>: A configuration file for building images</li>
+        <li><strong>Docker Hub</strong>: A registry for sharing images</li>
+      </ul>
+
+      <h2 id="install">2. Installation & Setup</h2>
+      <pre data-lang="bash"><code># macOS (Homebrew)
+brew install --cask docker
+
+# Windows (winget)
+winget install Docker.DockerDesktop
+
+# Linux (Ubuntu)
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+
+# Verify installation
+docker --version
+# Docker version 26.x.x
+docker run hello-world</code></pre>
+
+      <h2 id="commands">3. Essential Commands</h2>
+      <pre data-lang="bash"><code># Pull an image
+docker pull node:20-slim
+
+# Start a container
+docker run -d --name my-app -p 3000:3000 node:20-slim
+
+# List running containers
+docker ps
+
+# List all containers (including stopped)
+docker ps -a
+
+# View container logs
+docker logs my-app
+
+# Execute a command inside a container
+docker exec -it my-app bash
+
+# Stop & remove a container
+docker stop my-app
+docker rm my-app
+
+# Clean up unused resources
+docker system prune -a</code></pre>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="dockerfile">4. Writing a Dockerfile</h2>
+      <p>Let's look at a practical Dockerfile for a Node.js application.</p>
+
+      <pre data-lang="dockerfile"><code># Specify the base image
+FROM node:20-slim AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies (leveraging cache)
+COPY package*.json ./
+RUN npm ci
+
+# Copy application code
+COPY . .
+
+# Build
+RUN npm run build
+
+# Production stage (multi-stage build)
+FROM node:20-slim AS production
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY package*.json ./
+
+# Run as non-root user
+USER node
+
+EXPOSE 3000
+CMD ["node", "dist/server.js"]</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ Pro Tip</div>
+        <p>Multi-stage builds exclude build tools (like the TypeScript compiler) from the production image, dramatically reducing the final image size.</p>
+      </div>
+
+      <h2 id="compose">5. Multi-Container Management with docker-compose</h2>
+      <p>In real-world development, you often run multiple services simultaneously — app + database + Redis. <code>docker-compose</code> lets you spin up all services with a single command.</p>
+
+      <pre data-lang="yaml"><code># docker-compose.yml
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/mydb
+      - REDIS_URL=redis://cache:6379
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/app          # Hot reload
+      - /app/node_modules
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+
+volumes:
+  pgdata:</code></pre>
+
+      <pre data-lang="bash"><code># Start all services
+docker compose up -d
+
+# View logs
+docker compose logs -f app
+
+# Stop all services
+docker compose down
+
+# Full cleanup including data
+docker compose down -v</code></pre>
+
+      <h2 id="bestpractice">6. Best Practices</h2>
+      <ul>
+        <li><strong>Use lightweight base images</strong>: Choose <code>-slim</code> or <code>-alpine</code> variants</li>
+        <li><strong>Configure .dockerignore</strong>: Exclude <code>node_modules</code>, <code>.git</code>, etc.</li>
+        <li><strong>Leverage layer caching</strong>: COPY less-frequently-changed files first</li>
+        <li><strong>Run as non-root</strong>: Improve security posture</li>
+        <li><strong>Add health checks</strong>: Monitor container health</li>
+        <li><strong>Use multi-stage builds</strong>: Minimize production images</li>
+      </ul>
+
+      <p>Docker is an indispensable tool in modern software development. Start with a simple project, then gradually expand to docker-compose and CI/CD integration.</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html&text=Docker for Beginners: Container Technology in 30 Minutes" target="_blank" class="share-btn twitter">𝕏 Post</a>
+      </div></div>
+
+      <div class="article-nav">
+        <a href="react-native-vs-flutter.html"><div class="nav-label">← Previous</div><div class="nav-title">React Native vs Flutter Guide</div></a>
+        <a href="typescript-guide.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">TypeScript Beginner's Guide</div></a>
+      </div>
+    </article>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul>
+        <li><a href="google-cloud-run.html">Getting Started with Google Cloud Run</a></li>
+        <li><a href="github-actions-cicd.html">Getting Started with GitHub Actions</a></li>
+      </ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul>
+        <li><a href="../blog.html">Docker</a></li>
+        <li><a href="../blog.html">Containers</a></li>
+        <li><a href="../blog.html">DevOps</a></li>
+      </ul></div>
+      <div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>

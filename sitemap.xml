@@ -186,4 +186,110 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/prompt-engineering-guide.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/prompt-engineering-guide.html"/>
   </url>
+
+  <!-- English Articles (translated) -->
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/ai-trends-2026.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/ai-trends-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/ai-trends-2026.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/docker-introduction.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/git-github-guide.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/git-github-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/git-github-guide.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/github-actions-cicd.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/nextjs-15-features.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/nextjs-15-features.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/nextjs-15-features.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/owasp-security.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/owasp-security.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/react-native-vs-flutter.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/react-native-vs-flutter.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/react-native-vs-flutter.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/rest-api-design.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/typescript-guide.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/typescript-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/typescript-guide.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/vscode-extensions.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/vscode-extensions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/vscode-extensions.html"/>
+  </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/en/articles/web-performance.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/web-performance.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/web-performance.html"/>
+  </url>
 </urlset>

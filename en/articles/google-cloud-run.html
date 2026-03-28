@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+
+  <title>Google Cloud Run: Deploy Containers the Easy Way - TechPulse</title>
+  <meta name="description" content="A beginner's guide to Google Cloud Run. Learn container deployment, pricing, auto-scaling, and CI/CD integration in 15 minutes.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html">
+  <meta property="og:title" content="Google Cloud Run: Deploy Containers the Easy Way">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Google Cloud Run: Deploy Containers the Easy Way","datePublished":"2026-03-05","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}
+  </script>
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html" />
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/google-cloud-run.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="google-cloud-run.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container"><span class="category">Cloud</span><h1>Google Cloud Run: Deploy Containers the Easy Way</h1><div class="article-meta-info"><span>📅 March 5, 2026</span><span>🕐 10 min read</span><span>🏷️ GCP, Containers, Serverless</span></div></div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol>
+        <li><a href="#what-is">What is Cloud Run?</a></li>
+        <li><a href="#setup">Environment Setup</a></li>
+        <li><a href="#first-deploy">Your First Deployment</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#scaling">Auto-Scaling</a></li>
+        <li><a href="#tips">Practical Tips</a></li>
+      </ol></nav>
+
+      <p>Want to deploy a web application but avoid server management and infrastructure configuration? <strong>Google Cloud Run</strong> is the perfect solution. Just provide a Docker container, and Cloud Run automatically handles scaling, HTTPS, and load balancing.</p>
+
+      <div class="info-box info"><div class="info-title">💡 Key Takeaway</div><p>Cloud Run is a "serverless container execution service." You're only billed when requests come in — zero traffic means zero cost. Even beginners can deploy in 15 minutes.</p></div>
+
+      <h2 id="what-is">1. What is Cloud Run?</h2>
+      <p>Cloud Run is Google's <strong>fully managed serverless container runtime</strong>. Unlike traditional serverless offerings (like Cloud Functions), its standout feature is the ability to run <strong>any language or framework</strong> as a container.</p>
+
+      <h3>Key Features</h3>
+      <ul>
+        <li><strong>Serverless</strong>: No infrastructure management, pay-per-request billing</li>
+        <li><strong>Container-based</strong>: Docker-compatible, language/framework agnostic</li>
+        <li><strong>Auto-scaling</strong>: Automatically adjusts from 0 to 1000 instances</li>
+        <li><strong>Built-in HTTPS</strong>: Automatic SSL certificate management</li>
+        <li><strong>Custom Domains</strong>: Easy custom domain configuration</li>
+      </ul>
+
+      <h3>Cloud Functions vs Cloud Run</h3>
+      <ul>
+        <li><strong>Cloud Functions</strong>: Function-level deployment, language restrictions, ideal for lightweight tasks</li>
+        <li><strong>Cloud Run</strong>: Container-level deployment, any language, ideal for full web applications</li>
+      </ul>
+
+      <h2 id="setup">2. Environment Setup</h2>
+      <h3>Prerequisites</h3>
+      <ol>
+        <li>A Google account (GCP free trial includes $300 in credits)</li>
+        <li>Google Cloud SDK installed</li>
+        <li>Docker installed</li>
+      </ol>
+      <pre data-lang="bash"><code># Install Google Cloud SDK (macOS)
+brew install --cask google-cloud-sdk
+
+# Initial configuration
+gcloud init
+
+# Create a project
+gcloud projects create my-cloudrun-app --name="My Cloud Run App"
+gcloud config set project my-cloudrun-app
+
+# Enable required APIs
+gcloud services enable run.googleapis.com
+gcloud services enable cloudbuild.googleapis.com</code></pre>
+
+      <h2 id="first-deploy">3. Your First Deployment</h2>
+      <p>Let's deploy a simple Node.js web server to Cloud Run.</p>
+
+      <h3>Step 1: Create the Application</h3>
+      <pre data-lang="javascript"><code>// server.js
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Hello from Cloud Run! 🚀',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});</code></pre>
+
+      <h3>Step 2: Create a Dockerfile</h3>
+      <pre data-lang="dockerfile"><code># Dockerfile
+FROM node:20-slim
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 8080
+CMD ["node", "server.js"]</code></pre>
+
+      <h3>Step 3: Deploy</h3>
+      <pre data-lang="bash"><code># Deploy directly from source (auto-builds Docker image)
+gcloud run deploy my-app \
+  --source . \
+  --region asia-northeast1 \
+  --allow-unauthenticated
+
+# Done! You'll see the URL
+# Service URL: https://my-app-xxxxx-an.a.run.app</code></pre>
+
+      <div class="info-box tip"><div class="info-title">✅ Pro Tip</div><p>The <code>--source .</code> flag means you don't need to build locally — Cloud Build handles image creation automatically.</p></div>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="pricing">4. Pricing</h2>
+      <p>Cloud Run uses <strong>pay-as-you-go</strong> pricing. No traffic = no charges.</p>
+
+      <h3>Free Tier (Monthly)</h3>
+      <ul>
+        <li><strong>2 million requests</strong> free</li>
+        <li><strong>CPU</strong>: 180,000 vCPU-seconds (~50 hours)</li>
+        <li><strong>Memory</strong>: 360,000 GiB-seconds</li>
+        <li><strong>Network</strong>: 1GB free within North America</li>
+      </ul>
+      <p>For personal blogs or APIs, <strong>the free tier is more than sufficient</strong>. Even sites with tens of thousands of monthly page views often stay within the free tier.</p>
+
+      <div class="info-box warning"><div class="info-title">⚠️ Caution</div><p>Using "always-on" CPU allocation mode incurs charges even during idle time. For cost optimization, use the default "request-only" mode.</p></div>
+
+      <h2 id="scaling">5. Auto-Scaling</h2>
+      <p>One of Cloud Run's biggest advantages is <strong>automatic scaling</strong> based on traffic.</p>
+      <h3>How Scaling Works</h3>
+      <ul>
+        <li><strong>Scale to zero</strong>: Instances shrink to 0 when there's no traffic</li>
+        <li><strong>Horizontal scaling</strong>: Instances added as requests increase</li>
+        <li><strong>Concurrency control</strong>: Limit concurrent requests per instance</li>
+      </ul>
+      <pre data-lang="bash"><code># Configure min/max instances
+gcloud run services update my-app \
+  --min-instances 1 \          # Avoid cold starts
+  --max-instances 100 \        # Cost control
+  --concurrency 80 \           # Concurrent requests
+  --region asia-northeast1</code></pre>
+
+      <h2 id="tips">6. Practical Tips</h2>
+      <h3>Cold Start Mitigation</h3>
+      <ul>
+        <li><strong>Set min-instances to 1</strong>: Keep one instance warm (~$5-10/month)</li>
+        <li><strong>Use lightweight base images</strong>: <code>node:20-slim</code> or <code>python:3.12-slim</code></li>
+        <li><strong>Minimize startup processing</strong>: Defer initialization to request time</li>
+      </ul>
+
+      <h3>CI/CD Integration</h3>
+      <p>Combine with GitHub Actions for automatic deployment on every push.</p>
+      <pre data-lang="yaml"><code># .github/workflows/deploy.yml
+name: Deploy to Cloud Run
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: my-app
+          region: asia-northeast1
+          source: .</code></pre>
+
+      <p>Cloud Run is the ideal service for <strong>"just get my container running."</strong> Free yourself from server management and focus on building your application. Start with a small project using the free tier!</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html&text=Google Cloud Run: Deploy Containers the Easy Way" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="article-nav"><a href="../blog.html"><div class="nav-label">← Back</div><div class="nav-title">Blog Archives</div></a><a href="owasp-security.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">Web Security with OWASP Top 10</div></a></div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul><li><a href="github-actions-cicd.html">GitHub Actions CI/CD</a></li><li><a href="docker-introduction.html">Docker for Beginners</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul><li><a href="../blog.html">GCP</a></li><li><a href="../blog.html">Containers</a></li><li><a href="../blog.html">Serverless</a></li></ul></div>
+      <div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Python Data Analysis for Beginners: pandas, NumPy & Matplotlib - TechPulse</title>
+  <meta name="description" content="Learn Python data analysis from scratch with pandas, NumPy, and Matplotlib. Practical code examples for beginners.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html">
+  <meta property="og:title" content="Python Data Analysis for Beginners"><meta property="og:type" content="article"><meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html"><meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Python Data Analysis for Beginners","datePublished":"2026-03-12","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}</script>
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html" /><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/python-data-analysis.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="python-data-analysis.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container"><span class="category">AI / Data Science</span><h1>Python Data Analysis for Beginners: pandas, NumPy & Matplotlib</h1><div class="article-meta-info"><span>📅 March 12, 2026</span><span>🕐 10 min read</span><span>🏷️ Python, Data Analysis, pandas</span></div></div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol><li><a href="#setup">Environment Setup</a></li><li><a href="#numpy">NumPy Basics</a></li><li><a href="#pandas">pandas Fundamentals</a></li><li><a href="#viz">Data Visualization with Matplotlib</a></li><li><a href="#practice">Practical Example: Sales Data Analysis</a></li></ol></nav>
+
+      <p>Python has become the dominant language for data analysis, used by data scientists, analysts, and engineers worldwide. This guide introduces the three essential libraries — <strong>NumPy</strong>, <strong>pandas</strong>, and <strong>Matplotlib</strong> — with practical code examples you can run immediately.</p>
+
+      <div class="info-box info"><div class="info-title">💡 Key Takeaway</div><p>These three libraries form the foundation of Python data analysis. NumPy for numerical computation, pandas for data manipulation, and Matplotlib for visualization — mastering these three covers 80% of common data analysis tasks.</p></div>
+
+      <h2 id="setup">1. Environment Setup</h2>
+      <pre data-lang="bash"><code># Install required libraries
+pip install numpy pandas matplotlib jupyter
+
+# Start Jupyter Notebook
+jupyter notebook</code></pre>
+
+      <h2 id="numpy">2. NumPy Basics</h2>
+      <p>NumPy is the foundation for numerical computation in Python, providing high-performance multidimensional arrays.</p>
+      <pre data-lang="python"><code>import numpy as np
+
+# Create arrays
+arr = np.array([1, 2, 3, 4, 5])
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
+
+# Vectorized operations (no loops needed!)
+print(arr * 2)        # [2, 4, 6, 8, 10]
+print(arr.mean())     # 3.0
+print(arr.std())      # 1.414
+
+# Statistical operations
+data = np.random.randn(1000)
+print(f"Mean: {data.mean():.4f}")
+print(f"Std:  {data.std():.4f}")</code></pre>
+
+      <h2 id="pandas">3. pandas Fundamentals</h2>
+      <p>pandas provides the DataFrame — the most important data structure for data analysis.</p>
+      <pre data-lang="python"><code>import pandas as pd
+
+# Create a DataFrame
+df = pd.DataFrame({
+    'name': ['Alice', 'Bob', 'Charlie', 'Diana'],
+    'age': [28, 35, 42, 31],
+    'department': ['Engineering', 'Marketing', 'Engineering', 'Sales'],
+    'salary': [85000, 72000, 95000, 68000]
+})
+
+# Basic exploration
+print(df.describe())  # Statistical summary
+print(df.info())      # Column types & null counts
+
+# Filtering
+engineers = df[df['department'] == 'Engineering']
+high_earners = df[df['salary'] > 80000]
+
+# Grouping & aggregation
+dept_avg = df.groupby('department')['salary'].mean()
+print(dept_avg)
+
+# Reading CSV files
+# df = pd.read_csv('sales_data.csv')
+# df = pd.read_excel('report.xlsx')</code></pre>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="viz">4. Data Visualization with Matplotlib</h2>
+      <pre data-lang="python"><code>import matplotlib.pyplot as plt
+
+# Line chart
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+revenue = [120, 135, 148, 162, 178, 195]
+
+plt.figure(figsize=(10, 6))
+plt.plot(months, revenue, marker='o', linewidth=2, color='#8b5cf6')
+plt.title('Monthly Revenue Trend')
+plt.xlabel('Month')
+plt.ylabel('Revenue ($K)')
+plt.grid(True, alpha=0.3)
+plt.savefig('revenue_trend.png', dpi=150)
+plt.show()
+
+# Bar chart with pandas
+df.groupby('department')['salary'].mean().plot(
+    kind='bar', color=['#10b981', '#8b5cf6', '#f59e0b']
+)
+plt.title('Average Salary by Department')
+plt.tight_layout()
+plt.show()</code></pre>
+
+      <h2 id="practice">5. Practical Example: Sales Data Analysis</h2>
+      <pre data-lang="python"><code># Real-world analysis workflow
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Load data
+# df = pd.read_csv('sales_2026.csv')
+
+# 2. Data cleaning
+# df = df.dropna()
+# df['date'] = pd.to_datetime(df['date'])
+
+# 3. Analysis
+# monthly = df.resample('M', on='date')['amount'].sum()
+# top_products = df.groupby('product')['amount'].sum().nlargest(10)
+
+# 4. Visualization
+# fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+# monthly.plot(ax=axes[0], title='Monthly Sales')
+# top_products.plot(kind='barh', ax=axes[1], title='Top 10 Products')
+# plt.tight_layout()
+# plt.savefig('sales_report.png')
+
+print("Analysis complete! 📊")</code></pre>
+
+      <p>Python data analysis starts with these three libraries. Begin with small datasets, practice the patterns, and you'll be analyzing real-world data in no time.</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html&text=Python Data Analysis for Beginners" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="article-nav"><a href="../blog.html"><div class="nav-label">← Back</div><div class="nav-title">Blog Archives</div></a><a href="ai-trends-2026.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">AI Trends 2026</div></a></div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul><li><a href="ai-trends-2026.html">AI Trends 2026</a></li><li><a href="prompt-engineering-guide.html">Prompt Engineering Guide</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul><li><a href="../blog.html">Python</a></li><li><a href="../blog.html">Data Analysis</a></li><li><a href="../blog.html">pandas</a></li></ul></div><div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>

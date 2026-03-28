@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>REST API Design Best Practices - TechPulse</title>
+  <meta name="description" content="Master REST API design with best practices for URL design, HTTP methods, error handling, versioning, authentication, and pagination.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html">
+  <meta property="og:title" content="REST API Design Best Practices"><meta property="og:type" content="article"><meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html"><meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"REST API Design Best Practices","datePublished":"2026-02-20","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}</script>
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html" /><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/rest-api-design.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/rest-api-design.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="rest-api-design.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container"><span class="category">Backend</span><h1>REST API Design Best Practices</h1><div class="article-meta-info"><span>📅 February 20, 2026</span><span>🕐 10 min read</span><span>🏷️ REST API, Backend, Design</span></div></div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol><li><a href="#url">URL Design</a></li><li><a href="#methods">HTTP Methods</a></li><li><a href="#errors">Error Handling</a></li><li><a href="#auth">Authentication</a></li><li><a href="#pagination">Pagination & Filtering</a></li><li><a href="#versioning">Versioning</a></li></ol></nav>
+
+      <p>A well-designed REST API is the backbone of modern web applications. This article covers <strong>proven best practices</strong> that make APIs intuitive, consistent, and developer-friendly.</p>
+
+      <h2 id="url">1. URL Design</h2>
+      <pre data-lang="text"><code># ✅ Good REST URL design
+GET    /api/v1/users          # List all users
+GET    /api/v1/users/123      # Get specific user
+POST   /api/v1/users          # Create a user
+PUT    /api/v1/users/123      # Update a user
+DELETE /api/v1/users/123      # Delete a user
+
+# ✅ Nested resources
+GET    /api/v1/users/123/posts        # User's posts
+GET    /api/v1/users/123/posts/456    # Specific post
+
+# ❌ Avoid
+GET    /api/v1/getUsers
+POST   /api/v1/createUser
+GET    /api/v1/user-list</code></pre>
+
+      <div class="info-box tip"><div class="info-title">✅ Rules of Thumb</div><p>Use plural nouns for resources (<code>/users</code> not <code>/user</code>). Use hyphens for multi-word resources (<code>/blog-posts</code>). Never use verbs in URLs — HTTP methods express the action.</p></div>
+
+      <h2 id="methods">2. HTTP Methods</h2>
+      <ul>
+        <li><strong>GET</strong>: Read (safe, idempotent)</li>
+        <li><strong>POST</strong>: Create (not idempotent)</li>
+        <li><strong>PUT</strong>: Full update (idempotent)</li>
+        <li><strong>PATCH</strong>: Partial update (idempotent)</li>
+        <li><strong>DELETE</strong>: Remove (idempotent)</li>
+      </ul>
+
+      <h2 id="errors">3. Error Handling</h2>
+      <pre data-lang="json"><code>// Consistent error response format
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input data",
+    "details": [
+      {"field": "email", "message": "Must be a valid email address"},
+      {"field": "age", "message": "Must be 18 or older"}
+    ]
+  }
+}
+
+// Status codes
+// 200 OK, 201 Created, 204 No Content
+// 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found
+// 422 Unprocessable Entity, 429 Too Many Requests
+// 500 Internal Server Error</code></pre>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="auth">4. Authentication</h2>
+      <pre data-lang="javascript"><code>// JWT Authentication example
+// Request
+fetch('/api/v1/users', {
+  headers: {
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIs...',
+    'Content-Type': 'application/json'
+  }
+});
+
+// Server-side middleware
+function authenticate(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Token required' });
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (e) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+}</code></pre>
+
+      <h2 id="pagination">5. Pagination & Filtering</h2>
+      <pre data-lang="text"><code># Cursor-based pagination (recommended)
+GET /api/v1/posts?cursor=abc123&limit=20
+
+# Offset-based pagination
+GET /api/v1/posts?page=2&per_page=20
+
+# Filtering & sorting
+GET /api/v1/posts?category=tech&sort=-created_at&status=published</code></pre>
+
+      <pre data-lang="json"><code>// Pagination response format
+{
+  "data": [...],
+  "pagination": {
+    "total": 150,
+    "page": 2,
+    "per_page": 20,
+    "next_cursor": "def456",
+    "has_more": true
+  }
+}</code></pre>
+
+      <h2 id="versioning">6. Versioning</h2>
+      <ul>
+        <li><strong>URL versioning</strong> (recommended): <code>/api/v1/users</code>, <code>/api/v2/users</code></li>
+        <li><strong>Header versioning</strong>: <code>Accept: application/vnd.api+json;version=2</code></li>
+        <li><strong>Query parameter</strong>: <code>/api/users?version=2</code> (least recommended)</li>
+      </ul>
+
+      <p>Well-designed REST APIs improve developer productivity, reduce bugs, and make systems easier to maintain. Apply these patterns consistently across your projects.</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html&text=REST API Design Best Practices" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="article-nav"><a href="owasp-security.html"><div class="nav-label">← Previous</div><div class="nav-title">Web Security OWASP Top 10</div></a><a href="git-github-guide.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">Git & GitHub Guide</div></a></div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul><li><a href="owasp-security.html">Web Security Guide</a></li><li><a href="typescript-guide.html">TypeScript Guide</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul><li><a href="../blog.html">REST API</a></li><li><a href="../blog.html">Backend</a></li><li><a href="../blog.html">Design</a></li></ul></div><div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>

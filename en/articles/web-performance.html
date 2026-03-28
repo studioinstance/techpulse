@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Web Performance Optimization: Core Web Vitals & Beyond - TechPulse</title>
+  <meta name="description" content="Master web performance optimization. Learn Core Web Vitals (LCP, FID, CLS), image optimization, code splitting, caching strategies, and more.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/web-performance.html">
+  <meta property="og:title" content="Web Performance Optimization"><meta property="og:type" content="article"><meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/web-performance.html"><meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Web Performance Optimization","datePublished":"2026-03-06","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}</script>
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/web-performance.html" /><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/web-performance.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/web-performance.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="web-performance.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+
+  <header class="article-hero"><div class="article-container"><span class="category">Web Development</span><h1>Web Performance Optimization: Core Web Vitals & Beyond</h1><div class="article-meta-info"><span>📅 March 6, 2026</span><span>🕐 12 min read</span><span>🏷️ Performance, Core Web Vitals, SEO</span></div></div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol><li><a href="#cwv">Core Web Vitals</a></li><li><a href="#images">Image Optimization</a></li><li><a href="#code">Code Splitting & Lazy Loading</a></li><li><a href="#cache">Caching Strategies</a></li><li><a href="#tools">Measurement Tools</a></li></ol></nav>
+
+      <p>Web performance directly impacts user experience, SEO rankings, and conversion rates. Google's research shows that a <strong>1-second delay in page load reduces conversions by 7%</strong>. This guide covers practical techniques to optimize every aspect of your site's performance.</p>
+
+      <div class="info-box info"><div class="info-title">💡 Key Takeaway</div><p>Core Web Vitals are Google's official metrics for page experience. Meeting the "Good" thresholds directly improves your search rankings.</p></div>
+
+      <h2 id="cwv">1. Core Web Vitals</h2>
+      <h3>LCP — Largest Contentful Paint</h3>
+      <p>Measures loading performance. Target: <strong>under 2.5 seconds</strong>.</p>
+      <ul>
+        <li>Preload critical resources: <code>&lt;link rel="preload"&gt;</code></li>
+        <li>Optimize server response time (TTFB)</li>
+        <li>Use CDN for static assets</li>
+        <li>Optimize and properly size images</li>
+      </ul>
+
+      <h3>INP — Interaction to Next Paint</h3>
+      <p>Measures interactivity. Target: <strong>under 200ms</strong>.</p>
+      <ul>
+        <li>Break up long tasks (> 50ms)</li>
+        <li>Use <code>requestIdleCallback</code> for non-critical work</li>
+        <li>Minimize main thread work</li>
+      </ul>
+
+      <h3>CLS — Cumulative Layout Shift</h3>
+      <p>Measures visual stability. Target: <strong>under 0.1</strong>.</p>
+      <ul>
+        <li>Always set <code>width</code> and <code>height</code> on images/video</li>
+        <li>Reserve space for dynamic content</li>
+        <li>Avoid inserting content above existing content</li>
+      </ul>
+
+      <h2 id="images">2. Image Optimization</h2>
+      <pre data-lang="html"><code>&lt;!-- Modern responsive images --&gt;
+&lt;picture&gt;
+  &lt;source srcset="hero.avif" type="image/avif"&gt;
+  &lt;source srcset="hero.webp" type="image/webp"&gt;
+  &lt;img src="hero.jpg" alt="Hero image"
+       width="1200" height="600"
+       loading="lazy"
+       decoding="async"&gt;
+&lt;/picture&gt;
+
+&lt;!-- Responsive sizes --&gt;
+&lt;img srcset="small.webp 400w,
+             medium.webp 800w,
+             large.webp 1200w"
+     sizes="(max-width: 600px) 400px,
+            (max-width: 1000px) 800px,
+            1200px"
+     src="medium.webp"
+     alt="Responsive image"&gt;</code></pre>
+
+      <div class="info-box tip"><div class="info-title">✅ Pro Tip</div><p>Use AVIF format where possible — it offers 50% better compression than WebP. For above-the-fold images, add <code>fetchpriority="high"</code> and skip <code>loading="lazy"</code>.</p></div>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="code">3. Code Splitting & Lazy Loading</h2>
+      <pre data-lang="javascript"><code>// Dynamic imports for code splitting
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;Loading /&gt;}&gt;
+      &lt;HeavyComponent /&gt;
+    &lt;/Suspense&gt;
+  );
+}
+
+// Route-based splitting (Next.js automatic)
+// Each page in /pages or /app is auto-split
+
+// Intersection Observer for lazy loading
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      loadComponent(entry.target);
+      observer.unobserve(entry.target);
+    }
+  });
+});</code></pre>
+
+      <h2 id="cache">4. Caching Strategies</h2>
+      <pre data-lang="text"><code># Optimal caching headers
+# Static assets (CSS, JS, images) - aggressive caching
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages - always revalidate
+Cache-Control: no-cache
+
+# API responses - short cache with revalidation
+Cache-Control: public, max-age=60, stale-while-revalidate=300</code></pre>
+
+      <pre data-lang="javascript"><code>// Service Worker for offline caching
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      return cached || fetch(event.request).then((response) => {
+        const clone = response.clone();
+        caches.open('v1').then((cache) => cache.put(event.request, clone));
+        return response;
+      });
+    })
+  );
+});</code></pre>
+
+      <h2 id="tools">5. Measurement Tools</h2>
+      <ul>
+        <li><strong>Lighthouse</strong> — Built into Chrome DevTools. Comprehensive audits.</li>
+        <li><strong>PageSpeed Insights</strong> — Real-world performance data from CrUX.</li>
+        <li><strong>WebPageTest</strong> — Detailed waterfall analysis from multiple locations.</li>
+        <li><strong>Chrome DevTools Performance tab</strong> — Frame-by-frame analysis.</li>
+        <li><strong>web-vitals library</strong> — Measure CWV programmatically.</li>
+      </ul>
+
+      <pre data-lang="javascript"><code>// Measure Core Web Vitals in code
+import { onLCP, onINP, onCLS } from 'web-vitals';
+
+onLCP(console.log);
+onINP(console.log);
+onCLS(console.log);</code></pre>
+
+      <p>Performance optimization is an ongoing process, not a one-time task. Start by measuring your current metrics, then apply these techniques systematically. Even small improvements compound into significant user experience gains.</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/web-performance.html&text=Web Performance Optimization Guide" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="article-nav"><a href="git-github-guide.html"><div class="nav-label">← Previous</div><div class="nav-title">Git & GitHub Guide</div></a><a href="../blog.html" class="next"><div class="nav-label">Back to list →</div><div class="nav-title">Blog Archives</div></a></div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul><li><a href="nextjs-15-features.html">Next.js 15 Features</a></li><li><a href="nextjs-15-master-guide.html">Next.js 15 Master Guide</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul><li><a href="../blog.html">Performance</a></li><li><a href="../blog.html">Core Web Vitals</a></li><li><a href="../blog.html">SEO</a></li></ul></div><div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>

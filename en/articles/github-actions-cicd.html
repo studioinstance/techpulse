@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+
+  <title>GitHub Actions: Build a CI/CD Pipeline in 30 Minutes - TechPulse</title>
+  <meta name="description" content="Learn how to build a CI/CD pipeline with GitHub Actions in 30 minutes. Step-by-step guide covering test automation, deployment workflows, and best practices.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html">
+  <meta property="og:title" content="GitHub Actions: Build a CI/CD Pipeline in 30 Minutes">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"GitHub Actions: Build a CI/CD Pipeline in 30 Minutes","datePublished":"2026-02-15","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}
+  </script>
+
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html" />
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/github-actions-cicd.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../articles/article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul>
+    <div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;">
+      <a href="../../articles/github-actions-cicd.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span>
+      <a href="github-actions-cicd.html" style="color:var(--color-accent);text-decoration:none;">EN</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-hero"><div class="article-container">
+    <span class="category">DevOps</span>
+    <h1>GitHub Actions: Build a CI/CD Pipeline in 30 Minutes</h1>
+    <div class="article-meta-info"><span>📅 February 15, 2026</span><span>🕐 12 min read</span><span>🏷️ GitHub Actions, CI/CD, DevOps</span></div>
+  </div></header>
+
+  <section class="article-body"><div class="article-wrapper">
+    <article class="article-content">
+      <nav class="toc"><h3>📑 Table of Contents</h3><ol>
+        <li><a href="#what">What is GitHub Actions?</a></li>
+        <li><a href="#workflow">Workflow Basics</a></li>
+        <li><a href="#test">Implementing Test Automation</a></li>
+        <li><a href="#deploy">Setting Up Auto-Deploy</a></li>
+        <li><a href="#tips">Practical Tips</a></li>
+      </ol></nav>
+
+      <p>GitHub Actions is a CI/CD (Continuous Integration / Continuous Delivery) platform integrated directly into GitHub. This article walks you through <strong>building a CI/CD pipeline in 30 minutes</strong>, step by step.</p>
+
+      <div class="info-box info">
+        <div class="info-title">💡 Key Takeaway</div>
+        <p>If you have a GitHub repository, you can start CI/CD <strong>at no additional cost</strong>. Public repos get unlimited build time; private repos get 2,000 minutes/month free.</p>
+      </div>
+
+      <h2 id="what">1. What is GitHub Actions?</h2>
+      <p>GitHub Actions automates the process of "testing, building, and deploying code when you push."</p>
+
+      <h3>Key Terminology</h3>
+      <ul>
+        <li><strong>Workflow</strong>: The entire automation process, defined in YAML</li>
+        <li><strong>Job</strong>: An execution unit within a workflow — can run in parallel or sequentially</li>
+        <li><strong>Step</strong>: An individual command or Action within a job</li>
+        <li><strong>Action</strong>: A reusable component, shared via the Marketplace</li>
+        <li><strong>Runner</strong>: The server that executes workflows</li>
+      </ul>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="workflow">2. Workflow Basics</h2>
+      <p>Workflows are placed as YAML files in the <code>.github/workflows/</code> directory.</p>
+
+      <pre data-lang="yaml"><code># .github/workflows/ci.yml
+name: CI Pipeline
+
+# Trigger: on push or PR to main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    steps:
+      # 1. Checkout code
+      - uses: actions/checkout@v4
+
+      # 2. Set up Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # 3. Install dependencies
+      - run: npm ci
+
+      # 4. Run lint
+      - run: npm run lint
+
+      # 5. Run tests
+      - run: npm test
+
+      # 6. Verify build
+      - run: npm run build</code></pre>
+
+      <div class="info-box tip">
+        <div class="info-title">✅ Pro Tip</div>
+        <p>Using <code>strategy.matrix</code> enables parallel testing across multiple Node.js versions — invaluable for ensuring compatibility.</p>
+      </div>
+
+      <h2 id="test">3. Implementing Test Automation</h2>
+      <p>A practical workflow that runs tests automatically when a PR is created and comments results on the PR.</p>
+
+      <pre data-lang="yaml"><code># .github/workflows/test-report.yml
+name: Test with Coverage Report
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm test -- --coverage --coverageReporters=text
+
+      # Comment coverage on PR
+      - name: Comment Coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = '✅ Tests passed!';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverage
+            })</code></pre>
+
+      <div class="ad-space">Ad</div>
+
+      <h2 id="deploy">4. Setting Up Auto-Deploy</h2>
+      <p>A workflow that auto-deploys to production when code is merged to main.</p>
+
+      <pre data-lang="yaml"><code># .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run build
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+      # Notification
+      - name: Notify on Success
+        if: success()
+        run: |
+          echo "✅ Deploy complete!"</code></pre>
+
+      <h2 id="tips">5. Practical Tips</h2>
+
+      <h3>Speed Up with Caching</h3>
+      <pre data-lang="yaml"><code># npm dependency caching (automatic)
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+    cache: 'npm'  # This alone enables caching</code></pre>
+
+      <h3>Managing Secrets</h3>
+      <p>Store API keys and passwords in <strong>GitHub Secrets</strong> for safe access from workflows.</p>
+      <ol>
+        <li>Go to Settings → Secrets and variables → Actions</li>
+        <li>Click "New repository secret"</li>
+        <li>Enter name and value, then save</li>
+        <li>Reference in workflows with <code>${{ secrets.SECRET_NAME }}</code></li>
+      </ol>
+
+      <div class="info-box warning">
+        <div class="info-title">⚠️ Security Warning</div>
+        <p><strong>Never print secrets to logs.</strong> GitHub Actions masks them automatically, but they can leak through indirect means like Base64 encoding.</p>
+      </div>
+
+      <h3>Summary</h3>
+      <p>With GitHub Actions, you can build the following CI/CD pipeline in 30 minutes:</p>
+      <ol>
+        <li><strong>On PR creation</strong>: Auto-test + coverage report</li>
+        <li><strong>On merge</strong>: Auto-build + auto-deploy</li>
+        <li><strong>On error</strong>: Slack/email notification</li>
+      </ol>
+      <p>Start small and expand your workflows gradually.</p>
+
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html&text=GitHub Actions: Build CI/CD in 30 Minutes" target="_blank" class="share-btn twitter">𝕏 Post</a>
+      </div></div>
+      <div class="article-nav">
+        <a href="nextjs-15-features.html"><div class="nav-label">← Previous</div><div class="nav-title">Next.js 15 New Features Deep Dive</div></a>
+        <a href="../blog.html" class="next"><div class="nav-label">Back to list →</div><div class="nav-title">Blog Archives</div></a>
+      </div>
+    </article>
+    <aside class="article-sidebar">
+      <div class="sidebar-card"><h4>📌 Related Articles</h4><ul><li><a href="ai-trends-2026.html">AI Trends 2026</a></li><li><a href="docker-introduction.html">Docker for Beginners</a></li></ul></div>
+      <div class="sidebar-card"><h4>🏷️ Tags</h4><ul><li><a href="../blog.html">GitHub Actions</a></li><li><a href="../blog.html">CI/CD</a></li><li><a href="../blog.html">DevOps</a></li></ul></div>
+      <div class="ad-space">Ad</div>
+    </aside>
+  </div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
+<script src="../../scripts/tracker.js"></script>
+</body>
+</html>
