@@ -11,6 +11,17 @@ const FILE_NAME = `${ARTICLE_ID}.html`;
 const FILE_PATH = `articles/${FILE_NAME}`;
 const ARTICLE_URL = `${SITE_URL}/articles/${FILE_NAME}`;
 
+// セキュリティ対策: 外部からの入力をHTMLエスケープ（XSS対策）する関数
+function escapeHtml(unsafe) {
+  if (!unsafe) return '';
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 async function main() {
   console.log('Fetching RSS from Zenn Tech Topic...');
   const feed = await parser.parseURL(RSS_URL);
@@ -28,11 +39,15 @@ async function main() {
   // HTMLの生成
   let articlesHtml = '';
   items.forEach(item => {
+    const safeTitle = escapeHtml(item.title);
+    const safeLink = escapeHtml(item.link);
+    const safeSnippet = item.contentSnippet ? escapeHtml(item.contentSnippet.substring(0, 100)) + '...' : 'トレンドをチェックして最新の技術動向をキャッチアップしましょう！';
+
     articlesHtml += `
       <div class="trend-item" style="margin-bottom: 24px; padding: 16px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02);">
-        <h3 style="margin-bottom: 8px;"><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent);">${item.title}</a></h3>
+        <h3 style="margin-bottom: 8px;"><a href="${safeLink}" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent);">${safeTitle}</a></h3>
         <p style="font-size: 0.9rem; color: var(--color-text-muted);">公開日: ${new Date(item.pubDate).toLocaleDateString('ja-JP')}</p>
-        <p style="margin-top: 12px; font-size: 0.95rem;">${item.contentSnippet ? item.contentSnippet.substring(0, 100) + '...' : 'トレンドをチェックして最新の技術動向をキャッチアップしましょう！'}</p>
+        <p style="margin-top: 12px; font-size: 0.95rem;">${safeSnippet}</p>
       </div>
     `;
   });
