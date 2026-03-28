@@ -1,0 +1,48 @@
+name: Auto Generate and Publish Article
+
+on:
+  schedule:
+    # 毎週月曜日と木曜日の午前9時(JST) = UTC 00:00
+    - cron: '0 0 * * 1,4'
+  workflow_dispatch: # 手動実行用
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # リポジトリへのプッシュ権限
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Generate new article from RSS
+        run: node scripts/generate-article.js
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No new articles or changes generated."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes found."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and Push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "Auto-generated new article from RSS and updated sitemap/blog"
+          git push
