@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 28 Mar 2026 12:00:00 +0900</lastBuildDate>
     <atom:link href="https://studioinstance.github.io/techpulse/feed.xml" rel="self" type="application/rss+xml"/>
 
+    
+    <item>
+      <title>プロンプトエンジニアリング完全ガイド【2026年最新版】</title>
+      <link>https://studioinstance.github.io/techpulse/articles/prompt-engineering-guide.html</link>
+      <description>ChatGPT・Gemini・Claudeで使えるプロンプト設計の実践パターン20選を解説。</description>
+      <pubDate>Sat, 28 Mar 2026 10:09:14 GMT</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/articles/prompt-engineering-guide.html</guid>
+    </item>
     <item>
       <title>2026年最新版：Next.js 15 App Router 完全マスターガイド【保存版】</title>
       <link>https://studioinstance.github.io/techpulse/articles/nextjs-15-master-guide.html</link>
