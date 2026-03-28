@@ -1,0 +1,54 @@
+name: Weekly SEO & Analytics Report
+
+on:
+  schedule:
+    # 毎週日曜日の朝10時(JST = UTC+9 → UTC 01:00)に実行
+    - cron: '0 1 * * 0'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  run-analytics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Run SEO Health Checker
+        run: python scripts/seo-health-checker.py
+
+      - name: Run Content Gap Finder
+        run: python scripts/content-gap-finder.py
+
+      - name: Run Keyword Analyzer (sample mode)
+        run: python scripts/keyword-analyzer.py
+
+      - name: Move reports to public directory
+        run: |
+          mkdir -p reports
+          mv -f seo-report.html reports/ 2>/dev/null || true
+          mv -f content-gap-report.html reports/ 2>/dev/null || true
+          mv -f keyword-report.html reports/ 2>/dev/null || true
+
+      - name: Commit and push reports
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TechPulse Analytics Bot"
+          git add reports/
+          git diff --cached --quiet || git commit -m "📊 Weekly analytics report ($(date +'%Y-%m-%d'))"
+          git push
