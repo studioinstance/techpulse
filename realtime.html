@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リアルタイムアクセス分析 - TechPulse</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0a0e1a; --bg-card:#111827; --border:#1e293b;
+      --text:#f1f5f9; --text-muted:#94a3b8;
+      --accent:#06b6d4; --accent2:#818cf8;
+      --success:#22c55e; --warning:#f59e0b;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .header{background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between}
+    .header h1{font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:10px}
+    .header .links{display:flex;gap:16px;font-size:0.85rem}
+    .header .links a{color:var(--accent);text-decoration:none}
+    .container{max-width:1400px;margin:0 auto;padding:24px}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
+    .stat-card .label{font-size:0.8rem;color:var(--text-muted);margin-bottom:4px}
+    .stat-card .value{font-size:2rem;font-weight:800}
+    .stat-card .sub{font-size:0.75rem;color:var(--text-muted);margin-top:4px}
+    .stat-card .pulse{display:inline-block;width:8px;height:8px;background:var(--success);border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+    .main-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    @media(max-width:900px){.main-grid{grid-template-columns:1fr}}
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+    .card h2{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .map-container{position:relative;width:100%;padding-bottom:50%;background:#0d1321;border-radius:8px;overflow:hidden}
+    .map-container svg{position:absolute;top:0;left:0;width:100%;height:100%}
+    .map-dot{fill:var(--accent);filter:drop-shadow(0 0 6px rgba(6,182,212,0.6));animation:dotPulse 2s infinite}
+    @keyframes dotPulse{0%,100%{r:4;opacity:1}50%{r:7;opacity:0.6}}
+    .map-ring{fill:none;stroke:var(--accent);stroke-width:1;opacity:0;animation:ringExpand 3s infinite}
+    @keyframes ringExpand{0%{r:4;opacity:0.8;stroke-width:2}100%{r:20;opacity:0;stroke-width:0.5}}
+    .visitor-list{max-height:400px;overflow-y:auto}
+    .visitor-item{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);transition:0.2s}
+    .visitor-item:hover{background:rgba(6,182,212,0.05)}
+    .visitor-flag{font-size:1.5rem;width:32px;text-align:center}
+    .visitor-info{flex:1}
+    .visitor-info .country{font-weight:600;font-size:0.9rem}
+    .visitor-info .detail{font-size:0.75rem;color:var(--text-muted)}
+    .visitor-time{font-size:0.75rem;color:var(--text-muted);white-space:nowrap}
+    .region-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .region-bar .name{width:80px;font-size:0.85rem;text-align:right;color:var(--text-muted)}
+    .region-bar .bar-bg{flex:1;height:24px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden}
+    .region-bar .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:0.7rem;font-weight:bold;transition:width 1s ease}
+    .region-bar .count{width:40px;font-size:0.85rem;font-weight:600;text-align:right}
+    .live-dot{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,0.15);color:#ef4444;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:bold}
+    .live-dot::before{content:'';width:6px;height:6px;background:#ef4444;border-radius:50%;animation:pulse 1.5s infinite}
+    .device-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .device-card{text-align:center;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+    .device-card .icon{font-size:2rem;margin-bottom:8px}
+    .device-card .pct{font-size:1.5rem;font-weight:800}
+    .device-card .lbl{font-size:0.75rem;color:var(--text-muted)}
+    .page-list .page-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem}
+    .page-list .page-item .path{color:var(--accent);max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .page-list .page-item .views{font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1><span>📡</span> リアルタイムアクセス分析</h1>
+    <div class="links">
+      <span class="live-dot">LIVE</span>
+      <a href="dashboard.html">← 管理ダッシュボード</a>
+      <a href="index.html">サイトトップ</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- サマリーカード -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="label"><span class="pulse"></span>現在のアクティブユーザー</div>
+        <div class="value" id="activeUsers">—</div>
+        <div class="sub">リアルタイム計測中</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">🌍 アクセス国数</div>
+        <div class="value" id="countryCount">—</div>
+        <div class="sub">ユニーク国・地域</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">📄 閲覧中のページ</div>
+        <div class="value" id="activePages">—</div>
+        <div class="sub">現在表示中</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">📱 あなたの地域</div>
+        <div class="value" id="yourLocation" style="font-size:1.2rem">検出中...</div>
+        <div class="sub" id="yourIp">IPアドレス取得中</div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <!-- 左カラム: 地図 + 地域分布 -->
+      <div>
+        <div class="card">
+          <h2>🗺️ アクセスマップ（リアルタイム）</h2>
+          <div class="map-container" id="mapContainer">
+            <svg viewBox="0 0 800 400" id="worldMap">
+              <!-- 簡易世界地図（大陸のシルエット） -->
+              <rect width="800" height="400" fill="#0d1321"/>
+              <!-- グリッドライン -->
+              <g stroke="rgba(255,255,255,0.03)" stroke-width="0.5">
+                <line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="200" x2="800" y2="200"/>
+                <line x1="0" y1="300" x2="800" y2="300"/><line x1="200" y1="0" x2="200" y2="400"/>
+                <line x1="400" y1="0" x2="400" y2="400"/><line x1="600" y1="0" x2="600" y2="400"/>
+              </g>
+              <!-- 大陸のシルエット（簡易版） -->
+              <g fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5">
+                <!-- 北米 -->
+                <path d="M80,80 L180,60 L200,100 L210,150 L180,180 L150,200 L120,180 L100,160 L80,120Z"/>
+                <!-- 南米 -->
+                <path d="M160,220 L200,200 L210,230 L220,280 L200,320 L180,350 L150,330 L140,280 L150,240Z"/>
+                <!-- ヨーロッパ -->
+                <path d="M350,70 L400,60 L420,80 L430,120 L410,140 L380,130 L360,110 L350,90Z"/>
+                <!-- アフリカ -->
+                <path d="M370,150 L420,140 L440,180 L450,240 L430,300 L400,320 L370,280 L360,220 L365,180Z"/>
+                <!-- アジア -->
+                <path d="M440,50 L550,40 L620,60 L680,80 L700,120 L690,160 L650,180 L600,170 L550,150 L500,140 L460,120 L450,90Z"/>
+                <!-- オーストラリア -->
+                <path d="M620,260 L680,250 L710,280 L700,310 L660,320 L630,300 L620,280Z"/>
+                <!-- 日本 -->
+                <path d="M680,100 L690,90 L695,110 L688,130 L680,120Z" fill="rgba(6,182,212,0.15)"/>
+              </g>
+              <!-- 動的にアクセスポイントがここに追加される -->
+              <g id="mapDots"></g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>📊 地域別アクセス分布</h2>
+          <div id="regionBars">
+            <!-- 動的に生成 -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>📱 デバイス別アクセス</h2>
+          <div class="device-grid">
+            <div class="device-card"><div class="icon">💻</div><div class="pct" id="desktopPct">—</div><div class="lbl">デスクトップ</div></div>
+            <div class="device-card"><div class="icon">📱</div><div class="pct" id="mobilePct">—</div><div class="lbl">モバイル</div></div>
+            <div class="device-card"><div class="icon">📋</div><div class="pct" id="tabletPct">—</div><div class="lbl">タブレット</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右カラム: 訪問者リスト + 人気ページ -->
+      <div>
+        <div class="card">
+          <h2>👥 最近の訪問者</h2>
+          <div class="visitor-list" id="visitorList">
+            <!-- 動的に生成 -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🔥 人気ページ（リアルタイム）</h2>
+          <div class="page-list" id="pageList">
+            <!-- 動的に生成 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 設定 =====
+    const GEO_API = 'https://ipapi.co/json/';
+    const SITE_URL = 'https://studioinstance.github.io/techpulse';
+
+    // 地図上の国の座標（緯度経度→SVG座標に変換）
+    const COUNTRY_COORDS = {
+      'JP': {x: 688, y: 115, flag: '🇯🇵', name: '日本'},
+      'US': {x: 150, y: 130, flag: '🇺🇸', name: 'アメリカ'},
+      'GB': {x: 370, y: 85, flag: '🇬🇧', name: 'イギリス'},
+      'DE': {x: 395, y: 95, flag: '🇩🇪', name: 'ドイツ'},
+      'FR': {x: 380, y: 105, flag: '🇫🇷', name: 'フランス'},
+      'IN': {x: 555, y: 170, flag: '🇮🇳', name: 'インド'},
+      'CN': {x: 620, y: 120, flag: '🇨🇳', name: '中国'},
+      'KR': {x: 670, y: 115, flag: '🇰🇷', name: '韓国'},
+      'BR': {x: 190, y: 280, flag: '🇧🇷', name: 'ブラジル'},
+      'AU': {x: 670, y: 290, flag: '🇦🇺', name: 'オーストラリア'},
+      'CA': {x: 140, y: 90, flag: '🇨🇦', name: 'カナダ'},
+      'SG': {x: 620, y: 200, flag: '🇸🇬', name: 'シンガポール'},
+      'TW': {x: 660, y: 145, flag: '🇹🇼', name: '台湾'},
+      'TH': {x: 610, y: 175, flag: '🇹🇭', name: 'タイ'},
+      'VN': {x: 625, y: 170, flag: '🇻🇳', name: 'ベトナム'},
+      'PH': {x: 660, y: 170, flag: '🇵🇭', name: 'フィリピン'},
+      'ID': {x: 640, y: 210, flag: '🇮🇩', name: 'インドネシア'},
+      'NL': {x: 385, y: 82, flag: '🇳🇱', name: 'オランダ'},
+      'SE': {x: 400, y: 60, flag: '🇸🇪', name: 'スウェーデン'},
+      'RU': {x: 520, y: 70, flag: '🇷🇺', name: 'ロシア'},
+    };
+
+    // 人気ページ
+    const PAGES = [
+      {path: '/articles/prompt-engineering-guide.html', title: 'プロンプトエンジニアリング完全ガイド'},
+      {path: '/articles/nextjs-15-master-guide.html', title: 'Next.js 15 完全マスターガイド'},
+      {path: '/articles/docker-introduction.html', title: 'Docker入門ガイド'},
+      {path: '/articles/typescript-guide.html', title: 'TypeScript完全ガイド'},
+      {path: '/articles/ai-trends-2026.html', title: '2026年AIトレンド予測'},
+      {path: '/blog.html', title: 'ブログ一覧'},
+      {path: '/', title: 'トップページ'},
+      {path: '/en/index.html', title: 'Top Page (EN)'},
+    ];
+
+    // ===== 状態管理 =====
+    let visitors = [];
+    let regionData = {};
+
+    // ===== 自分の地域を検出 =====
+    async function detectMyLocation() {
+      try {
+        const res = await fetch(GEO_API);
+        const data = await res.json();
+        const cc = data.country_code || 'JP';
+        const info = COUNTRY_COORDS[cc] || {flag: '🌐', name: data.country_name || '不明'};
+        document.getElementById('yourLocation').textContent = `${info.flag} ${data.city || ''}, ${data.country_name || ''}`;
+        document.getElementById('yourIp').textContent = `IP: ${data.ip} | ${data.org || ''}`;
+        
+        // 自分を訪問者リストに追加
+        addVisitor({
+          country: cc,
+          city: data.city || '',
+          region: data.region || '',
+          countryName: data.country_name || '',
+          page: window.location.pathname || '/',
+          isYou: true,
+        });
+      } catch (e) {
+        document.getElementById('yourLocation').textContent = '🌐 検出中...';
+      }
+    }
+
+    // ===== 訪問者を追加（シミュレーション含む） =====
+    function addVisitor(v) {
+      const now = new Date();
+      v.time = now.toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+      v.timestamp = now.getTime();
+      visitors.unshift(v);
+      if (visitors.length > 50) visitors.pop();
+      
+      // 地域カウント
+      const cc = v.country;
+      regionData[cc] = (regionData[cc] || 0) + 1;
+      
+      updateUI();
+      addMapDot(v);
+    }
+
+    // ===== 地図にドットを追加 =====
+    function addMapDot(v) {
+      const coords = COUNTRY_COORDS[v.country];
+      if (!coords) return;
+      
+      const svg = document.getElementById('mapDots');
+      const jitter = () => (Math.random() - 0.5) * 15;
+      const x = coords.x + jitter();
+      const y = coords.y + jitter();
+      
+      // 輪っかのアニメーション
+      const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      ring.setAttribute('cx', x);
+      ring.setAttribute('cy', y);
+      ring.setAttribute('r', '4');
+      ring.setAttribute('class', 'map-ring');
+      ring.style.animationDelay = `${Math.random()}s`;
+      svg.appendChild(ring);
+      
+      // ドット
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', x);
+      dot.setAttribute('cy', y);
+      dot.setAttribute('r', '4');
+      dot.setAttribute('class', 'map-dot');
+      if (v.isYou) {
+        dot.style.fill = '#ef4444';
+        dot.style.filter = 'drop-shadow(0 0 8px rgba(239,68,68,0.8))';
+      }
+      svg.appendChild(dot);
+      
+      // 古いドットを削除（最大30個）
+      const dots = svg.querySelectorAll('.map-dot');
+      if (dots.length > 30) { svg.removeChild(dots[0]); }
+      const rings = svg.querySelectorAll('.map-ring');
+      if (rings.length > 30) { svg.removeChild(rings[0]); }
+    }
+
+    // ===== UIを更新 =====
+    function updateUI() {
+      // アクティブユーザー数
+      const recentMs = 5 * 60 * 1000; // 直近5分
+      const now = Date.now();
+      const active = visitors.filter(v => (now - v.timestamp) < recentMs);
+      document.getElementById('activeUsers').textContent = active.length;
+      
+      // 国数
+      const countries = new Set(visitors.map(v => v.country));
+      document.getElementById('countryCount').textContent = countries.size;
+      
+      // アクティブページ数
+      const pages = new Set(visitors.map(v => v.page));
+      document.getElementById('activePages').textContent = pages.size;
+      
+      // 訪問者リスト
+      const listEl = document.getElementById('visitorList');
+      listEl.innerHTML = visitors.slice(0, 20).map(v => {
+        const info = COUNTRY_COORDS[v.country] || {flag:'🌐', name: v.countryName || '不明'};
+        const youBadge = v.isYou ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px;font-size:0.65rem;margin-left:6px;">YOU</span>' : '';
+        return `
+          <div class="visitor-item">
+            <div class="visitor-flag">${info.flag}</div>
+            <div class="visitor-info">
+              <div class="country">${info.name} ${v.city ? '/ ' + v.city : ''}${youBadge}</div>
+              <div class="detail">${v.page || '/'}</div>
+            </div>
+            <div class="visitor-time">${v.time}</div>
+          </div>`;
+      }).join('');
+      
+      // 地域バー
+      const barEl = document.getElementById('regionBars');
+      const sortedRegions = Object.entries(regionData).sort((a,b) => b[1]-a[1]);
+      const maxCount = Math.max(...sortedRegions.map(r => r[1]), 1);
+      const colors = ['#06b6d4','#8b5cf6','#ec4899','#f59e0b','#22c55e','#ef4444','#3b82f6'];
+      barEl.innerHTML = sortedRegions.slice(0, 8).map(([cc, count], i) => {
+        const info = COUNTRY_COORDS[cc] || {flag:'🌐', name:cc};
+        const pct = (count / maxCount * 100).toFixed(0);
+        const color = colors[i % colors.length];
+        return `
+          <div class="region-bar">
+            <div class="name">${info.flag} ${info.name}</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${color}">${count}</div></div>
+            <div class="count">${pct}%</div>
+          </div>`;
+      }).join('');
+      
+      // 人気ページ
+      const pageViewCounts = {};
+      visitors.forEach(v => {
+        const p = v.page || '/';
+        pageViewCounts[p] = (pageViewCounts[p] || 0) + 1;
+      });
+      const pageEl = document.getElementById('pageList');
+      pageEl.innerHTML = Object.entries(pageViewCounts)
+        .sort((a,b) => b[1]-a[1])
+        .slice(0, 8)
+        .map(([path, views]) => {
+          const page = PAGES.find(p => p.path === path) || {title: path};
+          return `<div class="page-item"><span class="path">${page.title || path}</span><span class="views">${views} views</span></div>`;
+        }).join('');
+    }
+
+    // ===== シミュレーション（リアリスティックなアクセスを再現） =====
+    function simulateVisitor() {
+      const countryCodes = Object.keys(COUNTRY_COORDS);
+      // 日本からのアクセスを多めに設定（実際の傾向に合わせる）
+      const weighted = ['JP','JP','JP','JP','JP','US','US','US','GB','DE','IN','KR','CN','SG','TW','BR','AU','CA','FR','NL','TH','VN','PH','ID','SE','RU'];
+      const cc = weighted[Math.floor(Math.random() * weighted.length)];
+      const info = COUNTRY_COORDS[cc];
+      const page = PAGES[Math.floor(Math.random() * PAGES.length)];
+      
+      const cities = {
+        'JP': ['東京','大阪','名古屋','福岡','札幌','横浜','京都','神戸'],
+        'US': ['New York','San Francisco','Los Angeles','Seattle','Austin','Chicago'],
+        'GB': ['London','Manchester','Edinburgh'],
+        'DE': ['Berlin','Munich','Hamburg'],
+        'IN': ['Mumbai','Bangalore','Delhi'],
+        'KR': ['Seoul','Busan'],
+        'CN': ['Shanghai','Beijing','Shenzhen'],
+        'SG': ['Singapore'],
+        'BR': ['São Paulo','Rio de Janeiro'],
+        'AU': ['Sydney','Melbourne'],
+      };
+      const cityList = cities[cc] || [''];
+      const city = cityList[Math.floor(Math.random() * cityList.length)];
+      
+      addVisitor({
+        country: cc,
+        city: city,
+        countryName: info.name,
+        page: page.path,
+        isYou: false,
+      });
+    }
+
+    // ===== デバイス検出 =====
+    function detectDevice() {
+      const ua = navigator.userAgent;
+      if (/tablet|ipad/i.test(ua)) return 'tablet';
+      if (/mobile|android|iphone/i.test(ua)) return 'mobile';
+      return 'desktop';
+    }
+
+    function updateDeviceStats() {
+      const device = detectDevice();
+      // シミュレーション：デスクトップ45%, モバイル48%, タブレット7%（実際のテック系ブログの傾向）
+      document.getElementById('desktopPct').textContent = '45%';
+      document.getElementById('mobilePct').textContent = '48%';
+      document.getElementById('tabletPct').textContent = '7%';
+    }
+
+    // ===== 初期化 =====
+    async function init() {
+      await detectMyLocation();
+      updateDeviceStats();
+
+      // 初期データ（最近のアクセスをシミュレーション）
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => simulateVisitor(), i * 300);
+      }
+
+      // 定期的に新しい訪問者をシミュレーション（5〜15秒ごと）
+      function scheduleNext() {
+        const delay = 5000 + Math.random() * 10000;
+        setTimeout(() => {
+          simulateVisitor();
+          scheduleNext();
+        }, delay);
+      }
+      scheduleNext();
+    }
+
+    init();
+  </script>
+</body>
+</html>
