@@ -316,4 +316,10 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/auxia-agentic-marketing.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/auxia-agentic-marketing.html"/>
   </url>
+  <url>
+    <loc>https://studioinstance.github.io/techpulse/articles/data-scientist-future-ai.html</loc>
+    <lastmod>2026-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>
