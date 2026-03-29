@@ -1,8 +1,6 @@
 name: Auto Generate and Publish Article
 
 on:
-  push:
-    branches: [ main ]
   schedule:
     # 毎週月曜日と木曜日の午前9時(JST) = UTC 00:00
     - cron: '0 0 * * 1,4'
