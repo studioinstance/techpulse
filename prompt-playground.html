@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <title>AI プロンプト練習場 — インタラクティブに学ぶプロンプトエンジニアリング | TechPulse</title>
+  <meta name="description" content="プロンプトエンジニアリングをインタラクティブに練習できるツール。良い例・悪い例を比較しながら、実践的なスキルを身につけよう。">
+  <meta property="og:title" content="AI プロンプト練習場 — TechPulse">
+  <meta property="og:description" content="プロンプトエンジニアリングをインタラクティブに練習。良い例・悪い例を比較して学ぼう。">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/prompt-playground.html">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0e1a;--bg-card:#111827;--border:#1e293b;--text:#f1f5f9;--text-muted:#94a3b8;--accent:#8b5cf6;--accent2:#06b6d4;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .header{background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .header h1{font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:10px}
+    .header .links{display:flex;gap:16px;font-size:0.85rem;align-items:center}
+    .header .links a{color:var(--accent2);text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    .hero{text-align:center;padding:40px 20px;margin-bottom:32px}
+    .hero h2{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+    .hero p{color:var(--text-muted);font-size:1.1rem;max-width:600px;margin:0 auto}
+    .challenge-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+    @media(max-width:768px){.challenge-grid{grid-template-columns:1fr}}
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.3s}
+    .card:hover{border-color:rgba(139,92,246,0.3);box-shadow:0 0 20px rgba(139,92,246,0.1)}
+    .card h3{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .prompt-area{width:100%;min-height:120px;background:#0f172a;border:2px solid var(--border);border-radius:10px;padding:16px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.9rem;resize:vertical;line-height:1.6;transition:border-color 0.3s}
+    .prompt-area:focus{outline:none;border-color:var(--accent)}
+    .prompt-area.good{border-color:var(--success);background:rgba(34,197,94,0.05)}
+    .prompt-area.bad{border-color:var(--danger);background:rgba(239,68,68,0.05)}
+    .prompt-area.readonly{cursor:default;opacity:0.9}
+    .btn{padding:10px 20px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:0.9rem;transition:all 0.2s;font-family:inherit}
+    .btn-primary{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(139,92,246,0.4)}
+    .btn-success{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
+    .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-muted)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-group{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+    .score-display{text-align:center;padding:32px;margin:24px 0}
+    .score-display .score{font-size:5rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .score-display .label{font-size:1.2rem;color:var(--text-muted);margin-top:8px}
+    .progress-bar{width:100%;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;margin:16px 0 8px;overflow:hidden}
+    .progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#8b5cf6,#06b6d4);transition:width 0.5s ease}
+    .challenge-info{font-size:0.85rem;color:var(--text-muted);margin-bottom:12px}
+    .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:600;margin-right:4px}
+    .tag-beginner{background:rgba(34,197,94,0.15);color:#22c55e}
+    .tag-intermediate{background:rgba(245,158,11,0.15);color:#f59e0b}
+    .tag-advanced{background:rgba(239,68,68,0.15);color:#ef4444}
+    .feedback{padding:16px;border-radius:10px;margin-top:12px;font-size:0.9rem;line-height:1.6;display:none}
+    .feedback.show{display:block;animation:slideIn 0.3s ease}
+    .feedback.correct{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#86efac}
+    .feedback.hint{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#fde68a}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .techniques-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+    .technique-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.3s}
+    .technique-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 25px rgba(139,92,246,0.15)}
+    .technique-card h4{font-size:1rem;margin-bottom:8px}
+    .technique-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+    .newsletter{background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(6,182,212,0.1));border:1px solid rgba(139,92,246,0.2);border-radius:16px;padding:32px;text-align:center;margin:32px 0}
+    .newsletter h3{font-size:1.3rem;margin-bottom:8px}
+    .newsletter p{color:var(--text-muted);margin-bottom:16px;font-size:0.9rem}
+    .newsletter-form{display:flex;gap:8px;max-width:400px;margin:0 auto}
+    .newsletter-form input{flex:1;padding:10px 16px;background:#0f172a;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.9rem}
+    .newsletter-form input:focus{outline:none;border-color:var(--accent)}
+    .related-articles{margin:32px 0}
+    .related-articles h3{font-size:1.2rem;margin-bottom:16px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+    .related-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);transition:all 0.3s}
+    .related-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .related-card h4{font-size:0.95rem;margin-bottom:4px;color:var(--accent2)}
+    .related-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.4}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🧪 AI プロンプト練習場</h1>
+    <div class="links">
+      <a href="articles/prompt-engineering-guide.html">📖 ガイドを読む</a>
+      <a href="blog.html">ブログ一覧</a>
+      <a href="index.html">トップ</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h2>プロンプトを書いて、スキルを磨こう</h2>
+      <p>悪い例を良い例に改善する練習問題。5つの原則とテクニックを実践的に学びます。</p>
+    </div>
+
+    <!-- スコアと進捗 -->
+    <div class="card" style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <span style="font-size:0.85rem;color:var(--text-muted)">現在のスコア</span>
+          <div style="font-size:2rem;font-weight:800" id="totalScore">0</div>
+        </div>
+        <div style="flex:1;min-width:200px;max-width:400px">
+          <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-muted)">
+            <span>進捗</span><span id="progressText">0/5 完了</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+        </div>
+        <div>
+          <button class="btn btn-outline" onclick="resetAll()">🔄 リセット</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- チャレンジ一覧 -->
+    <div id="challenges"></div>
+
+    <!-- テクニック解説カード -->
+    <div class="card" style="margin-top:32px">
+      <h3>💡 プロンプトテクニック早見表</h3>
+      <div class="techniques-grid">
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>🎭 Role Prompting</h4>
+          <p>「あなたは○○の専門家です」と役割を与えることで、その分野に特化した回答が得られます。</p>
+        </div>
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>🔗 Chain-of-Thought</h4>
+          <p>「段階的に考えてください」と指示し、思考プロセスを可視化させることで精度を向上。</p>
+        </div>
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>📋 Few-Shot</h4>
+          <p>望む入出力の例を1〜3個提示することで、AIにパターンを理解させます。</p>
+        </div>
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>🔍 Self-Verification</h4>
+          <p>「回答を自己検証してください」と追加することで、ハルシネーションを削減。</p>
+        </div>
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>🎯 Constraint Setting</h4>
+          <p>文字数、言語、フォーマット等の制約を明記し、出力を正確にコントロール。</p>
+        </div>
+        <div class="technique-card" onclick="this.querySelector('p').style.display=this.querySelector('p').style.display==='none'?'block':'none'">
+          <h4>🤖 Agentic Prompting</h4>
+          <p>AIに自律的に計画→実行→検証→修正のサイクルを回させる上級テクニック。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- メルマガ登録フォーム (#13) -->
+    <div class="newsletter">
+      <h3>📬 週刊 TechPulse ニュースレター</h3>
+      <p>AI・Web開発の最新情報を毎週お届け。登録は無料です。</p>
+      <div class="newsletter-form">
+        <input type="email" id="emailInput" placeholder="your@email.com">
+        <button class="btn btn-primary" onclick="subscribeNewsletter()">登録する</button>
+      </div>
+      <div id="newsletterMsg" style="margin-top:8px;font-size:0.85rem;color:var(--success);display:none">✅ 登録ありがとうございます！</div>
+    </div>
+
+    <!-- 関連記事 (#6) -->
+    <div class="related-articles">
+      <h3>📚 関連記事</h3>
+      <div class="related-grid">
+        <a href="articles/prompt-engineering-guide.html" class="related-card">
+          <h4>プロンプトエンジニアリング完全ガイド【2026年最新版】</h4>
+          <p>ChatGPT・Gemini・Claudeで使えるプロンプト設計の実践パターン20選を解説。</p>
+        </a>
+        <a href="articles/ai-trends-2026.html" class="related-card">
+          <h4>2026年のAIトレンド予測：生成AIの次に来るもの</h4>
+          <p>エージェントAI、マルチモーダルAI、オンデバイスAIなど5つのトレンドを解説。</p>
+        </a>
+        <a href="articles/python-data-analysis.html" class="related-card">
+          <h4>Pythonデータ分析入門</h4>
+          <p>pandas, matplotlib, scikit-learnで始めるデータサイエンス実践ガイド。</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/tracker.js"></script>
+  <script>
+    const CHALLENGES = [
+      {
+        id: 1, level: 'beginner', title: 'Role Prompting（役割設定）',
+        desc: '曖昧なプロンプトを、役割を与えて改善してください',
+        bad: 'Pythonのコードを書いて',
+        hint: 'AIに専門家としての役割を与え、具体的なタスクと制約を指定しましょう',
+        keywords: ['あなたは', '専門家', 'エンジニア', 'Python', '型ヒント', 'クリーン'],
+        example: 'あなたはPython歴10年のシニアバックエンドエンジニアです。\nクリーンコードの原則に従い、型ヒント付きで\nユーザー認証APIのコードを書いてください。'
+      },
+      {
+        id: 2, level: 'beginner', title: '出力形式の指定',
+        desc: '出力形式を指定して、使いやすい回答を引き出してください',
+        bad: 'React, Vue, Svelteの違いを教えて',
+        hint: '出力形式（表、箇条書き、JSON等）と比較軸を明記しましょう',
+        keywords: ['表', 'テーブル', '比較', 'メリット', 'デメリット', '形式'],
+        example: '以下の3つのフレームワークを、学習コスト・パフォーマンス・\nエコシステムの3軸で**表形式**で比較してください：\nReact, Vue, Svelte'
+      },
+      {
+        id: 3, level: 'intermediate', title: 'コンテキスト提供',
+        desc: '背景情報を追加して、的確な回答を引き出してください',
+        bad: 'メール文を書いて',
+        hint: '誰が/誰に/何の目的で/どんなトーンで、を全て伝えましょう',
+        keywords: ['目的', '対象', '相手', 'トーン', '背景', 'ビジネス', '丁寧'],
+        example: '私はスタートアップのCTOです。\n投資家に向けた資金調達のお礼メールを書いてください。\n\n条件:\n- 丁寧だが堅すぎないトーン\n- 次回ミーティングの提案を含める\n- 200文字以内'
+      },
+      {
+        id: 4, level: 'intermediate', title: 'Few-Shot Prompting',
+        desc: '例を示して、AIに出力パターンを理解させてください',
+        bad: '技術用語を説明して',
+        hint: '望む出力の具体例を2-3個提示してから、本題を尋ねましょう',
+        keywords: ['例', '以下', '形式', '説明', '用語'],
+        example: '以下の形式で技術用語を説明してください。\n\n用語: API\n説明: ソフトウェア同士が会話するための「窓口」\n\n用語: Docker\n説明: アプリを箱に入れてどこでも動くようにする技術\n\n用語: Kubernetes\n説明: →'
+      },
+      {
+        id: 5, level: 'advanced', title: 'Agentic Prompting',
+        desc: 'AIに自律的に計画→実行→検証させるプロンプトを作成してください',
+        bad: 'AIの市場調査をして',
+        hint: '計画→実行→検証→修正のステップを明示し、自己検証も指示しましょう',
+        keywords: ['計画', 'ステップ', '検証', '修正', '自律', 'エージェント', '批判'],
+        example: 'あなたは自律型リサーチエージェントです。\n以下のタスクを計画→実行→検証のサイクルで完了してください。\n\nタスク: 2026年のAI市場規模の調査レポート作成\n\nステップ:\n1. 調査計画を立てる\n2. 情報源を特定\n3. データ収集・分析\n4. レポート作成\n5. 自分の回答を批判的に検証し、誤りがあれば修正'
+      }
+    ];
+
+    let scores = {};
+    let completed = {};
+
+    function renderChallenges() {
+      const el = document.getElementById('challenges');
+      el.innerHTML = CHALLENGES.map(c => {
+        const levelTag = c.level === 'beginner' ? '<span class="tag tag-beginner">初級</span>' :
+                         c.level === 'intermediate' ? '<span class="tag tag-intermediate">中級</span>' :
+                         '<span class="tag tag-advanced">上級</span>';
+        return `
+        <div class="card" style="margin-bottom:20px" id="challenge-${c.id}">
+          <h3>${levelTag} Challenge ${c.id}: ${c.title}</h3>
+          <p class="challenge-info">${c.desc}</p>
+          <div class="challenge-grid">
+            <div>
+              <div style="font-size:0.8rem;color:var(--danger);font-weight:600;margin-bottom:6px">❌ 悪い例（これを改善）</div>
+              <textarea class="prompt-area bad readonly" readonly>${c.bad}</textarea>
+            </div>
+            <div>
+              <div style="font-size:0.8rem;color:var(--success);font-weight:600;margin-bottom:6px">✅ あなたの改善版</div>
+              <textarea class="prompt-area" id="answer-${c.id}" placeholder="ここに改善したプロンプトを書いてください..."></textarea>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="checkAnswer(${c.id})">📝 採点する</button>
+            <button class="btn btn-outline" onclick="showHint(${c.id})">💡 ヒント</button>
+            <button class="btn btn-outline" onclick="showExample(${c.id})">📖 模範解答</button>
+          </div>
+          <div class="feedback" id="feedback-${c.id}"></div>
+        </div>`;
+      }).join('');
+    }
+
+    function checkAnswer(id) {
+      const c = CHALLENGES.find(ch => ch.id === id);
+      const answer = document.getElementById('answer-' + id).value.trim();
+      const fb = document.getElementById('feedback-' + id);
+
+      if (!answer) {
+        fb.className = 'feedback show hint';
+        fb.innerHTML = '⚠️ まずプロンプトを書いてみてください！';
+        return;
+      }
+
+      let matchCount = 0;
+      c.keywords.forEach(kw => { if (answer.includes(kw)) matchCount++; });
+
+      const score = Math.min(100, Math.round((matchCount / c.keywords.length) * 100) + (answer.length > c.bad.length * 2 ? 20 : 0));
+      scores[id] = score;
+
+      if (score >= 70) {
+        completed[id] = true;
+        fb.className = 'feedback show correct';
+        fb.innerHTML = '🎉 素晴らしい！ <strong>' + score + '点</strong><br>' +
+          (score >= 90 ? 'プロンプトマスターレベルです！' : 'さらに改善できるポイントがあるかも。模範解答を参考にしてみてください。');
+      } else {
+        fb.className = 'feedback show hint';
+        fb.innerHTML = '📝 <strong>' + score + '点</strong> — もう少し改善できます。<br>' +
+          'ヒント: ' + c.hint;
+      }
+      updateProgress();
+    }
+
+    function showHint(id) {
+      const c = CHALLENGES.find(ch => ch.id === id);
+      const fb = document.getElementById('feedback-' + id);
+      fb.className = 'feedback show hint';
+      fb.innerHTML = '💡 ヒント: ' + c.hint;
+    }
+
+    function showExample(id) {
+      const c = CHALLENGES.find(ch => ch.id === id);
+      document.getElementById('answer-' + id).value = c.example;
+      const fb = document.getElementById('feedback-' + id);
+      fb.className = 'feedback show correct';
+      fb.innerHTML = '📖 これが模範解答です。ポイントを理解して、自分の言葉で書いてみましょう！';
+    }
+
+    function updateProgress() {
+      const total = Object.values(scores).reduce((a, b) => a + b, 0);
+      const done = Object.keys(completed).length;
+      document.getElementById('totalScore').textContent = total;
+      document.getElementById('progressText').textContent = done + '/' + CHALLENGES.length + ' 完了';
+      document.getElementById('progressBar').style.width = (done / CHALLENGES.length * 100) + '%';
+    }
+
+    function resetAll() {
+      scores = {}; completed = {};
+      CHALLENGES.forEach(c => {
+        document.getElementById('answer-' + c.id).value = '';
+        document.getElementById('feedback-' + c.id).className = 'feedback';
+      });
+      updateProgress();
+    }
+
+    function subscribeNewsletter() {
+      const email = document.getElementById('emailInput').value;
+      if (email && email.includes('@')) {
+        document.getElementById('newsletterMsg').style.display = 'block';
+        document.getElementById('emailInput').value = '';
+      }
+    }
+
+    renderChallenges();
+  </script>
+</body>
+</html>
