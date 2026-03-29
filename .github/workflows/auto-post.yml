@@ -38,11 +38,20 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Auto Tweet newly generated article
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        run: node scripts/auto-tweet.js
+
       - name: Commit and Push changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -A
-          git commit -m "Auto-generated new article from RSS and updated sitemap/blog"
+          git commit -m "Auto-generated new article from RSS and automatically tweeted notification"
           git push
