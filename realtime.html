@@ -273,8 +273,18 @@
       // 地図
       renderMapDots(activeVisitors);
 
-      // 訪問者リスト（最近のログから表示）
-      const allVisitors = recentVisits.length > 0 ? recentVisits : activeVisitors;
+      // 訪問者リスト（アクティブ + ログをマージ、最新順）
+      const activeWithTime = activeVisitors.map(v => ({ ...v, timestamp: v.lastActive || v.timestamp }));
+      const merged = [...activeWithTime, ...recentVisits];
+      const seen = new Set();
+      const allVisitors = merged
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .filter(v => {
+          const key = v.sessionId || v.id || (v.country + v.page + v.timestamp);
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
       const listEl = document.getElementById('visitorList');
       if (allVisitors.length === 0) {
         listEl.innerHTML = '<div class="empty-state">まだ訪問者がいません。サイトにアクセスすると表示されます。</div>';
