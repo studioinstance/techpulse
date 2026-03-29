@@ -113,8 +113,18 @@
     .article-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; }
     .article-list li:last-child { border-bottom: none; }
     .article-list .cat { font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; background: rgba(6,182,212,0.1); color: var(--accent); white-space: nowrap; }
+    .article-list .new-badge { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: rgba(239,68,68,0.2); color: #ef4444; margin-left: 6px; font-weight: 700; }
 
     .dash-footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 40px; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 24px; margin-bottom: 40px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent), var(--accent2), var(--success)); }
+    .timeline-item { position: relative; margin-bottom: 20px; padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; }
+    .timeline-item::before { content: ''; position: absolute; left: -20px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    .timeline-date { font-size: 0.72rem; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+    .timeline-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .timeline-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -154,46 +164,143 @@
     <div style="display: flex; align-items: center; gap: 16px;">
       <span class="clock" id="clock"></span>
       <a href="realtime.html" class="site-link" style="background:rgba(239,68,68,0.1);border-color:#ef4444;color:#ef4444;">📡 リアルタイム分析</a>
+      <a href="prompt-playground.html" class="site-link" style="background:rgba(139,92,246,0.1);border-color:#8b5cf6;color:#8b5cf6;">🧪 練習場</a>
       <a href="index.html" class="site-link">🌐 サイトを表示</a>
+      <a href="en/index.html" class="site-link" style="background:rgba(6,182,212,0.1);border-color:#06b6d4;color:#06b6d4;">🇬🇧 English</a>
     </div>
   </header>
 
   <main class="dash-main">
     <!-- Summary -->
     <div class="summary-bar">
-      <div class="summary-item"><div class="num">13</div><div class="label">公開記事</div></div>
-      <div class="summary-item"><div class="num">6</div><div class="label">連携サービス</div></div>
-      <div class="summary-item"><div class="num">10</div><div class="label">GSCインデックス済</div></div>
+      <div class="summary-item"><div class="num">16</div><div class="label">公開記事（JP）</div></div>
+      <div class="summary-item"><div class="num">15</div><div class="label">公開記事（EN）</div></div>
+      <div class="summary-item"><div class="num">7</div><div class="label">連携サービス</div></div>
+      <div class="summary-item"><div class="num">16</div><div class="label">GA計測中</div></div>
+      <div class="summary-item"><div class="num">16</div><div class="label">AdSense導入済</div></div>
       <div class="summary-item"><div class="num">5</div><div class="label">はてブ登録済</div></div>
       <div class="summary-item"><div class="num">1</div><div class="label">Zenn記事</div></div>
       <div class="summary-item"><div class="num">¥0</div><div class="label">月額コスト</div></div>
+    </div>
+
+    <!-- 最近の活動タイムライン -->
+    <div class="section-title">🕐 最近の活動タイムライン</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/29</div>
+        <div class="timeline-title">🌐 英語版サイト完全構築（i18n対応）</div>
+        <div class="timeline-desc">全15記事の英語翻訳を完了。/en/ サブディレクトリ構造でEN版サイトを構築。hreflangタグ、サイトマップ多言語対応済み。国際トラフィックの獲得を強化。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/29</div>
+        <div class="timeline-title">🧠 プロンプトエンジニアリング完全ガイド公開</div>
+        <div class="timeline-desc">約1万文字の大型記事を日英両方で公開。ChatGPT/Gemini/Claude比較、実践パターン20選、6要素構造を網羅。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/29</div>
+        <div class="timeline-title">🧪 AI プロンプト練習場をリリース</div>
+        <div class="timeline-desc">プロンプトエンジニアリングをインタラクティブに学べるツール。5問のチャレンジ＆自動採点機能付き。ユーザーエンゲージメント強化。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/29</div>
+        <div class="timeline-title">📡 リアルタイムアクセス分析ダッシュボード</div>
+        <div class="timeline-desc">Firebase Realtime Databaseを活用し、世界地図上にリアルタイムアクセスを可視化。デバイス・地域・人気ページ分析機能搭載。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/29</div>
+        <div class="timeline-title">📊 Next.js 15 完全マスターガイド公開</div>
+        <div class="timeline-desc">約1万字の保存版ガイド。RSC、Server Actions、PPR、Turbopackを網羅した技術記事を公開。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/28</div>
+        <div class="timeline-title">📈 Google Analytics / AdSense / Search Console全記事対応</div>
+        <div class="timeline-desc">全16記事にGA4トラッキング + AdSense広告タグを導入。GSCインデックス登録リクエスト完了。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/28</div>
+        <div class="timeline-title">🔍 コンテンツギャップ分析ツール開発</div>
+        <div class="timeline-desc">既存記事のカバー範囲を分析し、検索需要の高い未開拓テーマを自動発見するPythonスクリプトを開発。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026/03/28</div>
+        <div class="timeline-title">🐦 SNSシェアコンテンツ＆Zennクロスポスト</div>
+        <div class="timeline-desc">X(Twitter)投稿用テンプレート10本、Zennクロスポスト用記事5本のマークダウンを生成。</div>
+      </div>
     </div>
 
     <!-- 集客施策 -->
     <div class="section-title">📈 実施済み集客施策</div>
     <div class="task-grid">
 
+      <!-- 英語版サイト構築 -->
+      <div class="task-card done">
+        <div class="task-header"><span class="icon">🌐</span><span class="badge done"><span class="dot"></span>完了</span></div>
+        <div class="task-name">英語版サイト国際化 (i18n)</div>
+        <div class="task-desc">全記事を英訳し /en/ サブディレクトリで公開。hreflangタグ、サイトマップ多言語対応、言語切替UI実装。</div>
+        <div class="task-details">
+          <div class="detail-row"><span class="detail-label">英語記事数</span><span class="detail-value">15本</span></div>
+          <div class="detail-row"><span class="detail-label">EN トップ</span><a href="https://studioinstance.github.io/techpulse/en/index.html" target="_blank" class="detail-value link">en/index.html</a></div>
+          <div class="detail-row"><span class="detail-label">実施日</span><span class="detail-value">2026/03/29</span></div>
+        </div>
+      </div>
+
+      <!-- プロンプト練習場 -->
+      <div class="task-card done">
+        <div class="task-header"><span class="icon">🧪</span><span class="badge done"><span class="dot"></span>完了</span></div>
+        <div class="task-name">AI プロンプト練習場リリース</div>
+        <div class="task-desc">5問のチャレンジ＆自動採点で、プロンプトエンジニアリングを実践的に学べるインタラクティブツール。</div>
+        <div class="task-details">
+          <div class="detail-row"><span class="detail-label">チャレンジ数</span><span class="detail-value">5問</span></div>
+          <div class="detail-row"><span class="detail-label">ページ</span><a href="https://studioinstance.github.io/techpulse/prompt-playground.html" target="_blank" class="detail-value link">prompt-playground.html</a></div>
+          <div class="detail-row"><span class="detail-label">実施日</span><span class="detail-value">2026/03/29</span></div>
+        </div>
+      </div>
+
+      <!-- リアルタイム分析 -->
+      <div class="task-card done">
+        <div class="task-header"><span class="icon">📡</span><span class="badge done"><span class="dot"></span>完了</span></div>
+        <div class="task-name">リアルタイムアクセス分析</div>
+        <div class="task-desc">Firebase Realtime Database連携で、世界地図上にリアルタイムアクセスを可視化。デバイス・地域分析搭載。</div>
+        <div class="task-details">
+          <div class="detail-row"><span class="detail-label">データソース</span><span class="detail-value">Firebase RTDB</span></div>
+          <div class="detail-row"><span class="detail-label">ページ</span><a href="https://studioinstance.github.io/techpulse/realtime.html" target="_blank" class="detail-value link">realtime.html</a></div>
+          <div class="detail-row"><span class="detail-label">実施日</span><span class="detail-value">2026/03/29</span></div>
+        </div>
+      </div>
+
       <!-- GSC インデックス -->
       <div class="task-card done">
         <div class="task-header"><span class="icon">🔍</span><span class="badge done"><span class="dot"></span>完了</span></div>
         <div class="task-name">Google Search Console インデックス登録</div>
-        <div class="task-desc">サイトマップ再送信＋新記事10本のインデックス登録リクエストを実施。Googleの検索結果に数日〜1週間で反映開始。</div>
+        <div class="task-desc">サイトマップ再送信＋全記事のインデックス登録リクエストを実施。Googleの検索結果への反映待ち。</div>
         <div class="task-details">
           <div class="detail-row"><span class="detail-label">sitemap.xml送信</span><span class="detail-value">✅ 送信済み</span></div>
-          <div class="detail-row"><span class="detail-label">インデックスリクエスト</span><span class="detail-value">10/10 完了</span></div>
-          <div class="detail-row"><span class="detail-label">実施日</span><span class="detail-value">2026/03/28</span></div>
+          <div class="detail-row"><span class="detail-label">インデックスリクエスト</span><span class="detail-value">16/16 完了</span></div>
+          <div class="detail-row"><span class="detail-label">実施日</span><span class="detail-value">2026/03/28-29</span></div>
+        </div>
+      </div>
+
+      <!-- GA4 + AdSense -->
+      <div class="task-card done">
+        <div class="task-header"><span class="icon">📊</span><span class="badge done"><span class="dot"></span>完了</span></div>
+        <div class="task-name">Google Analytics + AdSense 全記事導入</div>
+        <div class="task-desc">全16記事（JP/EN合計31ページ）にGA4トラッキング + AdSense広告タグを導入完了。</div>
+        <div class="task-details">
+          <div class="detail-row"><span class="detail-label">GA4 ID</span><span class="detail-value">G-G0K0FCE368</span></div>
+          <div class="detail-row"><span class="detail-label">AdSense ID</span><span class="detail-value">ca-pub-4279561450700157</span></div>
+          <div class="detail-row"><span class="detail-label">対象ページ</span><span class="detail-value">31ページ（JP16 + EN15）</span></div>
         </div>
       </div>
 
       <!-- コンテンツ拡充 -->
       <div class="task-card done">
         <div class="task-header"><span class="icon">📝</span><span class="badge done"><span class="dot"></span>完了</span></div>
-        <div class="task-name">コンテンツ量産（記事10本追加）</div>
-        <div class="task-desc">SEO最適化済みの高品質テック記事10本を新規作成。JSON-LD、OGP、シェアボタン完備。合計13記事に拡充</div>
+        <div class="task-name">コンテンツ量産（記事16本）</div>
+        <div class="task-desc">SEO最適化済みの高品質テック記事16本を作成。JSON-LD、OGP、シェアボタン完備。</div>
         <div class="task-details">
-          <div class="detail-row"><span class="detail-label">追加記事数</span><span class="detail-value">10本</span></div>
-          <div class="detail-row"><span class="detail-label">合計記事数</span><span class="detail-value">13本</span></div>
-          <div class="detail-row"><span class="detail-label">カテゴリ</span><span class="detail-value">7分野</span></div>
+          <div class="detail-row"><span class="detail-label">日本語記事数</span><span class="detail-value">16本</span></div>
+          <div class="detail-row"><span class="detail-label">英語記事数</span><span class="detail-value">15本</span></div>
+          <div class="detail-row"><span class="detail-label">カテゴリ</span><span class="detail-value">8分野</span></div>
         </div>
       </div>
 
@@ -212,7 +319,7 @@
       <div class="task-card done">
         <div class="task-header"><span class="icon">✍️</span><span class="badge done"><span class="dot"></span>完了</span></div>
         <div class="task-name">Zenn クロスポスト</div>
-        <div class="task-desc">Zennにアカウントを作成し、Docker入門記事を投稿（下書き）。TechPulseへの流入経路を確立。</div>
+        <div class="task-desc">Zennにアカウントを作成し、Docker入門記事を投稿。TechPulseへの流入経路を確立。</div>
         <div class="task-details">
           <div class="detail-row"><span class="detail-label">投稿記事</span><span class="detail-value">Docker入門</span></div>
           <div class="detail-row"><span class="detail-label">アカウント</span><a href="https://zenn.dev/instancestudio2" target="_blank" class="detail-value link">instancestudio2</a></div>
@@ -226,7 +333,7 @@
         <div class="task-name">RSSフィード＆技術SEO</div>
         <div class="task-desc">feed.xml新規作成、robots.txt改善、404ページ作成、サイトマップ更新。検索エンジン最適化の基盤を強化。</div>
         <div class="task-details">
-          <div class="detail-row"><span class="detail-label">feed.xml</span><span class="detail-value">✅ 13記事配信</span></div>
+          <div class="detail-row"><span class="detail-label">feed.xml</span><span class="detail-value">✅ 16記事配信</span></div>
           <div class="detail-row"><span class="detail-label">robots.txt</span><span class="detail-value">✅ RSS参照追加</span></div>
           <div class="detail-row"><span class="detail-label">404.html</span><span class="detail-value">✅ 新規作成</span></div>
         </div>
@@ -236,19 +343,34 @@
       <div class="task-card done">
         <div class="task-header"><span class="icon">🐦</span><span class="badge done"><span class="dot"></span>完了</span></div>
         <div class="task-name">SNSシェア用コンテンツ準備</div>
-        <div class="task-desc">X(Twitter)投稿用のツイート文10本と、Zennクロスポスト用記事3本のマークダウンを自動生成。</div>
+        <div class="task-desc">X(Twitter)投稿用のツイート文10本と、Zennクロスポスト用記事5本のマークダウンを自動生成。</div>
         <div class="task-details">
           <div class="detail-row"><span class="detail-label">ツイート文</span><span class="detail-value">10本（コピペ可）</span></div>
-          <div class="detail-row"><span class="detail-label">Zenn記事</span><span class="detail-value">3本（下書き）</span></div>
+          <div class="detail-row"><span class="detail-label">Zenn記事</span><span class="detail-value">5本（下書き）</span></div>
           <div class="detail-row"><span class="detail-label">残作業</span><span class="detail-value">X投稿＆Zenn公開</span></div>
+        </div>
+      </div>
+
+      <!-- コンテンツギャップ分析 -->
+      <div class="task-card done">
+        <div class="task-header"><span class="icon">🔬</span><span class="badge done"><span class="dot"></span>完了</span></div>
+        <div class="task-name">コンテンツギャップ分析ツール</div>
+        <div class="task-desc">既存記事のカバー範囲を分析し、検索需要の高い未開拓テーマを自動で発見・レコメンドするPythonスクリプト。</div>
+        <div class="task-details">
+          <div class="detail-row"><span class="detail-label">スクリプト</span><span class="detail-value">content-gap-finder.py</span></div>
+          <div class="detail-row"><span class="detail-label">分析トピック</span><span class="detail-value">24テーマ</span></div>
+          <div class="detail-row"><span class="detail-label">出力形式</span><span class="detail-value">HTMLレポート</span></div>
         </div>
       </div>
     </div>
 
-    <!-- 公開記事 -->
-    <div class="section-title">📄 公開記事一覧（13本）</div>
-    <div class="task-card" style="margin-bottom: 40px;">
+    <!-- 公開記事 JP -->
+    <div class="section-title">📄 日本語記事一覧（16本）</div>
+    <div class="task-card" style="margin-bottom: 20px;">
       <ul class="article-list">
+        <li><a href="https://studioinstance.github.io/techpulse/articles/prompt-engineering-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">プロンプトエンジニアリング完全ガイド【2026年最新版】</a><span><span class="new-badge">NEW</span><span class="cat">AI Special</span></span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/articles/nextjs-15-master-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">Next.js 15 App Router 完全マスターガイド【保存版】</a><span><span class="new-badge">NEW</span><span class="cat">Web開発</span></span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/articles/tech-trend-2026-03-28.html" target="_blank" style="color:var(--text);text-decoration:none;">今週のテックトレンドまとめ（2026-03-28）</a><span><span class="new-badge">NEW</span><span class="cat">トレンド</span></span></li>
         <li><a href="https://studioinstance.github.io/techpulse/articles/docker-introduction.html" target="_blank" style="color:var(--text);text-decoration:none;">Docker入門：コンテナ技術を30分で理解する</a><span class="cat">DevOps</span></li>
         <li><a href="https://studioinstance.github.io/techpulse/articles/typescript-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">TypeScript入門：完全ガイド</a><span class="cat">Web開発</span></li>
         <li><a href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" target="_blank" style="color:var(--text);text-decoration:none;">Pythonで始めるデータ分析入門</a><span class="cat">データ</span></li>
@@ -265,33 +387,67 @@
       </ul>
     </div>
 
+    <!-- 公開記事 EN -->
+    <div class="section-title">🇬🇧 英語記事一覧（15本）</div>
+    <div class="task-card" style="margin-bottom: 40px;">
+      <ul class="article-list">
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/prompt-engineering-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">Prompt Engineering Complete Guide [2026]</a><span class="cat">AI Special</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/nextjs-15-master-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">Next.js 15 App Router Master Guide</a><span class="cat">Web Dev</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/docker-introduction.html" target="_blank" style="color:var(--text);text-decoration:none;">Docker Introduction: Containers in 30 Minutes</a><span class="cat">DevOps</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/typescript-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">TypeScript Complete Guide</a><span class="cat">Web Dev</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html" target="_blank" style="color:var(--text);text-decoration:none;">Python Data Analysis for Beginners</a><span class="cat">Data</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/vscode-extensions.html" target="_blank" style="color:var(--text);text-decoration:none;">Top 20 VS Code Extensions [2026]</a><span class="cat">Tools</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html" target="_blank" style="color:var(--text);text-decoration:none;">Google Cloud Run Introduction</a><span class="cat">Cloud</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html" target="_blank" style="color:var(--text);text-decoration:none;">OWASP Top 10 Web Security Guide</a><span class="cat">Security</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/react-native-vs-flutter.html" target="_blank" style="color:var(--text);text-decoration:none;">React Native vs Flutter: 2026 Guide</a><span class="cat">Mobile</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/rest-api-design.html" target="_blank" style="color:var(--text);text-decoration:none;">REST API Design Best Practices</a><span class="cat">Web Dev</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/git-github-guide.html" target="_blank" style="color:var(--text);text-decoration:none;">Git/GitHub Complete Guide</a><span class="cat">DevOps</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/web-performance.html" target="_blank" style="color:var(--text);text-decoration:none;">Web Performance Optimization Techniques</a><span class="cat">Web Dev</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/ai-trends-2026.html" target="_blank" style="color:var(--text);text-decoration:none;">AI Trends 2026 Predictions</a><span class="cat">AI</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/nextjs-15-features.html" target="_blank" style="color:var(--text);text-decoration:none;">Next.js 15 New Features Deep Dive</a><span class="cat">Web Dev</span></li>
+        <li><a href="https://studioinstance.github.io/techpulse/en/articles/github-actions-cicd.html" target="_blank" style="color:var(--text);text-decoration:none;">GitHub Actions CI/CD in 30 Minutes</a><span class="cat">DevOps</span></li>
+      </ul>
+    </div>
+
     <!-- 連携サービス -->
     <div class="section-title">🔗 連携サービス</div>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-header"><span class="icon">🔍</span><span class="status active"><span class="dot"></span>稼働中</span></div>
         <div class="service-name">Google Search Console</div>
-        <div class="service-desc">検索パフォーマンス分析、インデックス管理、サイトマップ管理</div>
+        <div class="service-desc">検索パフォーマンス分析、インデックス管理、サイトマップ管理。全16記事+EN15記事のインデックス済み。</div>
         <div class="service-actions">
           <a href="https://search.google.com/search-console?resource_id=https%3A%2F%2Fstudioinstance.github.io%2Ftechpulse%2F" target="_blank" class="btn-dash btn-primary-dash">📊 管理画面</a>
           <a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fstudioinstance.github.io%2Ftechpulse%2F" target="_blank" class="btn-dash btn-secondary-dash">検索パフォーマンス</a>
+          <a href="https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fstudioinstance.github.io%2Ftechpulse%2F" target="_blank" class="btn-dash btn-secondary-dash">サイトマップ</a>
         </div>
       </div>
       <div class="service-card">
         <div class="service-header"><span class="icon">📈</span><span class="status active"><span class="dot"></span>計測中</span></div>
         <div class="service-name">Google Analytics (GA4)</div>
-        <div class="service-desc">アクセス解析、ユーザー行動分析、コンバージョン追跡</div>
+        <div class="service-desc">アクセス解析、ユーザー行動分析、コンバージョン追跡。ID: G-G0K0FCE368</div>
         <div class="service-actions">
           <a href="https://analytics.google.com/" target="_blank" class="btn-dash btn-primary-dash">📊 管理画面</a>
           <a href="https://analytics.google.com/analytics/web/#/realtime" target="_blank" class="btn-dash btn-secondary-dash">リアルタイム</a>
+          <a href="https://analytics.google.com/analytics/web/#/report/content-pages" target="_blank" class="btn-dash btn-secondary-dash">ページレポート</a>
         </div>
       </div>
       <div class="service-card">
         <div class="service-header"><span class="icon">💰</span><span class="status pending"><span class="dot"></span>審査中</span></div>
         <div class="service-name">Google AdSense</div>
-        <div class="service-desc">広告収益化。審査通過後、サイトに広告が自動表示</div>
+        <div class="service-desc">広告収益化。全記事に広告タグ導入済み。PubID: ca-pub-4279561450700157</div>
         <div class="service-actions">
           <a href="https://www.google.com/adsense/" target="_blank" class="btn-dash btn-primary-dash">💰 管理画面</a>
+          <a href="https://www.google.com/adsense/new/u/0/pub-4279561450700157/home" target="_blank" class="btn-dash btn-secondary-dash">収益レポート</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-header"><span class="icon">🔥</span><span class="status active"><span class="dot"></span>稼働中</span></div>
+        <div class="service-name">Firebase Realtime Database</div>
+        <div class="service-desc">リアルタイムアクセストラッキング。訪問者のIP、デバイス、ページを記録。</div>
+        <div class="service-actions">
+          <a href="https://console.firebase.google.com/project/techpulse-analytics/database/techpulse-analytics-default-rtdb/data" target="_blank" class="btn-dash btn-primary-dash">🔥 Firebase Console</a>
+          <a href="realtime.html" class="btn-dash btn-secondary-dash">📡 リアルタイム分析</a>
         </div>
       </div>
       <div class="service-card">
@@ -325,18 +481,26 @@
     <div class="section-title">⚡ クイックリンク</div>
     <div class="quick-links">
       <a href="https://studioinstance.github.io/techpulse/" target="_blank" class="quick-link"><span class="ql-icon">🏠</span><span class="ql-label">TechPulse トップ</span></a>
+      <a href="https://studioinstance.github.io/techpulse/en/index.html" target="_blank" class="quick-link"><span class="ql-icon">🇬🇧</span><span class="ql-label">English Site</span></a>
       <a href="https://studioinstance.github.io/techpulse/blog.html" target="_blank" class="quick-link"><span class="ql-icon">📝</span><span class="ql-label">ブログ一覧</span></a>
+      <a href="https://studioinstance.github.io/techpulse/en/blog.html" target="_blank" class="quick-link"><span class="ql-icon">📝</span><span class="ql-label">Blog (EN)</span></a>
+      <a href="https://studioinstance.github.io/techpulse/prompt-playground.html" target="_blank" class="quick-link"><span class="ql-icon">🧪</span><span class="ql-label">プロンプト練習場</span></a>
+      <a href="https://studioinstance.github.io/techpulse/articles/prompt-engineering-guide.html" target="_blank" class="quick-link"><span class="ql-icon">🧠</span><span class="ql-label">プロンプトガイド</span></a>
       <a href="https://studioinstance.github.io/techpulse/feed.xml" target="_blank" class="quick-link"><span class="ql-icon">📡</span><span class="ql-label">RSSフィード</span></a>
       <a href="https://studioinstance.github.io/techpulse/sitemap.xml" target="_blank" class="quick-link"><span class="ql-icon">🗺️</span><span class="ql-label">サイトマップ</span></a>
       <a href="https://b.hatena.ne.jp/StudioInstance/" target="_blank" class="quick-link"><span class="ql-icon">🔖</span><span class="ql-label">はてブマイページ</span></a>
-      <a href="https://zenn.dev/dashboard" target="_blank" class="quick-link"><span class="ql-icon">✍️</span><span class="ql-label">Zennダッシュボード</span></a>
+      <a href="https://zenn.dev/instancestudio2" target="_blank" class="quick-link"><span class="ql-icon">✍️</span><span class="ql-label">Zenn プロフィール</span></a>
       <a href="https://github.com/studioinstance/techpulse/actions" target="_blank" class="quick-link"><span class="ql-icon">🔄</span><span class="ql-label">GitHub Actions</span></a>
       <a href="https://studioinstance.github.io/techpulse/about.html" target="_blank" class="quick-link"><span class="ql-icon">ℹ️</span><span class="ql-label">About ページ</span></a>
+      <a href="https://search.google.com/search-console?resource_id=https%3A%2F%2Fstudioinstance.github.io%2Ftechpulse%2F" target="_blank" class="quick-link"><span class="ql-icon">🔍</span><span class="ql-label">Search Console</span></a>
+      <a href="https://analytics.google.com/" target="_blank" class="quick-link"><span class="ql-icon">📈</span><span class="ql-label">Google Analytics</span></a>
+      <a href="https://www.google.com/adsense/" target="_blank" class="quick-link"><span class="ql-icon">💰</span><span class="ql-label">Google AdSense</span></a>
+      <a href="https://console.firebase.google.com/" target="_blank" class="quick-link"><span class="ql-icon">🔥</span><span class="ql-label">Firebase Console</span></a>
     </div>
   </main>
 
   <footer class="dash-footer">
-    <p>⚡ TechPulse Management Dashboard — 最終更新: 2026/03/28</p>
+    <p>⚡ TechPulse Management Dashboard — 最終更新: 2026/03/29</p>
   </footer>
 
   <script>
