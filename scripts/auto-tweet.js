@@ -3,9 +3,16 @@ const { TwitterApi } = require('twitter-api-v2');
 console.log('🤖 Auto-Tweet bot executing...');
 
 const DATE_STR = new Date().toISOString().split('T')[0];
-const SITE_URL = 'https://studioinstance.github.io/techpulse/blog.html';
+const SITE_URL = 'https://studioinstance.github.io/techpulse/articles/ai-future-and-engineers-2026.html';
 
-const tweetText = `🚨【更新情報】\n今週の最新AIドキュメント・トレンド（${DATE_STR}）を自動生成＆公開しました！\n\nLLM、生成AIの動向をさくっとチェック👇\n${SITE_URL}\n\n#TechPulse #AI #ChatGPT #生成AI #テックブログ`;
+const tweetText = `🧭【新記事公開】AI時代にITエンジニアはどう生き残るか？
+
+雇用市場の最新データ、需給バランスの構造変化、求められる5つのスキル、具体的アクションプランを徹底解説しました。
+
+全エンジニア必読👇
+${SITE_URL}
+
+#TechPulse #AI #エンジニア #キャリア #生成AI`;
 
 async function main() {
   const client = new TwitterApi({
