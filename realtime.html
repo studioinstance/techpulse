@@ -283,10 +283,10 @@
         listEl.innerHTML = allVisitors.slice(0, 25).map(v => {
           const cc = v.country || 'XX';
           const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: v.countryName || cc };
-          const displayName = info.name || v.countryName || cc;
           const isMe = v.sessionId === sessionId || v.id === sessionId;
+          const displayName = info.name || v.countryName || cc;
           const youBadge = isMe ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px;font-size:0.65rem;margin-left:6px;">YOU</span>' : '';
-          const time = v.timestamp ? new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+          const time = v.timestamp ? new Date(v.timestamp).toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' }) + ' ' + new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
           return `
             <div class="visitor-item">
               <div class="visitor-flag">${info.flag}</div>
