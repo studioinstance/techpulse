@@ -2,31 +2,31 @@
    Design System & Variables
    =========================== */
 :root {
-  --color-primary: #f8fafc;        /* 白に近い色 */
-  --color-primary-light: #f1f5f9;
-  --color-primary-dark: #64748b;
-  --color-accent: #3b82f6;         /* 繊細なブルーアクセント */
-  --color-accent-light: #60a5fa;
-  --color-bg: #0a0a0a;             /* 深い無彩色の黒 */
-  --color-bg-card: rgba(255, 255, 255, 0.02); /* 薄い透明 */
-  --color-bg-card-hover: rgba(255, 255, 255, 0.05);
-  --color-surface: #121212;
-  --color-text: #ededed;           /* シャープな白 */
-  --color-text-muted: #a1a1aa;     /* 落ち着いたZincグレー */
-  --color-border: rgba(255, 255, 255, 0.08); /* 非常に微細なボーダー */
+  --color-primary: #ffffff;
+  --color-primary-light: #f5f5f5;
+  --color-primary-dark: #a3a3a3;
+  --color-accent: #ffffff;         /* モノトーンのアクセント */
+  --color-accent-light: #e5e5e5;
+  --color-bg: #000000;             /* 深い純黒 */
+  --color-bg-card: #0a0a0a;
+  --color-bg-card-hover: #121212;
+  --color-surface: #000000;
+  --color-text: #ededed;
+  --color-text-muted: #888888;
+  --color-border: rgba(255, 255, 255, 0.1);
   --color-success: #10b981;
   --color-warning: #f59e0b;
-  --gradient-primary: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
-  --gradient-hero: radial-gradient(circle at top, #1c1c1c 0%, #0a0a0a 100%);
+  --gradient-primary: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+  --gradient-hero: radial-gradient(circle at top, #111111 0%, #000000 100%);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.05);
+  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.08); /* 繊細な発光 */
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-md: 8px; /* Linear風に角をわずかにシャープに */
+  --radius-lg: 12px;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ===========================
@@ -43,6 +43,13 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-padding-top: 90px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 body {
