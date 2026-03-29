@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 28 Mar 2026 12:00:00 +0900</lastBuildDate>
     <atom:link href="https://studioinstance.github.io/techpulse/feed.xml" rel="self" type="application/rss+xml"/>
 
+    <item>
+      <title>AI プロンプト練習場 — インタラクティブに学ぶプロンプトエンジニアリング</title>
+      <link>https://studioinstance.github.io/techpulse/prompt-playground.html</link>
+      <description>プロンプトエンジニアリングをインタラクティブに練習できるツール。5つのチャレンジ問題で実践スキルを身につけよう。</description>
+      <pubDate>Sat, 29 Mar 2026 12:00:00 +0900</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/prompt-playground.html</guid>
+      <category>AI</category>
+    </item>
     
     <item>
       <title>プロンプトエンジニアリング完全ガイド【2026年最新版】</title>
