@@ -7,10 +7,10 @@
   const GEO_API = 'https://ipapi.co/json/';
   const SESSION_KEY = 'tp_session';
   const HEARTBEAT_INTERVAL = 60000; // 60秒ごと（API負荷軽減）
-  const RATE_LIMIT_KEY = 'tp_last_write';
+  const RATE_LIMIT_KEY = 'tp_rl_v2';
   const RATE_LIMIT_MS = 10000; // 最低10秒間隔で書き込み（DDoS防止）
-  const MAX_VISITS_PER_SESSION = 500; // 1セッションあたり最大500件の訪問ログ(検証のため引き上げ)
-  const VISIT_COUNT_KEY = 'tp_visit_count';
+  const MAX_VISITS_PER_SESSION = 500; // 1セッションあたり最大500件の訪問ログ
+  const VISIT_COUNT_KEY = 'tp_vc_v2';
 
   // ===== レート制限チェック =====
   function isRateLimited() {
