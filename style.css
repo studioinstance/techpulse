@@ -895,14 +895,16 @@ p {
 
 /* Article Body — Typography Optimized for Reading */
 .article-content {
-  font-size: 1.08rem;
-  line-height: 1.95;
-  color: #cbd5e1;
+  font-size: 1.12rem;
+  line-height: 2.05;
+  color: #e2e8f0;
+  letter-spacing: 0.01em;
+  font-weight: 400;
 }
 
 .article-content p {
-  margin-bottom: 1.5em;
-  color: #cbd5e1;
+  margin-bottom: 1.8em;
+  color: #e2e8f0;
   font-size: inherit;
 }
 
@@ -920,45 +922,52 @@ p {
 
 /* Headings inside article */
 .article-content h2 {
-  font-size: 1.65rem;
-  color: #f1f5f9;
-  margin-top: 56px;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid rgba(99,102,241,0.2);
+  font-size: 1.6rem;
+  color: #f8fafc;
+  margin-top: 64px;
+  margin-bottom: 24px;
+  padding: 14px 0 14px 18px;
+  border-left: 4px solid #818cf8;
+  border-bottom: none;
+  background: rgba(99,102,241,0.06);
+  border-radius: 0 8px 8px 0;
   font-weight: 700;
   letter-spacing: -0.01em;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .article-content h3 {
-  font-size: 1.3rem;
-  color: #a5b4fc;
-  margin-top: 40px;
-  margin-bottom: 14px;
+  font-size: 1.25rem;
+  color: #fbbf24;
+  margin-top: 44px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(251,191,36,0.15);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .article-content h4 {
   font-size: 1.1rem;
-  color: #e2e8f0;
-  margin-top: 28px;
-  margin-bottom: 10px;
+  color: #f1f5f9;
+  margin-top: 32px;
+  margin-bottom: 12px;
   font-weight: 600;
+  padding-left: 12px;
+  border-left: 3px solid rgba(255,255,255,0.15);
 }
 
 /* Lists */
 .article-content ul,
 .article-content ol {
-  margin-bottom: 1.5em;
-  padding-left: 1.5em;
+  margin-bottom: 1.8em;
+  padding-left: 1.6em;
 }
 
 .article-content li {
-  margin-bottom: 0.6em;
-  color: #cbd5e1;
-  line-height: 1.8;
+  margin-bottom: 0.7em;
+  color: #e2e8f0;
+  line-height: 1.9;
 }
 
 .article-content li::marker {
@@ -995,13 +1004,15 @@ p {
 
 /* Blockquote */
 .article-content blockquote {
-  margin: 24px 0;
-  padding: 16px 24px;
+  margin: 28px 0;
+  padding: 18px 24px;
   border-left: 4px solid #818cf8;
   background: rgba(99,102,241,0.06);
   border-radius: 0 10px 10px 0;
-  color: #94a3b8;
-  font-style: italic;
+  color: #cbd5e1;
+  font-style: normal;
+  font-size: 1.02rem;
+  line-height: 1.85;
 }
 
 /* Images in articles */
@@ -1013,24 +1024,24 @@ p {
 
 /* Strong / Bold */
 .article-content strong {
-  color: #f1f5f9;
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 /* Table of Contents */
 .toc {
-  background: rgba(99,102,241,0.04);
-  border: 1px solid rgba(99,102,241,0.15);
-  padding: 24px 28px;
-  border-radius: 14px;
-  margin: 36px 0;
+  background: rgba(30,41,59,0.7);
+  border: 1px solid rgba(99,102,241,0.18);
+  padding: 28px 32px;
+  border-radius: 16px;
+  margin: 40px 0;
 }
 
 .toc h3 {
   margin-top: 0;
-  color: #a5b4fc;
-  font-size: 1.15rem;
-  margin-bottom: 14px;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
   font-weight: 700;
 }
 
@@ -1041,51 +1052,53 @@ p {
 }
 
 .toc li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .toc a {
-  color: #94a3b8;
+  color: #cbd5e1;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.97rem;
   transition: all 0.2s ease;
   display: inline-block;
+  line-height: 1.5;
 }
 
 .toc a:hover {
-  color: #a5b4fc;
+  color: #fbbf24;
   padding-left: 6px;
 }
 
 /* Highlight Box / Callout */
 .highlight-box {
-  background: rgba(255,255,255,0.02);
+  background: rgba(30,41,59,0.6);
   border-left: 4px solid #818cf8;
-  padding: 18px 22px;
-  margin: 28px 0;
-  border-radius: 0 10px 10px 0;
-  font-size: 0.98rem;
-  line-height: 1.7;
-  color: #cbd5e1;
+  padding: 20px 24px;
+  margin: 32px 0;
+  border-radius: 0 12px 12px 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #e2e8f0;
 }
 
 .callout-box {
-  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(6,182,212,0.08));
-  border: 1px solid rgba(99,102,241,0.2);
-  border-radius: 14px;
-  padding: 24px;
-  margin: 28px 0;
+  background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(30,41,69,0.8));
+  border: 1px solid rgba(99,102,241,0.22);
+  border-radius: 16px;
+  padding: 28px;
+  margin: 36px 0;
 }
 
 .callout-box h4 {
-  color: #a5b4fc;
-  font-size: 1.05rem;
-  margin-bottom: 10px;
+  color: #f1f5f9;
+  font-size: 1.08rem;
+  margin-bottom: 12px;
 }
 
 .callout-box p {
-  font-size: 0.98rem;
-  line-height: 1.75;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #e2e8f0;
 }
 
 /* Comparison Tables */
@@ -1108,8 +1121,8 @@ p {
 
 .vs-table td {
   padding: 14px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #e2e8f0;
   vertical-align: top;
 }
 
@@ -1143,9 +1156,10 @@ p {
 }
 
 .stat-card .desc {
-  font-size: 0.78rem;
-  color: #94a3b8;
-  margin-top: 4px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
 /* Feature Grid */
@@ -1157,10 +1171,10 @@ p {
 }
 
 .feature-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(30,41,59,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
-  padding: 22px;
+  padding: 24px;
   position: relative;
   overflow: hidden;
 }
