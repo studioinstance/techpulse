@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>TypeScript入門：JavaScriptエンジニアのための完全ガイド - TechPulse</title>
   <meta name="description" content="TypeScript入門ガイド。型システム、インターフェース、ジェネリクス、ユーティリティ型をJavaScript経験者向けにわかりやすく解説します。">
   <meta name="keywords" content="TypeScript, JavaScript, 型安全, インターフェース, ジェネリクス, Web開発">
@@ -20,19 +18,19 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"TypeScript入門：JavaScriptエンジニアのための完全ガイド","datePublished":"2026-03-20","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"JavaScript経験者向けTypeScript完全入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/typescript-guide.html"}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\typescript-guide.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\typescript-guide.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\typescript-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\typescript-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\typescript-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\typescript-guide.html">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/articles\typescript-guide.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/articles\typescript-guide.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container">
+  <header class="article-header"><div class="article-container">
     <span class="category">Web開発</span>
     <h1>TypeScript入門：JavaScriptエンジニアのための完全ガイド</h1>
     <div class="article-meta-info"><span>📅 2026年3月20日</span><span>🕐 約12分で読めます</span><span>🏷️ TypeScript, JavaScript, Web開発</span></div>
@@ -40,14 +38,14 @@
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 目次</h3><ol>
+      <div class="toc"><h3>📑 目次</h3><ol>
         <li><a href="#why">なぜTypeScriptを学ぶべきか</a></li>
         <li><a href="#basics">基本の型</a></li>
         <li><a href="#interface">インターフェースと型エイリアス</a></li>
         <li><a href="#generics">ジェネリクス</a></li>
         <li><a href="#utility">ユーティリティ型</a></li>
         <li><a href="#migration">JSからTSへの移行戦略</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>TypeScriptは<strong>JavaScriptに型システムを追加した言語</strong>で、2026年現在、フロントエンド・バックエンド問わず、もはやデファクトスタンダードとなっています。本記事では、JavaScript経験者がスムーズにTypeScriptに移行するための完全ガイドを提供します。</p>
 
@@ -220,8 +218,8 @@ type ImmutableArticle = Readonly&lt;Article&gt;;</code></pre>
       <p>TypeScriptは<strong>一度学べば生産性が飛躍的に向上する</strong>技術です。まずは小さなプロジェクトから導入し、型の恩恵を実感してみてください。</p>
 
       <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
-        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html&text=TypeScript入門：JavaScriptエンジニアのための完全ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
-        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html&amp;text=TypeScript入門：JavaScriptエンジニアのための完全ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/typescript-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
       </div></div>
 
       <div class="article-nav">
@@ -243,11 +241,12 @@ type ImmutableArticle = Readonly&lt;Article&gt;;</code></pre>
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>

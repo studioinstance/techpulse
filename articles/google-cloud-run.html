@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -14,8 +12,7 @@
   </script>
 
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157"
-       crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
 
   <title>Google Cloud Run入門：コンテナを簡単にデプロイ - TechPulse</title>
   <meta name="description" content="Google Cloud Runの使い方を初心者向けに徹底解説。コンテナのデプロイ方法、料金体系、スケーリングの仕組みを15分で理解できる実践ガイドです。">
@@ -42,15 +39,15 @@
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\google-cloud-run.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\google-cloud-run.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\google-cloud-run.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\google-cloud-run.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\google-cloud-run.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\google-cloud-run.html">
 </head>
 <body>
   <nav class="navbar"><div class="container">
@@ -63,7 +60,7 @@
     <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div></nav>
 
-  <header class="article-hero">
+  <header class="article-header">
     <div class="article-container">
       <span class="category">クラウド</span>
       <h1>Google Cloud Run入門：コンテナを簡単にデプロイ</h1>
@@ -78,7 +75,7 @@
   <section class="article-body">
     <div class="article-wrapper">
       <article class="article-content">
-        <nav class="toc">
+        <div class="toc">
           <h3>📑 目次</h3>
           <ol>
             <li><a href="#what-is">Cloud Runとは？</a></li>
@@ -88,7 +85,7 @@
             <li><a href="#scaling">オートスケーリング</a></li>
             <li><a href="#tips">実践的なTips</a></li>
           </ol>
-        </nav>
+        </div>
 
         <p>Webアプリケーションをデプロイしたいけれど、サーバー管理やインフラの設定は避けたい——そんなエンジニアに最適なのが<strong>Google Cloud Run</strong>です。Dockerコンテナさえ用意すれば、あとはCloud Runが自動でスケーリング、HTTPS対応、ロードバランシングまで面倒を見てくれます。</p>
 
@@ -149,7 +146,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) =&gt; {
   res.json({
     message: 'Hello from Cloud Run! 🚀',
     timestamp: new Date().toISOString(),
@@ -157,11 +154,11 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', (req, res) =&gt; {
   res.status(200).json({ status: 'healthy' });
 });
 
-app.listen(port, () => {
+app.listen(port, () =&gt; {
   console.log(`Server running on port ${port}`);
 });</code></pre>
 
@@ -268,8 +265,8 @@ jobs:
         <div class="share-section">
           <h4>この記事が役に立ったらシェアしよう</h4>
           <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html&text=Google Cloud Run入門：コンテナを簡単にデプロイ" target="_blank" class="share-btn twitter">𝕏 Post</a>
-            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html&amp;text=Google Cloud Run入門：コンテナを簡単にデプロイ" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/google-cloud-run.html" target="_blank" class="share-btn hatena">B! はてブ</a>
           </div>
         </div>
 
@@ -313,16 +310,17 @@ jobs:
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
 
   <script>
     document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
   </script>
   <!-- Start of HubSpot Embed Code -->
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
   <!-- End of HubSpot Embed Code -->
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>

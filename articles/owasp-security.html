@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>OWASP Top 10を理解するWebセキュリティ入門 - TechPulse</title>
   <meta name="description" content="OWASP Top 10の主要なセキュリティリスクを初心者向けに解説。SQLインジェクション、XSS、CSRF等の攻撃手法と具体的な対策を実際のコード例と共に紹介します。">
   <meta name="keywords" content="OWASP, セキュリティ, SQLインジェクション, XSS, CSRF, Web開発, セキュリティ対策">
@@ -21,15 +19,15 @@
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"OWASP Top 10を理解するWebセキュリティ入門","datePublished":"2026-02-28","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"主要なセキュリティリスクと対策をコード例で紹介","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/owasp-security.html"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\owasp-security.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\owasp-security.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\owasp-security.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\owasp-security.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\owasp-security.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\owasp-security.html">
 </head>
 <body>
   <nav class="navbar"><div class="container">
@@ -42,7 +40,7 @@
     <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div></nav>
 
-  <header class="article-hero">
+  <header class="article-header">
     <div class="article-container">
       <span class="category">セキュリティ</span>
       <h1>OWASP Top 10を理解するWebセキュリティ入門</h1>
@@ -57,7 +55,7 @@
   <section class="article-body">
     <div class="article-wrapper">
       <article class="article-content">
-        <nav class="toc">
+        <div class="toc">
           <h3>📑 目次</h3>
           <ol>
             <li><a href="#what-owasp">OWASPとTop 10とは</a></li>
@@ -67,7 +65,7 @@
             <li><a href="#csrf">CSRF攻撃と対策</a></li>
             <li><a href="#checklist">セキュリティチェックリスト</a></li>
           </ol>
-        </nav>
+        </div>
 
         <p>Webアプリケーションを開発する上で、セキュリティは避けて通れない重要なテーマです。<strong>OWASP（Open Web Application Security Project）</strong>は、Webセキュリティのリスクを体系的に整理した「Top 10」を定期的に公開しています。本記事では、最も危険な脅威とその具体的な対策を、<strong>実際のコード例</strong>とともに解説します。</p>
 
@@ -98,7 +96,7 @@
 
         <h3>❌ 脆弱なコード</h3>
         <pre data-lang="javascript"><code>// 危険！ユーザー入力を直接SQL文に結合
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) =&gt; {
   const { username, password } = req.body;
   // 攻撃者が username に ' OR '1'='1' -- と入力すると…
   const query = `SELECT * FROM users
@@ -109,7 +107,7 @@ app.post('/login', (req, res) => {
 
         <h3>✅ 安全なコード（パラメータバインド）</h3>
         <pre data-lang="javascript"><code>// プリペアドステートメントを使用
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) =&gt; {
   const { username, password } = req.body;
   const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
   db.query(query, [username, password]); // 安全！
@@ -144,7 +142,7 @@ const loginLimiter = rateLimit({
   message: 'ログイン試行回数を超えました。15分後に再試行してください。'
 });
 
-app.post('/login', loginLimiter, async (req, res) => {
+app.post('/login', loginLimiter, async (req, res) =&gt; {
   const { email, password } = req.body;
   const user = await User.findByEmail(email);
 
@@ -186,15 +184,14 @@ element.textContent = userInput;
 // ✅ サーバーサイドでのエスケープ
 function escapeHtml(str) {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;');
+    .replace(/&amp;/g, '&amp;')
+    .replace(//g, '&gt;')
+    .replace(/"/g, '"')
+    .replace(/'/g, ''');
 }
 
 // ✅ Content Security Policy（CSP）ヘッダーの設定
-app.use((req, res, next) => {
+app.use((req, res, next) =&gt; {
   res.setHeader('Content-Security-Policy',
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'");
   next();
@@ -208,11 +205,11 @@ app.use((req, res, next) => {
 // CSRFトークンの設定
 const csrfProtection = csrf({ cookie: true });
 
-app.get('/transfer', csrfProtection, (req, res) => {
+app.get('/transfer', csrfProtection, (req, res) =&gt; {
   res.render('transfer', { csrfToken: req.csrfToken() });
 });
 
-app.post('/transfer', csrfProtection, (req, res) => {
+app.post('/transfer', csrfProtection, (req, res) =&gt; {
   // CSRFトークンが有効な場合のみ処理が実行される
   processTransfer(req.body);
 });</code></pre>
@@ -240,8 +237,8 @@ app.post('/transfer', csrfProtection, (req, res) => {
         <div class="share-section">
           <h4>この記事が役に立ったらシェアしよう</h4>
           <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/owasp-security.html&text=OWASP Top 10を理解するWebセキュリティ入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
-            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/owasp-security.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/owasp-security.html&amp;text=OWASP Top 10を理解するWebセキュリティ入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/owasp-security.html" target="_blank" class="share-btn hatena">B! はてブ</a>
           </div>
         </div>
 
@@ -285,11 +282,12 @@ app.post('/transfer', csrfProtection, (req, res) => {
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>

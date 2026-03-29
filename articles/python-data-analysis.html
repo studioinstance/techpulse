@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>Pythonで始めるデータ分析入門 - TechPulse</title>
   <meta name="description" content="Pythonを使ったデータ分析の入門ガイド。pandas、NumPy、Matplotlibの基本的な使い方を実践的なコード例で解説します。">
   <meta name="keywords" content="Python, データ分析, pandas, NumPy, Matplotlib, データサイエンス">
@@ -20,19 +18,19 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Pythonで始めるデータ分析入門","datePublished":"2026-03-22","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Pythonによるデータ分析入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/python-data-analysis.html"}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\python-data-analysis.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\python-data-analysis.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\python-data-analysis.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\python-data-analysis.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\python-data-analysis.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\python-data-analysis.html">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/articles\python-data-analysis.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/articles\python-data-analysis.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container">
+  <header class="article-header"><div class="article-container">
     <span class="category">AI・データサイエンス</span>
     <h1>Pythonで始めるデータ分析入門</h1>
     <div class="article-meta-info"><span>📅 2026年3月22日</span><span>🕐 約12分で読めます</span><span>🏷️ Python, pandas, データ分析</span></div>
@@ -40,14 +38,14 @@
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 目次</h3><ol>
+      <div class="toc"><h3>📑 目次</h3><ol>
         <li><a href="#why-python">なぜPythonでデータ分析か</a></li>
         <li><a href="#setup">環境構築</a></li>
         <li><a href="#pandas">pandasの基本操作</a></li>
         <li><a href="#numpy">NumPyで数値計算</a></li>
         <li><a href="#visualization">Matplotlibで可視化</a></li>
         <li><a href="#project">実践プロジェクト</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>データ分析は、ビジネスの意思決定からAI開発まで幅広い領域で活用されています。<strong>Python</strong>はその中心的な言語であり、豊富なライブラリにより、初心者でも簡単にデータ分析を始められます。</p>
 
@@ -98,7 +96,7 @@ revenue = df['revenue']
 subset = df[['product', 'revenue', 'quantity']]
 
 # フィルタリング
-high_revenue = df[df['revenue'] > 100000]
+high_revenue = df[df['revenue'] &gt; 100000]
 tokyo_data = df[df['region'] == '東京']
 
 # グループ化と集計
@@ -209,8 +207,8 @@ for page, count in popular_pages.head(5).items():
       <p>Pythonでのデータ分析は、<strong>エンジニアのスキルセットを大きく広げる</strong>技術です。ぜひ自分のプロジェクトのデータを使って実践的に学んでみてください。</p>
 
       <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
-        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html&text=Pythonで始めるデータ分析入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
-        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html&amp;text=Pythonで始めるデータ分析入門" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" target="_blank" class="share-btn hatena">B! はてブ</a>
       </div></div>
       <div class="article-nav">
         <a href="typescript-guide.html"><div class="nav-label">← 前の記事</div><div class="nav-title">TypeScript入門ガイド</div></a>
@@ -231,11 +229,12 @@ for page, count in popular_pages.head(5).items():
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>

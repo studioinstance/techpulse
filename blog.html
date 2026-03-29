@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G0K0FCE368');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157"
+       crossorigin="anonymous"></script>
 
   <title>ブログ - TechPulse | テクノロジーの最新トレンド記事</title>
   <meta name="description" content="TechPulseのブログ一覧。Web開発、AI、クラウド、DevOps、セキュリティなど最新記事をお届けします。">
@@ -16,48 +26,24 @@
   <meta property="og:description" content="テクノロジーに関する最新のブログ記事一覧。">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Blog","name":"TechPulse ブログ","url":"https://studioinstance.github.io/techpulse/blog.html","description":"テクノロジーの最新トレンドに関するブログ","inLanguage":"ja"}
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "TechPulse ブログ",
+    "url": "https://studioinstance.github.io/techpulse/blog.html",
+    "description": "テクノロジーの最新トレンドに関するブログ",
+    "inLanguage": "ja"
+  }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <!-- i18n SEO (多言語対応) -->
   <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/blog.html" />
   <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/blog.html" />
-  <style>
-    .blog-hero { padding:120px 0 48px; text-align:center; position:relative; }
-    .blog-hero h1 { font-size:clamp(1.8rem,4vw,2.8rem); color:#f8fafc; background:none; -webkit-text-fill-color:unset; margin-bottom:12px; }
-    .blog-hero p { color:#94a3b8; font-size:1.1rem; max-width:560px; margin:0 auto; }
-    .blog-stats { display:flex; justify-content:center; gap:32px; margin-top:24px; }
-    .blog-stats .bs { text-align:center; }
-    .blog-stats .bs-num { font-size:1.6rem; font-weight:800; background:linear-gradient(135deg,#818cf8,#06b6d4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .blog-stats .bs-label { font-size:0.78rem; color:#64748b; margin-top:2px; }
-
-    .blog-filter { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:32px auto 40px; max-width:900px; }
-    .filter-btn { padding:7px 18px; border-radius:50px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#94a3b8; font-size:0.85rem; font-weight:500; cursor:pointer; transition:all 0.2s; font-family:inherit; }
-    .filter-btn:hover, .filter-btn.active { background:rgba(99,102,241,0.15); border-color:#818cf8; color:#e2e8f0; }
-
-    .blog-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:20px; max-width:1100px; margin:0 auto; padding:0 24px 60px; }
-
-    .blog-card { background:rgba(30,41,59,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:16px; overflow:hidden; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); text-decoration:none; display:block; }
-    .blog-card:hover { border-color:rgba(99,102,241,0.4); transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,0.3); }
-
-    .blog-card-top { height:8px; }
-    .blog-card-body { padding:24px 24px 20px; }
-    .blog-card-body .meta { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
-    .blog-card-body .cat { padding:3px 12px; border-radius:50px; font-size:0.72rem; font-weight:700; color:#fff; display:inline-block; }
-    .blog-card-body .date { font-size:0.78rem; color:#64748b; }
-    .blog-card-body .new-tag { font-size:0.68rem; background:#ef4444; color:#fff; padding:2px 8px; border-radius:50px; font-weight:700; }
-    .blog-card-body h3 { font-size:1.08rem; color:#f1f5f9; font-weight:700; line-height:1.5; margin-bottom:10px; }
-    .blog-card-body p { font-size:0.88rem; color:#94a3b8; line-height:1.65; margin-bottom:14px; }
-    .blog-card-body .read { font-size:0.85rem; color:#818cf8; font-weight:600; transition:color 0.2s; }
-    .blog-card:hover .read { color:#a5b4fc; }
-
-    @media(max-width:768px) {
-      .blog-grid { grid-template-columns:1fr; padding:0 16px 40px; }
-      .blog-stats { gap:20px; }
-      .blog-filter { padding:0 16px; }
-    }
-  </style>
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/blog.html" />
 </head>
 <body>
   <nav class="navbar"><div class="container">
@@ -66,222 +52,177 @@
       <li><a href="index.html">ホーム</a></li>
       <li><a href="blog.html" class="active">ブログ</a></li>
       <li><a href="about.html">このサイトについて</a></li>
-    </ul>
-    <div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;">
-      <a href="blog.html" style="color:var(--color-accent);text-decoration:none;">JP</a>
-      <span style="color:#666;">|</span>
-      <a href="en/blog.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a>
-    </div>
+    </ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/blog.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/blog.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div>
     <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
   </div></nav>
 
-  <header class="blog-hero">
-    <h1>📝 ブログ記事一覧</h1>
+  <header class="page-header">
+    <h1>ブログ記事一覧</h1>
     <p>テクノロジーの最新トレンド、チュートリアル、実践ガイドをお届けします。</p>
-    <div class="blog-stats">
-      <div class="bs"><div class="bs-num">18</div><div class="bs-label">記事数</div></div>
-      <div class="bs"><div class="bs-num">10</div><div class="bs-label">カテゴリ</div></div>
-      <div class="bs"><div class="bs-num">JP/EN</div><div class="bs-label">多言語対応</div></div>
-    </div>
   </header>
 
-  <div class="blog-filter">
-    <button class="filter-btn active" data-cat="all">すべて</button>
-    <button class="filter-btn" data-cat="ai">AI</button>
-    <button class="filter-btn" data-cat="web">Web開発</button>
-    <button class="filter-btn" data-cat="devops">DevOps</button>
-    <button class="filter-btn" data-cat="data">データ</button>
-    <button class="filter-btn" data-cat="cloud">クラウド</button>
-    <button class="filter-btn" data-cat="security">セキュリティ</button>
-    <button class="filter-btn" data-cat="mobile">モバイル</button>
-    <button class="filter-btn" data-cat="tools">ツール</button>
-  </div>
+  <main class="section"><div class="container"><div class="cards-grid">
+        <article class="article-card fade-in">
+          <div class="article-card-image" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;font-size:3rem">🧠</div>
+          <div class="article-card-body">
+            <div class="article-meta"><span class="category" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;font-weight:bold">🧠 AI Special</span><span>2026/03/28</span></div>
+            <h3><a href="articles/prompt-engineering-guide.html">プロンプトエンジニアリング完全ガイド【2026年最新版】</a></h3>
+            <p>ChatGPT・Gemini・Claudeで使えるプロンプト設計の実践パターン20選を解説。</p>
+            <a href="articles/prompt-engineering-guide.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
+        <article class="article-card fade-in">
+          <div class="article-card-image" style="background: linear-gradient(135deg, #000, #333); display: flex; align-items: center; justify-content: center; font-size: 3rem;">▲</div>
+          <div class="article-card-body">
+            <div class="article-meta"><span class="category" style="background: var(--color-accent); color: #000; font-weight: bold;">⭐ Special</span><span>2026/03/28</span></div>
+            <h3><a href="articles/nextjs-15-master-guide.html">2026年最新版：Next.js 15 App Router 完全マスターガイド【保存版】</a></h3>
+            <p>Next.js 15の全貌を徹底解説。React Server Components、Server Actions、PPR、Turbopackまで網羅した保存版ガイド。</p>
+            <a href="articles/nextjs-15-master-guide.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
+        <article class="article-card fade-in">
+          <div class="article-card-image" style="background: linear-gradient(135deg, #10b981, #06b6d4);">🔥</div>
+          <div class="article-card-body">
+            <div class="article-meta"><span class="category">トレンド</span><span>2026/03/28</span></div>
+            <h3><a href="articles/tech-trend-2026-03-28.html">今週のテックトレンドまとめ（2026-03-28）</a></h3>
+            <p>最新の技術トレンド情報をピックアップしてご紹介します。今週の注目記事 5 件をまとめました。</p>
+            <a href="articles/tech-trend-2026-03-28.html" class="read-more">続きを読む →</a>
+          </div>
+        </article>
 
-  <main class="blog-grid">
-
-    <a href="articles/data-scientist-future-ai.html" class="blog-card" data-cat="ai">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🔮 AI × Career</span><span class="date">2026/03/29</span><span class="new-tag">NEW</span></div>
-        <h3>AI時代のデータサイエンティスト生存戦略【2026年版】</h3>
-        <p>AutoML・生成AIの台頭で激変するDSキャリアの未来を、年収動向・7スキル・アクションプランまで徹底分析。</p>
-        <span class="read">続きを読む →</span>
-      </div>
-    </a>
-
-    <a href="articles/auxia-agentic-marketing.html" class="blog-card" data-cat="ai">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#06b6d4,#818cf8)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#06b6d4,#818cf8)">🤖 AI × Marketing</span><span class="date">2026/03/29</span><span class="new-tag">NEW</span></div>
-        <h3>Auxia完全解説：エージェンティックAIマーケティングプラットフォーム</h3>
-        <p>元Google/Meta出身チームが創設。1000億超の自律意思決定を処理するAuxiaの全貌を解説。</p>
-        <span class="read">続きを読む →</span>
-      </div>
-    </a>
-
-    <a href="articles/prompt-engineering-guide.html" class="blog-card" data-cat="ai">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#8b5cf6,#ec4899)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">🧠 AI Special</span><span class="date">2026/03/28</span><span class="new-tag">NEW</span></div>
-        <h3>プロンプトエンジニアリング完全ガイド【2026年最新版】</h3>
-        <p>ChatGPT・Gemini・Claudeで使えるプロンプト設計の実践パターン20選を解説。</p>
-        <span class="read">続きを読む →</span>
-      </div>
-    </a>
-
-    <a href="articles/nextjs-15-master-guide.html" class="blog-card" data-cat="web">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#000,#444)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:#111;border:1px solid #555">⭐ Special</span><span class="date">2026/03/28</span><span class="new-tag">NEW</span></div>
-        <h3>Next.js 15 App Router 完全マスターガイド【保存版】</h3>
-        <p>RSC、Server Actions、PPR、Turbopackまで網羅した約1万字の保存版ガイド。</p>
-        <span class="read">続きを読む →</span>
-      </div>
-    </a>
-
-    <a href="articles/tech-trend-2026-03-28.html" class="blog-card" data-cat="ai">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#10b981,#06b6d4)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#10b981,#06b6d4)">🔥 トレンド</span><span class="date">2026/03/28</span></div>
-        <h3>今週のテックトレンドまとめ（2026-03-28）</h3>
-        <p>最新の技術トレンド情報をピックアップ。今週の注目記事5件をまとめました。</p>
-        <span class="read">続きを読む →</span>
-      </div>
-    </a>
-
-    <a href="articles/vscode-extensions.html" class="blog-card" data-cat="tools">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#8b5cf6,#3b82f6)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">🛠️ ツール</span><span class="date">2026/03/25</span></div>
-        <h3>VS Code拡張機能おすすめ20選【2026年版】</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);">🛠️</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">ツール</span><span>2026年3月25日</span></div>
+        <h3><a href="articles/vscode-extensions.html">VS Code拡張機能おすすめ20選【2026年版】</a></h3>
         <p>生産性を爆上げするVS Code拡張機能を20個厳選。AI補完、Git、テーマなどカテゴリ別に紹介。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/vscode-extensions.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/python-data-analysis.html" class="blog-card" data-cat="data">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#06b6d4,#8b5cf6)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#06b6d4,#8b5cf6)">📊 データ</span><span class="date">2026/03/22</span></div>
-        <h3>Pythonで始めるデータ分析入門</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #06b6d4, #8b5cf6);">📊</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">AI・データサイエンス</span><span>2026年3月22日</span></div>
+        <h3><a href="articles/python-data-analysis.html">Pythonで始めるデータ分析入門</a></h3>
         <p>pandas、NumPy、Matplotlibの基本操作を実践的なコード例で学ぶデータ分析入門。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/python-data-analysis.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/typescript-guide.html" class="blog-card" data-cat="web">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">📘 Web開発</span><span class="date">2026/03/20</span></div>
-        <h3>TypeScript入門：JavaScriptエンジニアのための完全ガイド</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">📘</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">Web開発</span><span>2026年3月20日</span></div>
+        <h3><a href="articles/typescript-guide.html">TypeScript入門：JavaScriptエンジニアのための完全ガイド</a></h3>
         <p>型システム、インターフェース、ジェネリクス、ユーティリティ型をわかりやすく解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/typescript-guide.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/docker-introduction.html" class="blog-card" data-cat="devops">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#0ea5e9,#22c55e)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#0ea5e9,#22c55e)">🐳 DevOps</span><span class="date">2026/03/18</span></div>
-        <h3>Docker入門：コンテナ技術を30分で理解する</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #0ea5e9, #22c55e);">🐳</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">DevOps</span><span>2026年3月18日</span></div>
+        <h3><a href="articles/docker-introduction.html">Docker入門：コンテナ技術を30分で理解する</a></h3>
         <p>Dockerfile、docker-compose、ベストプラクティスまで30分で理解できる完全ガイド。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/docker-introduction.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/ai-trends-2026.html" class="blog-card" data-cat="ai">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#4f46e5,#06b6d4)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#4f46e5,#06b6d4)">🤖 AI</span><span class="date">2026/03/15</span></div>
-        <h3>2026年のAIトレンド予測：生成AIの次に来るもの</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image">🤖</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">AI</span><span>2026年3月15日</span></div>
+        <h3><a href="articles/ai-trends-2026.html">2026年のAIトレンド予測：生成AIの次に来るもの</a></h3>
         <p>エージェントAI、マルチモーダルAI、オンデバイスAIなど注目分野を解説します。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/ai-trends-2026.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/rest-api-design.html" class="blog-card" data-cat="web">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#f59e0b,#22c55e)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#f59e0b,#22c55e)">🔗 Web開発</span><span class="date">2026/03/12</span></div>
-        <h3>REST API設計のベストプラクティス</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #f59e0b, #22c55e);">🔗</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">Web開発</span><span>2026年3月12日</span></div>
+        <h3><a href="articles/rest-api-design.html">REST API設計のベストプラクティス</a></h3>
         <p>エンドポイント命名、HTTPメソッド、ステータスコード、認証、バージョニングを解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/rest-api-design.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/nextjs-15-features.html" class="blog-card" data-cat="web">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">🌐 Web開発</span><span class="date">2026/03/10</span></div>
-        <h3>Next.js 15の新機能を徹底解説</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">🌐</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">Web開発</span><span>2026年3月10日</span></div>
+        <h3><a href="articles/nextjs-15-features.html">Next.js 15の新機能を徹底解説</a></h3>
         <p>パフォーマンス改善、新ルーティング、Server Componentsの進化など注目アップデートを網羅。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/nextjs-15-features.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/git-github-guide.html" class="blog-card" data-cat="devops">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#10b981,#059669)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#10b981,#059669)">📂 DevOps</span><span class="date">2026/03/08</span></div>
-        <h3>Git/GitHub完全入門ガイド</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #10b981, #059669);">📂</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">DevOps</span><span>2026年3月8日</span></div>
+        <h3><a href="articles/git-github-guide.html">Git/GitHub完全入門ガイド</a></h3>
         <p>基本コマンド、ブランチ戦略、プルリクエスト、コンフリクト解決をわかりやすく解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/git-github-guide.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/google-cloud-run.html" class="blog-card" data-cat="cloud">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#22c55e,#06b6d4)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">☁️ クラウド</span><span class="date">2026/03/05</span></div>
-        <h3>Google Cloud Run入門：コンテナを簡単にデプロイ</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #22c55e, #06b6d4);">☁️</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">クラウド</span><span>2026年3月5日</span></div>
+        <h3><a href="articles/google-cloud-run.html">Google Cloud Run入門：コンテナを簡単にデプロイ</a></h3>
         <p>初心者でも15分で始められる実践ガイド。料金体系やスケーリングも解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/google-cloud-run.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/web-performance.html" class="blog-card" data-cat="web">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#ef4444,#f59e0b)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">🚀 Web開発</span><span class="date">2026/03/01</span></div>
-        <h3>Webパフォーマンス最適化の実践テクニック</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">🚀</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">Web開発</span><span>2026年3月1日</span></div>
+        <h3><a href="articles/web-performance.html">Webパフォーマンス最適化の実践テクニック</a></h3>
         <p>Core Web Vitals改善からキャッシュ戦略まで、実践的なWeb高速化テクニックを解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/web-performance.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/owasp-security.html" class="blog-card" data-cat="security">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🔒 セキュリティ</span><span class="date">2026/02/28</span></div>
-        <h3>OWASP Top 10を理解するWebセキュリティ入門</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">🔒</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">セキュリティ</span><span>2026年2月28日</span></div>
+        <h3><a href="articles/owasp-security.html">OWASP Top 10を理解するWebセキュリティ入門</a></h3>
         <p>主要なセキュリティリスクと対策をSQLインジェクション、XSS等の具体例で紹介。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/owasp-security.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/react-native-vs-flutter.html" class="blog-card" data-cat="mobile">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#8b5cf6,#ec4899)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">📱 モバイル</span><span class="date">2026/02/20</span></div>
-        <h3>React Native vs Flutter：2026年の選定ガイド</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">📱</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">モバイル</span><span>2026年2月20日</span></div>
+        <h3><a href="articles/react-native-vs-flutter.html">React Native vs Flutter：2026年の選定ガイド</a></h3>
         <p>パフォーマンス、学習コスト、エコシステムから最適なフレームワークを解説。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/react-native-vs-flutter.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-    <a href="articles/github-actions-cicd.html" class="blog-card" data-cat="devops">
-      <div class="blog-card-top" style="background:linear-gradient(90deg,#14b8a6,#3b82f6)"></div>
-      <div class="blog-card-body">
-        <div class="meta"><span class="cat" style="background:linear-gradient(135deg,#14b8a6,#3b82f6)">⚡ DevOps</span><span class="date">2026/02/15</span></div>
-        <h3>GitHub Actions入門：CI/CDを30分で構築</h3>
+    <article class="article-card fade-in">
+      <div class="article-card-image" style="background: linear-gradient(135deg, #14b8a6, #3b82f6);">⚡</div>
+      <div class="article-card-body">
+        <div class="article-meta"><span class="category">DevOps</span><span>2026年2月15日</span></div>
+        <h3><a href="articles/github-actions-cicd.html">GitHub Actions入門：CI/CDを30分で構築</a></h3>
         <p>テスト自動化からデプロイまでの一連の流れをワークフロー付きで紹介。</p>
-        <span class="read">続きを読む →</span>
+        <a href="articles/github-actions-cicd.html" class="read-more">続きを読む →</a>
       </div>
-    </a>
+    </article>
 
-  </main>
+  </div></div></main>
 
-  <footer class="footer"><div class="container">
+    <footer class="footer"><div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><a href="index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div>
       <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="index.html">ホーム</a></li><li><a href="blog.html">ブログ</a></li><li><a href="about.html">このサイトについて</a></li></ul></div>
@@ -290,30 +231,15 @@
     </div>
     <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
-
   <script>
-    document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));
-
-    // Category filter
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.cat;
-        document.querySelectorAll('.blog-card').forEach(card => {
-          if (cat === 'all' || card.dataset.cat === cat) {
-            card.style.display = '';
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(10px)';
-            setTimeout(() => { card.style.transition = 'all 0.3s ease'; card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
+    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.style.animationPlayState='running';obs.unobserve(el.target);}}),{threshold:0.1});
+    document.querySelectorAll('.fade-in').forEach(el => {el.style.animationPlayState='paused';obs.observe(el);});
   </script>
+  <!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
-  <script src="scripts/tracker.js"></script>
+  <!-- End of HubSpot Embed Code -->
+<script src="scripts/tracker.js"></script>
 </body>
 </html>
+

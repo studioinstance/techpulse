@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
 
   <title>Google Cloud Run: Deploy Containers the Easy Way - TechPulse</title>
   <meta name="description" content="A beginner's guide to Google Cloud Run. Learn container deployment, pricing, auto-scaling, and CI/CD integration in 15 minutes.">
@@ -18,28 +16,28 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Article","headline":"Google Cloud Run: Deploy Containers the Easy Way","datePublished":"2026-03-05","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}
   </script>
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/google-cloud-run.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="../../articles/article.css">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/google-cloud-run.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="google-cloud-run.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container"><span class="category">Cloud</span><h1>Google Cloud Run: Deploy Containers the Easy Way</h1><div class="article-meta-info"><span>📅 March 5, 2026</span><span>🕐 10 min read</span><span>🏷️ GCP, Containers, Serverless</span></div></div></header>
+  <header class="article-header"><div class="article-container"><span class="category">Cloud</span><h1>Google Cloud Run: Deploy Containers the Easy Way</h1><div class="article-meta-info"><span>📅 March 5, 2026</span><span>🕐 10 min read</span><span>🏷️ GCP, Containers, Serverless</span></div></div></header>
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 Table of Contents</h3><ol>
+      <div class="toc"><h3>📑 Table of Contents</h3><ol>
         <li><a href="#what-is">What is Cloud Run?</a></li>
         <li><a href="#setup">Environment Setup</a></li>
         <li><a href="#first-deploy">Your First Deployment</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#scaling">Auto-Scaling</a></li>
         <li><a href="#tips">Practical Tips</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>Want to deploy a web application but avoid server management and infrastructure configuration? <strong>Google Cloud Run</strong> is the perfect solution. Just provide a Docker container, and Cloud Run automatically handles scaling, HTTPS, and load balancing.</p>
 
@@ -93,7 +91,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) =&gt; {
   res.json({
     message: 'Hello from Cloud Run! 🚀',
     timestamp: new Date().toISOString(),
@@ -101,11 +99,11 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', (req, res) =&gt; {
   res.status(200).json({ status: 'healthy' });
 });
 
-app.listen(port, () => {
+app.listen(port, () =&gt; {
   console.log(`Server running on port ${port}`);
 });</code></pre>
 
@@ -194,7 +192,7 @@ jobs:
 
       <p>Cloud Run is the ideal service for <strong>"just get my container running."</strong> Free yourself from server management and focus on building your application. Start with a small project using the free tier!</p>
 
-      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html&text=Google Cloud Run: Deploy Containers the Easy Way" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/google-cloud-run.html&amp;text=Google Cloud Run: Deploy Containers the Easy Way" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
       <div class="article-nav"><a href="../blog.html"><div class="nav-label">← Back</div><div class="nav-title">Blog Archives</div></a><a href="owasp-security.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">Web Security with OWASP Top 10</div></a></div>
     </article>
     <aside class="article-sidebar">
@@ -204,8 +202,9 @@ jobs:
     </aside>
   </div></section>
 
-  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>© 2026 TechPulse.</span></div></div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
 <script src="../../scripts/tracker.js"></script>
-</body>
-</html>
+
+
+</body></html>

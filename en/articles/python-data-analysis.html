@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
-  <title>Python Data Analysis for Beginners: pandas, NumPy & Matplotlib - TechPulse</title>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <title>Python Data Analysis for Beginners: pandas, NumPy &amp; Matplotlib - TechPulse</title>
   <meta name="description" content="Learn Python data analysis from scratch with pandas, NumPy, and Matplotlib. Practical code examples for beginners.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html">
   <meta property="og:title" content="Python Data Analysis for Beginners"><meta property="og:type" content="article"><meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html"><meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Python Data Analysis for Beginners","datePublished":"2026-03-12","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}</script>
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html" /><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html"><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/python-data-analysis.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../../articles/article.css">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/python-data-analysis.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="python-data-analysis.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container"><span class="category">AI / Data Science</span><h1>Python Data Analysis for Beginners: pandas, NumPy & Matplotlib</h1><div class="article-meta-info"><span>📅 March 12, 2026</span><span>🕐 10 min read</span><span>🏷️ Python, Data Analysis, pandas</span></div></div></header>
+  <header class="article-header"><div class="article-container"><span class="category">AI / Data Science</span><h1>Python Data Analysis for Beginners: pandas, NumPy &amp; Matplotlib</h1><div class="article-meta-info"><span>📅 March 12, 2026</span><span>🕐 10 min read</span><span>🏷️ Python, Data Analysis, pandas</span></div></div></header>
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 Table of Contents</h3><ol><li><a href="#setup">Environment Setup</a></li><li><a href="#numpy">NumPy Basics</a></li><li><a href="#pandas">pandas Fundamentals</a></li><li><a href="#viz">Data Visualization with Matplotlib</a></li><li><a href="#practice">Practical Example: Sales Data Analysis</a></li></ol></nav>
+      <div class="toc"><h3>📑 Table of Contents</h3><ol><li><a href="#setup">Environment Setup</a></li><li><a href="#numpy">NumPy Basics</a></li><li><a href="#pandas">pandas Fundamentals</a></li><li><a href="#viz">Data Visualization with Matplotlib</a></li><li><a href="#practice">Practical Example: Sales Data Analysis</a></li></ol></div>
 
       <p>Python has become the dominant language for data analysis, used by data scientists, analysts, and engineers worldwide. This guide introduces the three essential libraries — <strong>NumPy</strong>, <strong>pandas</strong>, and <strong>Matplotlib</strong> — with practical code examples you can run immediately.</p>
 
@@ -66,13 +64,13 @@ df = pd.DataFrame({
 
 # Basic exploration
 print(df.describe())  # Statistical summary
-print(df.info())      # Column types & null counts
+print(df.info())      # Column types &amp; null counts
 
 # Filtering
 engineers = df[df['department'] == 'Engineering']
-high_earners = df[df['salary'] > 80000]
+high_earners = df[df['salary'] &gt; 80000]
 
-# Grouping & aggregation
+# Grouping &amp; aggregation
 dept_avg = df.groupby('department')['salary'].mean()
 print(dept_avg)
 
@@ -133,7 +131,7 @@ print("Analysis complete! 📊")</code></pre>
 
       <p>Python data analysis starts with these three libraries. Begin with small datasets, practice the patterns, and you'll be analyzing real-world data in no time.</p>
 
-      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html&text=Python Data Analysis for Beginners" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/python-data-analysis.html&amp;text=Python Data Analysis for Beginners" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
       <div class="article-nav"><a href="../blog.html"><div class="nav-label">← Back</div><div class="nav-title">Blog Archives</div></a><a href="ai-trends-2026.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">AI Trends 2026</div></a></div>
     </article>
     <aside class="article-sidebar">
@@ -142,8 +140,9 @@ print("Analysis complete! 📊")</code></pre>
     </aside>
   </div></section>
 
-  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>© 2026 TechPulse.</span></div></div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
 <script src="../../scripts/tracker.js"></script>
-</body>
-</html>
+
+
+</body></html>

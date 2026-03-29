@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>REST API設計のベストプラクティス - TechPulse</title>
   <meta name="description" content="RESTful API設計の実践的なベストプラクティス。エンドポイント命名規則、HTTPメソッド、ステータスコード、認証、バージョニングを解説します。">
   <meta name="keywords" content="REST API, API設計, HTTP, エンドポイント, バックエンド, Web開発">
@@ -20,19 +18,19 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"REST API設計のベストプラクティス","datePublished":"2026-03-12","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"RESTful API設計の実践的なベストプラクティス","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/rest-api-design.html"}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\rest-api-design.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\rest-api-design.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\rest-api-design.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\rest-api-design.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\rest-api-design.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\rest-api-design.html">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/articles\rest-api-design.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/articles\rest-api-design.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container">
+  <header class="article-header"><div class="article-container">
     <span class="category">Web開発</span>
     <h1>REST API設計のベストプラクティス</h1>
     <div class="article-meta-info"><span>📅 2026年3月12日</span><span>🕐 約10分で読めます</span><span>🏷️ REST API, バックエンド, 設計</span></div>
@@ -40,14 +38,14 @@
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 目次</h3><ol>
+      <div class="toc"><h3>📑 目次</h3><ol>
         <li><a href="#principles">RESTの基本原則</a></li>
         <li><a href="#naming">エンドポイント命名規則</a></li>
         <li><a href="#methods">HTTPメソッドの正しい使い方</a></li>
         <li><a href="#status">ステータスコードの使い分け</a></li>
         <li><a href="#auth">認証とセキュリティ</a></li>
         <li><a href="#versioning">バージョニング戦略</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>REST APIはほぼすべてのWebサービスの基盤です。しかし、「動く」APIと「良い」APIには大きな違いがあります。本記事では、<strong>保守性が高く、使いやすいREST API</strong>を設計するための実践的なベストプラクティスを解説します。</p>
 
@@ -92,7 +90,7 @@ const express = require('express');
 const router = express.Router();
 
 // GET - リソースの取得（冪等・安全）
-router.get('/users', async (req, res) => {
+router.get('/users', async (req, res) =&gt; {
   const { page = 1, limit = 20, sortBy = 'createdAt' } = req.query;
   const users = await User.find()
     .sort(sortBy)
@@ -106,13 +104,13 @@ router.get('/users', async (req, res) => {
 });
 
 // POST - リソースの作成（冪等ではない）
-router.post('/users', async (req, res) => {
+router.post('/users', async (req, res) =&gt; {
   const user = await User.create(req.body);
   res.status(201).json({ data: user });
 });
 
 // PUT - リソースの全体更新（冪等）
-router.put('/users/:id', async (req, res) => {
+router.put('/users/:id', async (req, res) =&gt; {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true, runValidators: true
   });
@@ -121,7 +119,7 @@ router.put('/users/:id', async (req, res) => {
 });
 
 // DELETE - リソースの削除（冪等）
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', async (req, res) =&gt; {
   const user = await User.findByIdAndDelete(req.params.id);
   if (!user) return res.status(404).json({ error: 'User not found' });
   res.status(204).send();
@@ -160,7 +158,7 @@ router.delete('/users/:id', async (req, res) => {
       <pre data-lang="javascript"><code>// JWT認証ミドルウェア
 const jwt = require('jsonwebtoken');
 
-const authenticate = (req, res, next) => {
+const authenticate = (req, res, next) =&gt; {
   const token = req.headers.authorization?.split(' ')[1]; // Bearer TOKEN
   if (!token) {
     return res.status(401).json({ error: { code: 'UNAUTHORIZED' }});
@@ -194,8 +192,8 @@ const apiLimiter = rateLimit({
       <p>良いAPI設計は、<strong>チームの生産性とシステムの保守性</strong>を大きく左右します。この記事のベストプラクティスを参考に、使いやすく拡張性の高いAPIを目指してください。</p>
 
       <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
-        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html&text=REST API設計のベストプラクティス" target="_blank" class="share-btn twitter">𝕏 Post</a>
-        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html&amp;text=REST API設計のベストプラクティス" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/rest-api-design.html" target="_blank" class="share-btn hatena">B! はてブ</a>
       </div></div>
       <div class="article-nav">
         <a href="vscode-extensions.html"><div class="nav-label">← 前の記事</div><div class="nav-title">VS Code拡張機能おすすめ20選</div></a>
@@ -216,11 +214,12 @@ const apiLimiter = rateLimit({
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>

@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>Web Security with OWASP Top 10: A Practical Guide - TechPulse</title>
   <meta name="description" content="Learn OWASP Top 10 security risks with practical code examples. SQL injection, XSS, CSRF attacks and defenses explained for beginners.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html">
   <meta property="og:title" content="Web Security with OWASP Top 10"><meta property="og:type" content="article"><meta property="og:url" content="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html"><meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Web Security with OWASP Top 10","datePublished":"2026-02-28","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"}}</script>
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html" /><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/owasp-security.html" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles/owasp-security.html"><link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/owasp-security.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../../articles/article.css">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../blog.html" class="active">Blog</a></li><li><a href="../about.html">About</a></li></ul><div class="lang-switcher" style="margin-left:auto;display:flex;gap:8px;font-weight:bold;align-items:center;"><a href="../../articles/owasp-security.html" style="color:#fff;text-decoration:none;transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">JP</a><span style="color:#666;">|</span><a href="owasp-security.html" style="color:var(--color-accent);text-decoration:none;">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container"><span class="category">Security</span><h1>Web Security with OWASP Top 10: A Practical Guide</h1><div class="article-meta-info"><span>📅 February 28, 2026</span><span>🕐 12 min read</span><span>🏷️ OWASP, Security, Web Dev</span></div></div></header>
+  <header class="article-header"><div class="article-container"><span class="category">Security</span><h1>Web Security with OWASP Top 10: A Practical Guide</h1><div class="article-meta-info"><span>📅 February 28, 2026</span><span>🕐 12 min read</span><span>🏷️ OWASP, Security, Web Dev</span></div></div></header>
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 Table of Contents</h3><ol>
-        <li><a href="#what-owasp">What is OWASP & the Top 10</a></li>
+      <div class="toc"><h3>📑 Table of Contents</h3><ol>
+        <li><a href="#what-owasp">What is OWASP &amp; the Top 10</a></li>
         <li><a href="#injection">Injection Attacks</a></li>
         <li><a href="#auth">Broken Authentication</a></li>
         <li><a href="#xss">Cross-Site Scripting (XSS)</a></li>
-        <li><a href="#csrf">CSRF Attacks & Defenses</a></li>
+        <li><a href="#csrf">CSRF Attacks &amp; Defenses</a></li>
         <li><a href="#checklist">Security Checklist</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>Security is an unavoidable, critical topic when developing web applications. <strong>OWASP (Open Web Application Security Project)</strong> periodically publishes a "Top 10" list that systematically categorizes web security risks. This article explains the most dangerous threats and their specific defenses with <strong>real code examples</strong>.</p>
 
       <div class="info-box warning"><div class="info-title">⚠️ Important</div><p>The code examples in this article are for educational purposes. Using them for actual attacks is prohibited by law. Apply security knowledge for defense only.</p></div>
 
-      <h2 id="what-owasp">1. What is OWASP & the Top 10</h2>
+      <h2 id="what-owasp">1. What is OWASP &amp; the Top 10</h2>
       <p>OWASP is a nonprofit organization dedicated to <strong>improving web application security</strong>. The OWASP Top 10 summarizes the most critical web security risks in 10 categories — a de facto standard referenced by developers and security engineers worldwide.</p>
       <h3>2025 OWASP Top 10 Overview</h3>
       <ol>
@@ -47,8 +45,8 @@
         <li><strong>A05: Security Misconfiguration</strong> — Default settings left unchanged</li>
         <li><strong>A06: Vulnerable Components</strong> — Outdated libraries</li>
         <li><strong>A07: Authentication Failures</strong> — Password and auth flow issues</li>
-        <li><strong>A08: Software & Data Integrity</strong> — CI/CD and update vulnerabilities</li>
-        <li><strong>A09: Logging & Monitoring Failures</strong> — Insufficient logging</li>
+        <li><strong>A08: Software &amp; Data Integrity</strong> — CI/CD and update vulnerabilities</li>
+        <li><strong>A09: Logging &amp; Monitoring Failures</strong> — Insufficient logging</li>
         <li><strong>A10: SSRF</strong> — Server-Side Request Forgery</li>
       </ol>
 
@@ -56,7 +54,7 @@
       <p>One of the oldest and most dangerous attack vectors is <strong>SQL Injection</strong>. Embedding user input directly into SQL queries allows attackers to manipulate your database.</p>
       <h3>❌ Vulnerable Code</h3>
       <pre data-lang="javascript"><code>// DANGER! Directly concatenating user input into SQL
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) =&gt; {
   const { username, password } = req.body;
   // If attacker enters ' OR '1'='1' -- as username...
   const query = `SELECT * FROM users
@@ -66,7 +64,7 @@ app.post('/login', (req, res) => {
 });</code></pre>
       <h3>✅ Safe Code (Parameterized Queries)</h3>
       <pre data-lang="javascript"><code>// Use prepared statements
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) =&gt; {
   const { username, password } = req.body;
   const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
   db.query(query, [username, password]); // Safe!
@@ -95,7 +93,7 @@ const loginLimiter = rateLimit({
   message: 'Too many login attempts. Try again in 15 minutes.'
 });
 
-app.post('/login', loginLimiter, async (req, res) => {
+app.post('/login', loginLimiter, async (req, res) =&gt; {
   const { email, password } = req.body;
   const user = await User.findByEmail(email);
 
@@ -134,31 +132,30 @@ element.textContent = userInput;
 // ✅ Server-side HTML escaping
 function escapeHtml(str) {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;');
+    .replace(/&amp;/g, '&amp;')
+    .replace(//g, '&gt;')
+    .replace(/"/g, '"')
+    .replace(/'/g, ''');
 }
 
 // ✅ Set Content Security Policy (CSP) header
-app.use((req, res, next) => {
+app.use((req, res, next) =&gt; {
   res.setHeader('Content-Security-Policy',
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'");
   next();
 });</code></pre>
 
-      <h2 id="csrf">5. CSRF Attacks & Defenses</h2>
+      <h2 id="csrf">5. CSRF Attacks &amp; Defenses</h2>
       <p><strong>CSRF (Cross-Site Request Forgery)</strong> tricks authenticated users into sending unintended requests using their active session.</p>
       <pre data-lang="javascript"><code>import csrf from 'csurf';
 
 const csrfProtection = csrf({ cookie: true });
 
-app.get('/transfer', csrfProtection, (req, res) => {
+app.get('/transfer', csrfProtection, (req, res) =&gt; {
   res.render('transfer', { csrfToken: req.csrfToken() });
 });
 
-app.post('/transfer', csrfProtection, (req, res) => {
+app.post('/transfer', csrfProtection, (req, res) =&gt; {
   // Only executes if CSRF token is valid
   processTransfer(req.body);
 });</code></pre>
@@ -182,7 +179,7 @@ app.post('/transfer', csrfProtection, (req, res) => {
 
       <p>Security is never "one and done." New vulnerabilities are constantly discovered, making <strong>continuous learning and updates</strong> essential. Start with the basics covered in this article and gradually deepen your security knowledge.</p>
 
-      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/owasp-security.html&text=Web Security with OWASP Top 10" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
+      <div class="share-section"><h4>Found this article helpful? Share it!</h4><div class="share-buttons"><a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/en/articles/owasp-security.html&amp;text=Web Security with OWASP Top 10" target="_blank" class="share-btn twitter">𝕏 Post</a></div></div>
       <div class="article-nav"><a href="google-cloud-run.html"><div class="nav-label">← Previous</div><div class="nav-title">Google Cloud Run Guide</div></a><a href="react-native-vs-flutter.html" class="next"><div class="nav-label">Next Article →</div><div class="nav-title">React Native vs Flutter 2026</div></a></div>
     </article>
     <aside class="article-sidebar">
@@ -192,8 +189,9 @@ app.post('/transfer', csrfProtection, (req, res) => {
     </aside>
   </div></section>
 
-  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 TechPulse.</span></div></div></footer>
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>Publishing the latest technology trends globally.</p></div><div class="footer-col"><h4>Navigation</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../about.html">About</a></li></ul></div><div class="footer-col"><h4>Categories</h4><ul><li><a href="../blog.html">Web Dev</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">Cloud</a></li></ul></div><div class="footer-col"><h4>Links</h4><ul><li><a href="../../sitemap.xml">Sitemap</a></li><li><a href="../privacy-policy.html">Privacy</a></li><li><a href="../../feed.xml">RSS</a></li></ul></div></div><div class="footer-bottom"><span>© 2026 TechPulse.</span></div></div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
 <script src="../../scripts/tracker.js"></script>
-</body>
-</html>
+
+
+</body></html>

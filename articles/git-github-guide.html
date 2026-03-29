@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
+<!DOCTYPE html><html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G0K0FCE368');</script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
   <title>Git/GitHub完全入門ガイド - TechPulse</title>
   <meta name="description" content="Git/GitHub初心者向け完全入門ガイド。基本コマンド、ブランチ戦略、プルリクエスト、コンフリクト解決をわかりやすく解説します。">
   <meta name="keywords" content="Git, GitHub, バージョン管理, ブランチ, プルリクエスト, 入門">
@@ -20,19 +18,19 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Git/GitHub完全入門ガイド","datePublished":"2026-03-08","dateModified":"2026-03-28","author":{"@type":"Organization","name":"TechPulse"},"publisher":{"@type":"Organization","name":"TechPulse"},"description":"Git/GitHub初心者向け完全入門ガイド","mainEntityOfPage":"https://studioinstance.github.io/techpulse/articles/git-github-guide.html"}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="article.css">
 
   <!-- i18n SEO (多言語対応) -->
-  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\git-github-guide.html" />
-  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\git-github-guide.html" />
-  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\git-github-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://studioinstance.github.io/techpulse/en/articles\git-github-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles\git-github-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://studioinstance.github.io/techpulse/articles\git-github-guide.html">
 </head>
 <body>
   <nav class="navbar"><div class="container"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><ul class="nav-links" id="navLinks"><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html" class="active">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul><div class="lang-switcher" style="margin-left:auto; display:flex; gap:8px; font-weight:bold; align-items:center;"><a href="https://studioinstance.github.io/techpulse/articles\git-github-guide.html" style="color:var(--color-accent);text-decoration:none;">JP</a><span style="color:#666;">|</span><a href="https://studioinstance.github.io/techpulse/en/articles\git-github-guide.html" style="color:#fff;text-decoration:none; transition:0.2s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='#fff'">EN</a></div><button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
 
-  <header class="article-hero"><div class="article-container">
+  <header class="article-header"><div class="article-container">
     <span class="category">DevOps</span>
     <h1>Git/GitHub完全入門ガイド</h1>
     <div class="article-meta-info"><span>📅 2026年3月8日</span><span>🕐 約12分で読めます</span><span>🏷️ Git, GitHub, バージョン管理</span></div>
@@ -40,14 +38,14 @@
 
   <section class="article-body"><div class="article-wrapper">
     <article class="article-content">
-      <nav class="toc"><h3>📑 目次</h3><ol>
+      <div class="toc"><h3>📑 目次</h3><ol>
         <li><a href="#what">Gitとは？GitHubとは？</a></li>
         <li><a href="#setup">初期設定</a></li>
         <li><a href="#basics">基本コマンド</a></li>
         <li><a href="#branch">ブランチ戦略</a></li>
         <li><a href="#pr">プルリクエスト</a></li>
         <li><a href="#conflict">コンフリクト解決</a></li>
-      </ol></nav>
+      </ol></div>
 
       <p>ソフトウェア開発において<strong>バージョン管理</strong>は最も重要なスキルの一つです。<strong>Git</strong>はその事実上の標準であり、<strong>GitHub</strong>はGitを活用したコラボレーションプラットフォームです。本記事では、ゼロからGit/GitHubを使いこなすための完全ガイドを提供します。</p>
 
@@ -152,15 +150,15 @@ git branch -d feature/user-auth</code></pre>
       <h2 id="conflict">6. コンフリクト解決</h2>
       <p>複数人が同じファイルを編集するとコンフリクトが発生します。</p>
       <pre data-lang="bash"><code># コンフリクト発生時の表示
-<<<<<<< HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 const greeting = "おはようございます";
 =======
 const greeting = "こんにちは";
->>>>>>> feature/greeting-update
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/greeting-update
 
 # 解決方法：
 # 1. どちらかを選ぶ、または両方を統合する
-# 2. マーカー（<<<, ===, >>>）を削除
+# 2. マーカー（&lt;&lt;&lt;, ===, &gt;&gt;&gt;）を削除
 # 3. ファイルを保存
 
 const greeting = "こんにちは"; # 正しい方を残す
@@ -177,8 +175,8 @@ git commit -m "fix: greetingのコンフリクトを解決"</code></pre>
       <p>Git/GitHubは最初は複雑に感じますが、<strong>基本コマンドの7割は日常的に使う5〜6個</strong>です。まずはadd → commit → push → pullのサイクルをマスターし、徐々にブランチやPRの活用に進んでいきましょう。</p>
 
       <div class="share-section"><h4>この記事が役に立ったらシェアしよう</h4><div class="share-buttons">
-        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html&text=Git/GitHub完全入門ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
-        <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+        <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html&amp;text=Git/GitHub完全入門ガイド" target="_blank" class="share-btn twitter">𝕏 Post</a>
+        <a href="https://b.hatena.ne.jp/add?mode=confirm&amp;url=https://studioinstance.github.io/techpulse/articles/git-github-guide.html" target="_blank" class="share-btn hatena">B! はてブ</a>
       </div></div>
       <div class="article-nav">
         <a href="rest-api-design.html"><div class="nav-label">← 前の記事</div><div class="nav-title">REST API設計のベストプラクティス</div></a>
@@ -199,11 +197,12 @@ git commit -m "fix: greetingのコンフリクトを解決"</code></pre>
       <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
       <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+    <div class="footer-bottom"><span>© 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
   </div></footer>
   <script>document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('active'));</script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <script type="text/javascript" id="hs-script-loader" async="" defer="" src="//js-na2.hs-scripts.com/245633062.js"></script>
 <script src="../scripts/tracker.js"></script>
-</body>
-</html>
 
+
+
+</body></html>
