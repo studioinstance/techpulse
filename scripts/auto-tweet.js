@@ -5,7 +5,7 @@ console.log('🤖 Auto-Tweet bot executing...');
 const DATE_STR = new Date().toISOString().split('T')[0];
 const SITE_URL = 'https://studioinstance.github.io/techpulse/blog.html';
 
-const tweetText = `🚨【更新情報】\n今週のテックトレンドまとめ（${DATE_STR}）を自動生成＆公開しました！\n\n最新のAIやWeb開発動向をチェック👇\n${SITE_URL}\n\n#TechPulse #個人開発 #テックブログ`;
+const tweetText = `🚨【更新情報】\n今週の最新AIドキュメント・トレンド（${DATE_STR}）を自動生成＆公開しました！\n\nLLM、生成AIの動向をさくっとチェック👇\n${SITE_URL}\n\n#TechPulse #AI #ChatGPT #生成AI #テックブログ`;
 
 async function main() {
   const client = new TwitterApi({

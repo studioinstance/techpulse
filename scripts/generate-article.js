@@ -3,7 +3,7 @@ const fs = require('fs');
 const parser = new Parser();
 
 // 設定
-const RSS_URL = 'https://zenn.dev/topics/tech/feed';
+const RSS_URL = 'https://zenn.dev/topics/ai/feed';
 const SITE_URL = 'https://studioinstance.github.io/techpulse';
 const DATE_STR = new Date().toISOString().split('T')[0];
 const ARTICLE_ID = `tech-trend-${DATE_STR}`;
@@ -33,7 +33,7 @@ async function main() {
     return;
   }
 
-  const title = `今週のテックトレンドまとめ（${DATE_STR}）`;
+  const title = `今週のAI技術トレンドまとめ（${DATE_STR}）`;
   const description = `最新の技術トレンド情報をピックアップしてご紹介します。今週の注目記事 ${items.length} 件をまとめました。`;
 
   // HTMLの生成
@@ -88,10 +88,19 @@ async function main() {
       <div class="author-info"><span>👨‍💻 StudioInstance</span></div>
     </header>
     
-    <div class="article-content">
+    <div class="article-content" style="margin-bottom: 40px;">
       <h2>最新の注目記事（${DATE_STR}）</h2>
       <p>${description}</p>
       ${articlesHtml}
+    </div>
+
+    <!-- シェア促進用CTA -->
+    <div class="share-actions" style="margin-top:40px; padding-top:32px; border-top:1px solid var(--border); text-align:center;">
+      <p style="margin-bottom:16px; font-weight:bold; font-size:1.1rem;">この記事が役に立ったらシェアをお願いします！</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(title + ' - TechPulse\n' + ARTICLE_URL)}" target="_blank" rel="noopener noreferrer" style="padding:12px 24px; background:#000; color:#fff; border:1px solid #333; border-radius:8px; font-weight:bold; text-decoration:none; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">𝕏 でポスト</a>
+        <a href="https://b.hatena.ne.jp/entry/s/${SITE_URL.replace('https://','')}/articles/${FILE_NAME}" target="_blank" rel="noopener noreferrer" style="padding:12px 24px; background:#00A4DE; color:#fff; border:none; border-radius:8px; font-weight:bold; text-decoration:none; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">B! はてブに追加</a>
+      </div>
     </div>
   </article>
 
