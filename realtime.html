@@ -31,7 +31,7 @@
     .header .links a{color:var(--accent);text-decoration:none}
     .data-source{font-size:0.7rem;padding:3px 8px;border-radius:4px;background:rgba(34,197,94,0.15);color:#22c55e;font-weight:bold}
     .container{max-width:1400px;margin:0 auto;padding:24px}
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
     @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)}}
     .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
     .stat-card .label{font-size:0.8rem;color:var(--text-muted);margin-bottom:4px}
@@ -49,7 +49,7 @@
     @keyframes dotPulse{0%,100%{r:4;opacity:1}50%{r:7;opacity:0.6}}
     .map-ring{fill:none;stroke:var(--accent);stroke-width:1;opacity:0;animation:ringExpand 3s infinite}
     @keyframes ringExpand{0%{r:4;opacity:0.8;stroke-width:2}100%{r:20;opacity:0;stroke-width:0.5}}
-    .visitor-list{max-height:500px;overflow-y:auto}
+    .visitor-list{overflow-y:auto}
     .visitor-item{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);transition:0.2s}
     .visitor-item:hover{background:rgba(6,182,212,0.05)}
     .visitor-flag{font-size:1.5rem;width:32px;text-align:center}
@@ -73,6 +73,39 @@
     .page-list .page-item .path{color:var(--accent);max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .page-list .page-item .views{font-weight:700}
     .empty-state{text-align:center;padding:40px;color:var(--text-muted);font-size:0.9rem}
+
+    /* タブUI */
+    .tab-bar{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--border);padding-bottom:0}
+    .tab-btn{padding:10px 20px;font-size:0.85rem;font-weight:600;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+    .tab-btn:hover{color:var(--text)}
+    .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+
+    /* 訪問者数バッジ */
+    .count-badge{background:var(--accent);color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:10px;margin-left:8px;font-weight:700}
+
+    /* ページネーション */
+    .pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+    .pagination button{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:0.82rem;font-weight:600;transition:all 0.2s}
+    .pagination button:hover:not(:disabled){background:var(--accent);color:#fff;border-color:var(--accent)}
+    .pagination button:disabled{opacity:0.3;cursor:not-allowed}
+    .pagination .page-info{font-size:0.8rem;color:var(--text-muted);min-width:80px;text-align:center}
+
+    /* 日別サマリーテーブル */
+    .daily-table{width:100%;border-collapse:collapse}
+    .daily-table th,.daily-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:0.85rem}
+    .daily-table th{color:var(--text-muted);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px}
+    .daily-table tr:hover td{background:rgba(6,182,212,0.03)}
+    .daily-table .num{font-weight:700;font-size:0.95rem;color:var(--accent)}
+
+    /* フィルター */
+    .filter-bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+    .filter-bar select,.filter-bar input{padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:0.82rem;font-family:inherit}
+    .filter-bar label{font-size:0.8rem;color:var(--text-muted);font-weight:500}
+
+    /* FullWidth card for history */
+    .full-width-section{margin-top:24px}
   </style>
 </head>
 <body>
@@ -89,9 +122,9 @@
   <div class="container">
     <div class="stats-row">
       <div class="stat-card">
-        <div class="label"><span class="pulse"></span>現在のアクティブユーザー</div>
+        <div class="label"><span class="pulse"></span>アクティブユーザー</div>
         <div class="value" id="activeUsers">0</div>
-        <div class="sub">直近5分以内のアクセス</div>
+        <div class="sub">直近5分以内</div>
       </div>
       <div class="stat-card">
         <div class="label">🌍 アクセス国数</div>
@@ -99,9 +132,14 @@
         <div class="sub">ユニーク国・地域</div>
       </div>
       <div class="stat-card">
-        <div class="label">📄 閲覧中のページ</div>
+        <div class="label">📄 閲覧中ページ</div>
         <div class="value" id="activePages">0</div>
         <div class="sub">現在表示中</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">📊 累計訪問数</div>
+        <div class="value" id="totalVisits">-</div>
+        <div class="sub">全ログ合計</div>
       </div>
       <div class="stat-card">
         <div class="label">📱 あなたの地域</div>
@@ -151,7 +189,7 @@
       <div>
         <div class="card">
           <h2>👥 最近の訪問者（実データ）</h2>
-          <div class="visitor-list" id="visitorList"><div class="empty-state">データ受信待ち...</div></div>
+          <div class="visitor-list" id="visitorList" style="max-height:500px"><div class="empty-state">データ受信待ち...</div></div>
         </div>
         <div class="card">
           <h2>🔥 人気ページ（リアルタイム）</h2>
@@ -159,17 +197,67 @@
         </div>
       </div>
     </div>
+
+    <!-- ===== 訪問者履歴（フルワイド） ===== -->
+    <div class="full-width-section">
+      <div class="card">
+        <h2>📋 訪問者履歴<span class="count-badge" id="historyTotalBadge">0</span></h2>
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="tab-all" onclick="switchTab('tab-all',this)">全履歴</button>
+          <button class="tab-btn" data-tab="tab-daily" onclick="switchTab('tab-daily',this)">日別サマリー</button>
+          <button class="tab-btn" data-tab="tab-pages" onclick="switchTab('tab-pages',this)">ページ別集計</button>
+        </div>
+
+        <!-- 全履歴タブ -->
+        <div class="tab-content active" id="tab-all">
+          <div class="filter-bar">
+            <label>国：</label>
+            <select id="filterCountry" onchange="applyFilters()"><option value="">すべて</option></select>
+            <label>デバイス：</label>
+            <select id="filterDevice" onchange="applyFilters()">
+              <option value="">すべて</option>
+              <option value="desktop">デスクトップ</option>
+              <option value="mobile">モバイル</option>
+              <option value="tablet">タブレット</option>
+            </select>
+            <label>ページ：</label>
+            <input type="text" id="filterPage" placeholder="パスで検索..." oninput="applyFilters()" style="width:180px">
+          </div>
+          <div class="visitor-list" id="historyList" style="max-height:none"></div>
+          <div class="pagination" id="historyPagination"></div>
+        </div>
+
+        <!-- 日別サマリータブ -->
+        <div class="tab-content" id="tab-daily">
+          <table class="daily-table" id="dailyTable">
+            <thead><tr><th>日付</th><th>訪問数</th><th>ユニーク国</th><th>人気ページ</th><th>デバイス比率</th></tr></thead>
+            <tbody id="dailyBody"></tbody>
+          </table>
+        </div>
+
+        <!-- ページ別集計タブ -->
+        <div class="tab-content" id="tab-pages">
+          <table class="daily-table" id="pagesTable">
+            <thead><tr><th>ページ</th><th>訪問数</th><th>ユニーク国数</th><th>最終訪問</th></tr></thead>
+            <tbody id="pagesBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 自分自身のアクセスもトラッキング -->
   <script src="scripts/theme-toggle.js"></script>
   <script src="scripts/tracker.js"></script>
 
   <script>
-    // ===== Firebase設定 =====
     const FIREBASE_DB = 'https://techpulse-analytics-default-rtdb.asia-southeast1.firebasedatabase.app';
-    const ACTIVE_THRESHOLD = 5 * 60 * 1000; // 5分以内 = アクティブ
-    const POLL_INTERVAL = 5000; // 5秒ごとにデータ取得
+    const ACTIVE_THRESHOLD = 5 * 60 * 1000;
+    const POLL_INTERVAL = 5000;
+    const ITEMS_PER_PAGE = 50;
+
+    let allHistoryData = [];
+    let filteredData = [];
+    let currentPage = 1;
 
     const COUNTRY_COORDS = {
       'JP':{x:688,y:115,flag:'🇯🇵',name:'日本'},'US':{x:150,y:130,flag:'🇺🇸',name:'アメリカ'},
@@ -187,40 +275,38 @@
       'MX':{x:130,y:165,flag:'🇲🇽',name:'メキシコ'},'AR':{x:180,y:320,flag:'🇦🇷',name:'アルゼンチン'},
     };
 
-    // 緯度経度 → SVG座標に変換
     function latLonToXY(lat, lon) {
-      const x = (lon + 180) * (800 / 360);
-      const y = (90 - lat) * (400 / 180);
-      return { x, y };
+      return { x: (lon + 180) * (800 / 360), y: (90 - lat) * (400 / 180) };
     }
 
-    // ===== Firebaseからアクティブセッションを取得 =====
+    // ===== タブ切り替え =====
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // ===== Firebase fetch =====
     async function fetchActiveVisitors() {
       try {
         const res = await fetch(`${FIREBASE_DB}/active.json`);
         const data = await res.json();
         if (!data) return [];
         const now = Date.now();
-        return Object.entries(data)
-          .map(([id, v]) => ({ ...v, id }))
-          .filter(v => v.lastActive && (now - v.lastActive) < ACTIVE_THRESHOLD);
+        return Object.entries(data).map(([id, v]) => ({ ...v, id })).filter(v => v.lastActive && (now - v.lastActive) < ACTIVE_THRESHOLD);
       } catch (e) { return []; }
     }
 
-    // ===== Firebaseから最近の訪問ログを取得 =====
-    async function fetchRecentVisits() {
+    async function fetchAllVisits() {
       try {
         const res = await fetch(`${FIREBASE_DB}/visits.json`);
         const data = await res.json();
         if (!data) return [];
-        // フロントでソートして最新30件を返す
-        return Object.values(data)
-          .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
-          .slice(0, 30);
+        return Object.values(data).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
       } catch (e) { console.error('visits fetch error:', e); return []; }
     }
 
-    // ===== 自分の位置を検出 =====
     async function detectMyLocation() {
       try {
         const res = await fetch('https://ipapi.co/json/');
@@ -232,35 +318,47 @@
       }
     }
 
-    // ===== 地図にドットを描画 =====
+    // ===== 訪問者1件をHTML化 =====
+    function renderVisitorItem(v) {
+      const cc = v.country || 'XX';
+      const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: v.countryName || cc };
+      const sessionId = sessionStorage.getItem('tp_session');
+      const isMe = v.sessionId === sessionId || v.id === sessionId;
+      const displayName = info.name || v.countryName || cc;
+      const youBadge = isMe ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px;font-size:0.65rem;margin-left:6px;">YOU</span>' : '';
+      const time = v.timestamp ? new Date(v.timestamp).toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' }) + ' ' + new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+      return `<div class="visitor-item">
+        <div class="visitor-flag">${info.flag}</div>
+        <div class="visitor-info">
+          <div class="country">${displayName}${v.city ? ' / ' + v.city : ''}${youBadge}</div>
+          <div class="detail">${v.page || '/'} | ${v.device || 'desktop'}</div>
+        </div>
+        <div class="visitor-time">${time}</div>
+      </div>`;
+    }
+
+    // ===== 地図ドット =====
     function renderMapDots(visitors) {
       const svg = document.getElementById('mapDots');
       svg.innerHTML = '';
       const sessionId = sessionStorage.getItem('tp_session');
-
       visitors.forEach(v => {
         let pos;
-        if (v.lat && v.lon && v.lat !== 0) {
-          pos = latLonToXY(v.lat, v.lon);
-        } else {
+        if (v.lat && v.lon && v.lat !== 0) { pos = latLonToXY(v.lat, v.lon); }
+        else {
           const cc = COUNTRY_COORDS[v.country];
           if (!cc) return;
           pos = { x: cc.x + (Math.random() - 0.5) * 10, y: cc.y + (Math.random() - 0.5) * 10 };
         }
-
-        // 輪っか
         const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         ring.setAttribute('cx', pos.x); ring.setAttribute('cy', pos.y);
         ring.setAttribute('r', '4'); ring.setAttribute('class', 'map-ring');
         ring.style.animationDelay = `${Math.random() * 2}s`;
         svg.appendChild(ring);
-
-        // ドット
         const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         dot.setAttribute('cx', pos.x); dot.setAttribute('cy', pos.y);
         dot.setAttribute('r', '4'); dot.setAttribute('class', 'map-dot');
-        const isMe = v.id && v.id === sessionId;
-        if (isMe) {
+        if (v.id && v.id === sessionId) {
           dot.style.fill = '#ef4444';
           dot.style.filter = 'drop-shadow(0 0 8px rgba(239,68,68,0.8))';
         }
@@ -268,62 +366,153 @@
       });
     }
 
-    // ===== UIを更新 =====
-    function updateDashboard(activeVisitors, recentVisits) {
-      // アクティブユーザー数
-      document.getElementById('activeUsers').textContent = activeVisitors.length;
+    // ===== フィルター処理 =====
+    function applyFilters() {
+      const country = document.getElementById('filterCountry').value;
+      const device = document.getElementById('filterDevice').value;
+      const pageQ = document.getElementById('filterPage').value.toLowerCase();
+      filteredData = allHistoryData.filter(v => {
+        if (country && v.country !== country) return false;
+        if (device && (v.device || 'desktop') !== device) return false;
+        if (pageQ && !(v.page || '/').toLowerCase().includes(pageQ)) return false;
+        return true;
+      });
+      currentPage = 1;
+      renderHistoryPage();
+    }
 
-      // 国数
-      const countries = new Set(activeVisitors.map(v => v.country));
-      document.getElementById('countryCount').textContent = countries.size;
+    // ===== 履歴ページネーション描画 =====
+    function renderHistoryPage() {
+      const listEl = document.getElementById('historyList');
+      const pagEl = document.getElementById('historyPagination');
+      const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const pageData = filteredData.slice(start, start + ITEMS_PER_PAGE);
 
-      // アクティブページ数
-      const pages = new Set(activeVisitors.map(v => v.page));
-      document.getElementById('activePages').textContent = pages.size;
-
-      // 地図
-      renderMapDots(activeVisitors);
-
-      // 訪問者リスト（アクティブ + ログをマージ、最新順）
-      const activeWithTime = activeVisitors.map(v => ({ ...v, timestamp: v.lastActive || v.timestamp }));
-      const merged = [...activeWithTime, ...recentVisits];
-      const seen = new Set();
-      const allVisitors = merged
-        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
-        .filter(v => {
-          const key = v.sessionId || v.id || (v.country + v.page + v.timestamp);
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
-      const listEl = document.getElementById('visitorList');
-      if (allVisitors.length === 0) {
-        listEl.innerHTML = '<div class="empty-state">まだ訪問者がいません。サイトにアクセスすると表示されます。</div>';
-      } else {
-        const sessionId = sessionStorage.getItem('tp_session');
-        listEl.innerHTML = allVisitors.slice(0, 25).map(v => {
-          const cc = v.country || 'XX';
-          const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: v.countryName || cc };
-          const isMe = v.sessionId === sessionId || v.id === sessionId;
-          const displayName = info.name || v.countryName || cc;
-          const youBadge = isMe ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px;font-size:0.65rem;margin-left:6px;">YOU</span>' : '';
-          const time = v.timestamp ? new Date(v.timestamp).toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' }) + ' ' + new Date(v.timestamp).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
-          return `
-            <div class="visitor-item">
-              <div class="visitor-flag">${info.flag}</div>
-              <div class="visitor-info">
-                <div class="country">${displayName}${v.city ? ' / ' + v.city : ''}${youBadge}</div>
-                <div class="detail">${v.page || '/'} | ${v.device || ''}</div>
-              </div>
-              <div class="visitor-time">${time}</div>
-            </div>`;
-        }).join('');
+      if (filteredData.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">条件に一致する訪問者がいません</div>';
+        pagEl.innerHTML = '';
+        return;
       }
 
-      // 地域分布（countryNameをキーにして集約）
+      listEl.innerHTML = pageData.map(renderVisitorItem).join('');
+      pagEl.innerHTML = `
+        <button onclick="goPage(1)" ${currentPage === 1 ? 'disabled' : ''}>« 最初</button>
+        <button onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ 前</button>
+        <span class="page-info">${currentPage} / ${totalPages}</span>
+        <button onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>次 ›</button>
+        <button onclick="goPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''}>最後 »</button>
+      `;
+    }
+
+    function goPage(p) {
+      const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
+      currentPage = Math.max(1, Math.min(p, totalPages));
+      renderHistoryPage();
+      document.getElementById('tab-all').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== 日別サマリー生成 =====
+    function renderDailySummary(allVisits) {
+      const byDate = {};
+      allVisits.forEach(v => {
+        const d = v.timestamp ? new Date(v.timestamp).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }) : '不明';
+        if (!byDate[d]) byDate[d] = [];
+        byDate[d].push(v);
+      });
+      const body = document.getElementById('dailyBody');
+      const sortedDates = Object.keys(byDate).sort((a, b) => b.localeCompare(a));
+      body.innerHTML = sortedDates.map(date => {
+        const visits = byDate[date];
+        const countries = new Set(visits.map(v => v.country)).size;
+        const pageCounts = {};
+        visits.forEach(v => { pageCounts[v.page || '/'] = (pageCounts[v.page || '/'] || 0) + 1; });
+        const topPage = Object.entries(pageCounts).sort((a, b) => b[1] - a[1])[0];
+        const devices = { desktop: 0, mobile: 0, tablet: 0 };
+        visits.forEach(v => { devices[v.device || 'desktop']++; });
+        const total = visits.length;
+        const deviceStr = `💻${Math.round(devices.desktop / total * 100)}% 📱${Math.round(devices.mobile / total * 100)}% 📋${Math.round(devices.tablet / total * 100)}%`;
+        return `<tr>
+          <td style="font-weight:600">${date}</td>
+          <td class="num">${visits.length}</td>
+          <td>${countries} 国</td>
+          <td style="color:var(--accent);font-size:0.82rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${topPage ? topPage[0] + ' (' + topPage[1] + ')' : '-'}</td>
+          <td style="font-size:0.8rem;color:var(--text-muted)">${deviceStr}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    // ===== ページ別集計生成 =====
+    function renderPagesSummary(allVisits) {
+      const byPage = {};
+      allVisits.forEach(v => {
+        const p = v.page || '/';
+        if (!byPage[p]) byPage[p] = { visits: 0, countries: new Set(), lastTime: 0 };
+        byPage[p].visits++;
+        if (v.country) byPage[p].countries.add(v.country);
+        if (v.timestamp > byPage[p].lastTime) byPage[p].lastTime = v.timestamp;
+      });
+      const body = document.getElementById('pagesBody');
+      const sorted = Object.entries(byPage).sort((a, b) => b[1].visits - a[1].visits);
+      body.innerHTML = sorted.map(([page, info]) => {
+        const lastStr = info.lastTime ? new Date(info.lastTime).toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' }) + ' ' + new Date(info.lastTime).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '-';
+        return `<tr>
+          <td style="color:var(--accent);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${page}</td>
+          <td class="num">${info.visits}</td>
+          <td>${info.countries.size} 国</td>
+          <td style="font-size:0.82rem;color:var(--text-muted)">${lastStr}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    // ===== 国フィルターの選択肢を構築 =====
+    function buildCountryFilter(allVisits) {
+      const countryCounts = {};
+      allVisits.forEach(v => {
+        const cc = v.country || 'XX';
+        countryCounts[cc] = (countryCounts[cc] || 0) + 1;
+      });
+      const sel = document.getElementById('filterCountry');
+      const sorted = Object.entries(countryCounts).sort((a, b) => b[1] - a[1]);
+      sorted.forEach(([cc, cnt]) => {
+        const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: cc };
+        const opt = document.createElement('option');
+        opt.value = cc;
+        opt.textContent = `${info.flag} ${info.name || cc} (${cnt})`;
+        sel.appendChild(opt);
+      });
+    }
+
+    // ===== メインUI更新 =====
+    function updateDashboard(activeVisitors, allVisits) {
+      document.getElementById('activeUsers').textContent = activeVisitors.length;
+      document.getElementById('countryCount').textContent = new Set(activeVisitors.map(v => v.country)).size;
+      document.getElementById('activePages').textContent = new Set(activeVisitors.map(v => v.page)).size;
+      document.getElementById('totalVisits').textContent = allVisits.length.toLocaleString();
+      document.getElementById('historyTotalBadge').textContent = allVisits.length.toLocaleString();
+
+      renderMapDots(activeVisitors);
+
+      // 最近の訪問者（上部サイドパネル: 最新25件）
+      const activeWithTime = activeVisitors.map(v => ({ ...v, timestamp: v.lastActive || v.timestamp }));
+      const merged = [...activeWithTime, ...allVisits];
+      const seen = new Set();
+      const recentUnique = merged.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).filter(v => {
+        const key = v.sessionId || v.id || (v.country + v.page + v.timestamp);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+      const listEl = document.getElementById('visitorList');
+      listEl.innerHTML = recentUnique.length === 0
+        ? '<div class="empty-state">まだ訪問者がいません</div>'
+        : recentUnique.slice(0, 25).map(renderVisitorItem).join('');
+
+      // 地域分布
       const regionData = {};
       const regionNames = {};
-      allVisitors.forEach(v => {
+      recentUnique.forEach(v => {
         const cc = v.country || 'XX';
         regionData[cc] = (regionData[cc] || 0) + 1;
         if (!regionNames[cc] && v.countryName) regionNames[cc] = v.countryName;
@@ -337,46 +526,53 @@
         const colors = ['#06b6d4', '#8b5cf6', '#ec4899', '#f59e0b', '#22c55e', '#ef4444', '#3b82f6'];
         barEl.innerHTML = sortedRegions.slice(0, 10).map(([cc, count], i) => {
           const info = COUNTRY_COORDS[cc] || { flag: '🌐', name: regionNames[cc] || cc };
-          const displayName = info.name || regionNames[cc] || cc;
           const pct = (count / maxCount * 100).toFixed(0);
-          return `
-            <div class="region-bar">
-              <div class="name">${info.flag} ${displayName}</div>
-              <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${colors[i % colors.length]}">${count}</div></div>
-              <div class="count">${pct}%</div>
-            </div>`;
+          return `<div class="region-bar">
+            <div class="name">${info.flag} ${info.name || regionNames[cc] || cc}</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${colors[i % colors.length]}">${count}</div></div>
+            <div class="count">${pct}%</div>
+          </div>`;
         }).join('');
       }
 
       // デバイス別
       const devices = { desktop: 0, mobile: 0, tablet: 0 };
-      allVisitors.forEach(v => { devices[v.device || 'desktop']++; });
-      const total = Math.max(allVisitors.length, 1);
+      recentUnique.forEach(v => { devices[v.device || 'desktop']++; });
+      const total = Math.max(recentUnique.length, 1);
       document.getElementById('desktopPct').textContent = Math.round(devices.desktop / total * 100) + '%';
       document.getElementById('mobilePct').textContent = Math.round(devices.mobile / total * 100) + '%';
       document.getElementById('tabletPct').textContent = Math.round(devices.tablet / total * 100) + '%';
 
       // 人気ページ
       const pageCounts = {};
-      allVisitors.forEach(v => { pageCounts[v.page || '/'] = (pageCounts[v.page || '/'] || 0) + 1; });
+      recentUnique.forEach(v => { pageCounts[v.page || '/'] = (pageCounts[v.page || '/'] || 0) + 1; });
       const pageEl = document.getElementById('pageList');
       const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
-      if (sortedPages.length === 0) {
-        pageEl.innerHTML = '<div class="empty-state">データ受信待ち...</div>';
-      } else {
-        pageEl.innerHTML = sortedPages.slice(0, 8).map(([path, views]) => {
-          return `<div class="page-item"><span class="path">${path}</span><span class="views">${views}</span></div>`;
-        }).join('');
-      }
+      pageEl.innerHTML = sortedPages.length === 0
+        ? '<div class="empty-state">データ受信待ち...</div>'
+        : sortedPages.slice(0, 10).map(([path, views]) =>
+            `<div class="page-item"><span class="path">${path}</span><span class="views">${views}</span></div>`
+          ).join('');
     }
 
     // ===== メインループ =====
+    let historyLoaded = false;
     async function refresh() {
-      const [active, recent] = await Promise.all([fetchActiveVisitors(), fetchRecentVisits()]);
-      updateDashboard(active, recent);
+      const [active, allVisits] = await Promise.all([fetchActiveVisitors(), fetchAllVisits()]);
+      updateDashboard(active, allVisits);
+
+      // 全履歴データを保持（初回のみフィルター等を構築）
+      if (!historyLoaded || allVisits.length !== allHistoryData.length) {
+        allHistoryData = allVisits;
+        filteredData = allVisits;
+        if (!historyLoaded) buildCountryFilter(allVisits);
+        historyLoaded = true;
+        renderHistoryPage();
+        renderDailySummary(allVisits);
+        renderPagesSummary(allVisits);
+      }
     }
 
-    // ===== 初期化 =====
     detectMyLocation();
     refresh();
     setInterval(refresh, POLL_INTERVAL);
