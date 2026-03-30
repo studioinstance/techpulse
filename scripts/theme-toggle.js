@@ -1,6 +1,7 @@
 /**
  * TechPulse Theme Toggle
  * ダーク/ライトテーマの切り替えとlocalStorageへの永続化
+ * スライダー式トグルスイッチで切り替えを直感的に
  */
 (function () {
   'use strict';
@@ -20,11 +21,12 @@
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-    // トグルボタンのアイコンを更新
-    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-      btn.textContent = theme === DARK ? '☀️' : '🌙';
-      btn.setAttribute('aria-label', theme === DARK ? 'ライトモードに切替' : 'ダークモードに切替');
-      btn.title = theme === DARK ? 'ライトモードに切替' : 'ダークモードに切替';
+    // トグルスイッチの状態を更新
+    document.querySelectorAll('.theme-toggle-switch').forEach(wrapper => {
+      const input = wrapper.querySelector('input');
+      if (input) input.checked = (theme === LIGHT);
+      wrapper.setAttribute('aria-label', theme === DARK ? 'ライトモードに切替' : 'ダークモードに切替');
+      wrapper.title = theme === DARK ? 'ライトモードに切替' : 'ダークモードに切替';
     });
   }
 
@@ -32,27 +34,35 @@
   const initial = getPreferred();
   document.documentElement.setAttribute('data-theme', initial);
 
-  // DOM Ready後にボタン注入
+  // DOM Ready後にトグルスイッチ注入
   document.addEventListener('DOMContentLoaded', function () {
     applyTheme(getPreferred());
 
-    // ナビバー or ダッシュボードヘッダーにトグルボタンを注入
-    const navContainer = document.querySelector('.navbar .container') || document.querySelector('.dash-header');
+    // ナビバー or ダッシュボードヘッダーにトグルスイッチを注入
+    const navContainer = document.querySelector('.navbar .container') || document.querySelector('.dash-header') || document.querySelector('.header .links');
     if (navContainer) {
-      const btn = document.createElement('button');
-      btn.className = 'theme-toggle-btn';
-      btn.type = 'button';
-      btn.style.cssText = 'background:none;border:1px solid var(--color-border, rgba(255,255,255,0.15));color:var(--color-text,#ededed);cursor:pointer;font-size:1.2rem;padding:6px 10px;border-radius:8px;transition:all 0.3s ease;margin-left:12px;display:flex;align-items:center;justify-content:center;line-height:1;';
-      btn.addEventListener('click', function () {
-        const current = document.documentElement.getAttribute('data-theme') || DARK;
-        applyTheme(current === DARK ? LIGHT : DARK);
+      const wrapper = document.createElement('label');
+      wrapper.className = 'theme-toggle-switch';
+      wrapper.title = getPreferred() === DARK ? 'ライトモードに切替' : 'ダークモードに切替';
+      wrapper.setAttribute('aria-label', getPreferred() === DARK ? 'ライトモードに切替' : 'ダークモードに切替');
+      wrapper.innerHTML = `
+        <span class="toggle-icon toggle-icon-sun">☀️</span>
+        <input type="checkbox" class="toggle-input" ${getPreferred() === LIGHT ? 'checked' : ''}>
+        <span class="toggle-slider"></span>
+        <span class="toggle-icon toggle-icon-moon">🌙</span>
+      `;
+
+      const input = wrapper.querySelector('input');
+      input.addEventListener('change', function () {
+        applyTheme(this.checked ? LIGHT : DARK);
       });
+
       // ハンバーガーの前に挿入（なければ末尾に追加）
       const hamburger = navContainer.querySelector('.nav-hamburger');
       if (hamburger) {
-        navContainer.insertBefore(btn, hamburger);
+        navContainer.insertBefore(wrapper, hamburger);
       } else {
-        navContainer.appendChild(btn);
+        navContainer.appendChild(wrapper);
       }
     }
   });
