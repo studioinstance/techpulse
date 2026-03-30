@@ -12,10 +12,20 @@
       --text:#f1f5f9; --text-muted:#94a3b8;
       --accent:#06b6d4; --accent2:#818cf8;
       --success:#22c55e; --warning:#f59e0b;
+      --color-border:#1e293b; --color-text:#f1f5f9;
+      --header-bg:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);
+    }
+    [data-theme="light"] {
+      --bg:#f5f6f8; --bg-card:#ffffff; --border:rgba(0,0,0,0.1);
+      --text:#1a1a1a; --text-muted:#555555;
+      --accent:#0369a1; --accent2:#4f46e5;
+      --success:#059669; --warning:#d97706;
+      --color-border:rgba(0,0,0,0.1); --color-text:#1a1a1a;
+      --header-bg:linear-gradient(135deg,#e0e7ff,#dbeafe,#e0e7ff);
     }
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    .header{background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .header{background:var(--header-bg);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .header h1{font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:10px}
     .header .links{display:flex;gap:16px;font-size:0.85rem;align-items:center;flex-wrap:wrap}
     .header .links a{color:var(--accent);text-decoration:none}
@@ -152,6 +162,7 @@
   </div>
 
   <!-- 自分自身のアクセスもトラッキング -->
+  <script src="scripts/theme-toggle.js"></script>
   <script src="scripts/tracker.js"></script>
 
   <script>

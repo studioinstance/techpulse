@@ -93,7 +93,7 @@
 
 .article-content p {
   margin-bottom: 20px;
-  color: #cbd5e1;
+  color: var(--color-text-muted);
 }
 
 .article-content ul, .article-content ol {
@@ -103,7 +103,7 @@
 
 .article-content li {
   margin-bottom: 8px;
-  color: #cbd5e1;
+  color: var(--color-text-muted);
 }
 
 .article-content strong {
@@ -123,7 +123,7 @@
 
 /* Code Blocks */
 .article-content pre {
-  background: #0d1117;
+  background: var(--color-pre-bg, #0d1117);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 20px 24px;

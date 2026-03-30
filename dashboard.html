@@ -15,12 +15,22 @@
       --accent: #ffffff; --accent2: #a3a3a3;
       --success: #10b981; --warning: #f59e0b; --pending: #f97316;
       --font: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+      --color-border: rgba(255,255,255,0.1); --color-text: #ededed;
+      --dash-header-bg: rgba(0, 0, 0, 0.8);
+    }
+    [data-theme="light"] {
+      --bg: #f5f6f8; --bg-card: #ffffff; --bg-card-hover: #f0f0f0;
+      --border: rgba(0,0,0,0.1); --text: #1a1a1a; --text-muted: #555555;
+      --accent: #111111; --accent2: #555555;
+      --success: #059669; --warning: #d97706; --pending: #ea580c;
+      --color-border: rgba(0,0,0,0.1); --color-text: #1a1a1a;
+      --dash-header-bg: rgba(255, 255, 255, 0.85);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
 
     .dash-header {
-      background: rgba(0, 0, 0, 0.8);
+      background: var(--dash-header-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border); padding: 20px 32px;
@@ -532,6 +542,7 @@
     updateClock();
     setInterval(updateClock, 1000);
   </script>
+<script src="scripts/theme-toggle.js"></script>
 <script src="scripts/tracker.js"></script>
 </body>
 </html>
