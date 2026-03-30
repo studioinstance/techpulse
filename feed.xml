@@ -2,6 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <item>
+      <title>Finance x Data Science 2026 Guide</title>
+      <link>https://studioinstance.github.io/techpulse/articles/finance-data-science-2026.html</link>
+      <description>Credit scoring, fraud detection, algo trading, RegTech, YMYL strategy - the definitive financial DS guide.</description>
+      <pubDate>Mon, 30 Mar 2026 19:00:00 +0900</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/articles/finance-data-science-2026.html</guid>
+    </item>
+    <item>
       <title>AI Tools Deep Dive 2026</title>
       <link>https://studioinstance.github.io/techpulse/articles/ai-tools-deep-dive-2026.html</link>
       <description>ChatGPT, Gemini, Claude, Copilot, Devin compared. MCP, autonomous coding agents, and practical strategy guide.</description>
