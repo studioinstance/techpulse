@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
+    <item>
+      <title>AI Tools Deep Dive 2026</title>
+      <link>https://studioinstance.github.io/techpulse/articles/ai-tools-deep-dive-2026.html</link>
+      <description>ChatGPT, Gemini, Claude, Copilot, Devin compared. MCP, autonomous coding agents, and practical strategy guide.</description>
+      <pubDate>Mon, 30 Mar 2026 18:30:00 +0900</pubDate>
+      <guid>https://studioinstance.github.io/techpulse/articles/ai-tools-deep-dive-2026.html</guid>
+    </item>
     <title>TechPulse - テクノロジーの最新トレンド</title>
     <link>https://studioinstance.github.io/techpulse/</link>
     <description>テクノロジーの最新トレンド、Web開発、AI、クラウドに関する情報を発信するテックブログ</description>
