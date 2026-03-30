@@ -19,8 +19,8 @@ jobs:
       - name: Detect new article
         id: detect
         run: |
-          # 直前のコミットで追加されたHTMLファイルを検出
-          NEW_FILE=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'articles/*.html' | head -1)
+          # 直前のコミットで追加・更新されたHTMLファイルを検出
+          NEW_FILE=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'articles/*.html' | head -1)
           if [ -z "$NEW_FILE" ]; then
             echo "No new article file detected."
             echo "has_new=false" >> $GITHUB_OUTPUT
