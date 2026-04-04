@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechPulse ガントチャート（計画 vs 実績）</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#1a1a2e;--bg2:#16213e;--bg3:#0f3460;--row-even:#1c1c34;--row-odd:#1e1e38;--row-hover:#2a2a4e;--row-selected:#2d2d5e;--border:#333358;--border-light:#444470;--text:#e0e0f0;--text2:#9090b0;--text3:#6060a0;--green:#4ade80;--blue:#60a5fa;--orange:#fbbf24;--red:#f87171;--purple:#c084fc;--cyan:#22d3ee;--header-bg:#12122a;--cell-edit:#2a2a5e}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;display:flex;flex-direction:column}
+.toolbar{display:flex;align-items:center;gap:8px;padding:6px 16px;background:var(--header-bg);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.toolbar-title{font-size:14px;font-weight:700;color:var(--blue);margin-right:auto}
+.toolbar-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s}
+.toolbar-btn:hover{background:var(--bg3);color:var(--text);border-color:var(--blue)}
+.toolbar-btn.active{background:var(--bg3);color:var(--blue);border-color:var(--blue)}
+.toolbar-info{font-size:11px;color:var(--text3);padding:0 8px;border-left:1px solid var(--border)}
+.formula-bar{display:flex;align-items:center;padding:3px 16px;background:var(--header-bg);border-bottom:1px solid var(--border);flex-shrink:0;gap:8px}
+.cell-ref{font-size:11px;color:var(--text2);background:var(--bg);border:1px solid var(--border);padding:2px 8px;border-radius:3px;min-width:60px;text-align:center}
+.formula-input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:2px 8px;border-radius:3px;font-size:12px;font-family:inherit}
+.formula-input:focus{outline:none;border-color:var(--blue)}
+.grid-container{flex:1;display:flex;overflow:hidden}
+.left-panel{flex-shrink:0;overflow:hidden;border-right:2px solid var(--blue);z-index:5;display:flex;flex-direction:column}
+.left-header{flex-shrink:0}.left-body{flex:1;overflow-y:auto;overflow-x:hidden}
+.right-panel{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.right-header{flex-shrink:0;overflow:hidden}.right-body{flex:1;overflow:auto}
+.left-body::-webkit-scrollbar{display:none}
+table{border-collapse:collapse;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:36px;font-size:11px}
+th{background:var(--header-bg);color:var(--text2);font-weight:600;text-align:center;position:sticky;top:0;z-index:2;user-select:none}
+td{color:var(--text);cursor:cell}
+.row-num{width:30px;min-width:30px;text-align:center;color:var(--text3);font-size:10px;background:var(--header-bg)!important;cursor:pointer}
+.col-task{width:180px}.col-status{width:65px}.col-pstart{width:82px}.col-pend{width:82px}.col-astart{width:82px}.col-aend{width:82px}.col-days{width:36px}.col-delay{width:42px}.col-progress{width:60px}
+td .cell{padding:1px 4px;height:100%;display:flex;align-items:center;min-height:34px;font-size:11px}
+td.editable:hover{background:var(--row-hover)}
+td.editing{background:var(--cell-edit);outline:2px solid var(--blue);outline-offset:-1px;z-index:1}
+td.editing .cell{display:none}
+td .cell-input{width:100%;height:100%;border:none;background:transparent;color:var(--text);font-size:11px;font-family:inherit;padding:2px 4px;outline:none}
+.status-badge{display:inline-flex;align-items:center;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:600}
+.status-completed{background:rgba(74,222,128,.15);color:var(--green)}
+.status-in-progress{background:rgba(96,165,250,.15);color:var(--blue)}
+.status-planned{background:rgba(251,191,36,.12);color:var(--orange)}
+.progress-cell{display:flex;align-items:center;gap:3px;padding:1px 4px}
+.progress-bar-bg{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:3px}
+.progress-text{font-size:9px;color:var(--text2);min-width:24px;text-align:right}
+.delay-positive{color:var(--red);font-weight:600}
+.delay-zero{color:var(--green)}
+.delay-empty{color:var(--text3)}
+.data-row:nth-child(even) td:not(.row-num){background:var(--row-even)}
+.data-row:nth-child(odd) td:not(.row-num){background:var(--row-odd)}
+.data-row:hover td:not(.row-num){background:var(--row-hover)!important}
+.data-row.selected td{background:var(--row-selected)!important}
+.group-row td{background:var(--bg2)!important;font-weight:600;color:var(--blue)}
+.day-col{width:28px;min-width:28px;padding:0!important}
+.day-header{font-size:9px;line-height:1.2}
+.day-header.weekend{background:rgba(255,255,255,.02)}
+.day-header.today{background:rgba(248,113,113,.15);color:var(--red)}
+.month-header-cell{font-size:11px;font-weight:600;color:var(--text)}
+.gantt-cell{position:relative;padding:0!important}
+.today-col{background:rgba(248,113,113,.06)!important}
+
+/* Plan bar (top half) - outline style */
+.bar-plan{position:absolute;top:3px;height:13px;border-radius:2px;z-index:1;border:1.5px solid;opacity:.6}
+.bar-plan.start{border-radius:3px 0 0 3px}.bar-plan.end{border-radius:0 3px 3px 0}.bar-plan.middle{border-radius:0}.bar-plan.single{border-radius:3px}
+
+/* Actual bar (bottom half) - solid fill */
+.bar-actual{position:absolute;top:19px;height:13px;border-radius:2px;z-index:2}
+.bar-actual.start{border-radius:3px 0 0 3px}.bar-actual.end{border-radius:0 3px 3px 0}.bar-actual.middle{border-radius:0}.bar-actual.single{border-radius:3px}
+
+/* Legend in toolbar */
+.legend-inline{display:flex;gap:12px;align-items:center;font-size:10px;color:var(--text2);margin-left:8px;border-left:1px solid var(--border);padding-left:12px}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-box{width:20px;height:8px;border-radius:2px}
+
+.status-bar{display:flex;align-items:center;gap:16px;padding:3px 16px;background:var(--header-bg);border-top:1px solid var(--border);font-size:11px;color:var(--text3);flex-shrink:0}
+.status-bar .sep{width:1px;height:14px;background:var(--border)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-corner{background:var(--bg)}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <span class="toolbar-title">📊 TechPulse ガントチャート（計画 vs 実績）</span>
+  <button class="toolbar-btn" onclick="expandAll()">＋全展開</button>
+  <button class="toolbar-btn" onclick="collapseAll()">－全折畳</button>
+  <button class="toolbar-btn active" id="fAll" onclick="filterStatus('all',this)">全て</button>
+  <button class="toolbar-btn" id="fDone" onclick="filterStatus('completed',this)">✅完了</button>
+  <button class="toolbar-btn" id="fProg" onclick="filterStatus('in-progress',this)">🔄進行中</button>
+  <button class="toolbar-btn" id="fPlan" onclick="filterStatus('planned',this)">📅予定</button>
+  <div class="legend-inline">
+    <span class="legend-item"><span class="legend-box" style="border:1.5px solid var(--blue);background:transparent"></span>計画</span>
+    <span class="legend-item"><span class="legend-box" style="background:var(--blue)"></span>実績</span>
+    <span class="legend-item"><span class="legend-box" style="background:var(--red);width:2px;border-radius:1px"></span>今日</span>
+    <span class="legend-item" style="color:var(--red)">▲遅延</span>
+  </div>
+  <span class="toolbar-info" id="summaryInfo"></span>
+</div>
+<div class="formula-bar">
+  <span class="cell-ref" id="cellRef">A1</span>
+  <input class="formula-input" id="formulaInput" placeholder="セルを選択してください" readonly>
+</div>
+<div class="grid-container">
+  <div class="left-panel">
+    <div class="left-header"><table id="leftHeaderTable"></table></div>
+    <div class="left-body" id="leftBody"><table id="leftBodyTable"></table></div>
+  </div>
+  <div class="right-panel">
+    <div class="right-header" id="rightHeader"><table id="rightHeaderTable"></table></div>
+    <div class="right-body" id="rightBody"><table id="rightBodyTable"></table></div>
+  </div>
+</div>
+<div class="status-bar">
+  <span id="statusTasks"></span><span class="sep"></span>
+  <span id="statusProgress"></span><span class="sep"></span>
+  <span>今日: <span id="todayDate"></span></span><span class="sep"></span>
+  <span style="color:var(--red)" id="statusDelay"></span>
+</div>
+
+<script>
+const phases=[
+{name:'Phase 1: 基盤構築',color:'#22c55e',collapsed:false,tasks:[
+{name:'サイト初期構築 & SEO基盤',start:'2026-03-22',end:'2026-03-22',aStart:'2026-03-22',aEnd:'2026-03-22',status:'completed',progress:100},
+{name:'GSC認証 & GA4導入',start:'2026-03-22',end:'2026-03-22',aStart:'2026-03-22',aEnd:'2026-03-22',status:'completed',progress:100},
+{name:'AdSense & HubSpot統合',start:'2026-03-22',end:'2026-03-22',aStart:'2026-03-22',aEnd:'2026-03-22',status:'completed',progress:100},
+{name:'Tableau ダッシュボード埋込',start:'2026-03-22',end:'2026-03-22',aStart:'2026-03-22',aEnd:'2026-03-22',status:'completed',progress:100},
+{name:'管理ダッシュボード構築',start:'2026-03-22',end:'2026-03-23',aStart:'2026-03-22',aEnd:'2026-03-23',status:'completed',progress:100}]},
+{name:'Phase 2: コンテンツ拡充',color:'#6366f1',collapsed:false,tasks:[
+{name:'技術記事10本公開 (JP)',start:'2026-03-25',end:'2026-03-27',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100},
+{name:'404ページ & プライバシーポリシー',start:'2026-03-26',end:'2026-03-27',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100},
+{name:'RSSフィード & サイトマップ整備',start:'2026-03-26',end:'2026-03-27',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100},
+{name:'Next.js 15 / SNS自動投稿ガイド',start:'2026-03-27',end:'2026-03-28',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100},
+{name:'プロンプトエンジニアリングガイド',start:'2026-03-27',end:'2026-03-28',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100}]},
+{name:'Phase 3: 国際化 & ツール開発',color:'#06b6d4',collapsed:false,tasks:[
+{name:'i18n: 英語サイト構築',start:'2026-03-27',end:'2026-03-29',aStart:'2026-03-28',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'SEO分析ツール群 (Python)',start:'2026-03-28',end:'2026-03-29',aStart:'2026-03-28',aEnd:'2026-03-28',status:'completed',progress:100},
+{name:'全13記事の英語翻訳',start:'2026-03-28',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'リアルタイム訪問者分析',start:'2026-03-28',end:'2026-03-29',aStart:'2026-03-28',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'Firebase セキュリティ強化',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100}]},
+{name:'Phase 4: デザイン & UX刷新',color:'#a855f7',collapsed:false,tasks:[
+{name:'Qiita / Zenn クロスポスト',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'プロンプトプレイグラウンド',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'Auxia / DS記事',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'プレミアムデザイン刷新',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100},
+{name:'Twitter API v2 自動ツイート',start:'2026-03-29',end:'2026-03-30',aStart:'2026-03-29',aEnd:'2026-03-29',status:'completed',progress:100}]},
+{name:'Phase 5: 高度化 & 自動化',color:'#f59e0b',collapsed:false,tasks:[
+{name:'AI未来 & エンジニア戦略記事',start:'2026-03-30',end:'2026-03-31',aStart:'2026-03-30',aEnd:'2026-03-30',status:'completed',progress:100},
+{name:'ダーク/ライト テーマ切替',start:'2026-03-30',end:'2026-03-31',aStart:'2026-03-30',aEnd:'2026-03-30',status:'completed',progress:100},
+{name:'バイリンガルツイート自動化',start:'2026-03-30',end:'2026-03-31',aStart:'2026-03-30',aEnd:'2026-03-30',status:'completed',progress:100},
+{name:'AI Tools / Finance DS 記事',start:'2026-03-30',end:'2026-03-31',aStart:'2026-03-30',aEnd:'2026-03-30',status:'completed',progress:100},
+{name:'訪問者分析ページ高度化',start:'2026-03-30',end:'2026-03-31',aStart:'2026-03-30',aEnd:'2026-03-30',status:'completed',progress:100}]},
+{name:'Phase 6: CTR最適化',color:'#ec4899',collapsed:false,tasks:[
+{name:'大手企業UX分析',start:'2026-04-01',end:'2026-04-02',aStart:'2026-04-01',aEnd:'2026-04-02',status:'completed',progress:100},
+{name:'CTR改善施策の策定',start:'2026-04-01',end:'2026-04-03',aStart:'2026-04-01',aEnd:'2026-04-03',status:'completed',progress:100},
+{name:'CTA デザイン最適化',start:'2026-04-03',end:'2026-04-05',aStart:'2026-04-03',aEnd:'',status:'in-progress',progress:60},
+{name:'A/Bテスト基盤構築',start:'2026-04-04',end:'2026-04-08',aStart:'2026-04-04',aEnd:'',status:'in-progress',progress:20},
+{name:'ランディングページ改善',start:'2026-04-06',end:'2026-04-10',aStart:'',aEnd:'',status:'planned',progress:0}]},
+{name:'Phase 7: コンテンツ戦略 Q2',color:'#06b6d4',collapsed:false,tasks:[
+{name:'月間コンテンツカレンダー',start:'2026-04-07',end:'2026-04-10',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'AI / クラウド特集シリーズ',start:'2026-04-10',end:'2026-04-20',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'ゲスト記事 & コラボ',start:'2026-04-14',end:'2026-04-25',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'ニュースレター配信自動化',start:'2026-04-15',end:'2026-04-22',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'コミュニティ構築',start:'2026-04-20',end:'2026-04-30',aStart:'',aEnd:'',status:'planned',progress:0}]},
+{name:'Phase 8: 収益化 & スケール',color:'#f59e0b',collapsed:false,tasks:[
+{name:'AdSense収益最適化',start:'2026-04-20',end:'2026-05-05',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'スポンサードコンテンツ開拓',start:'2026-04-25',end:'2026-05-10',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'Core Web Vitals最適化',start:'2026-05-01',end:'2026-05-12',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'CDN / エッジキャッシュ導入',start:'2026-05-05',end:'2026-05-15',aStart:'',aEnd:'',status:'planned',progress:0},
+{name:'PWA対応 & オフライン機能',start:'2026-05-10',end:'2026-05-25',aStart:'',aEnd:'',status:'planned',progress:0}]}
+];
+
+const CHART_START=new Date('2026-03-16'),CHART_END=new Date('2026-05-31');
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+let currentFilter='all',selectedRow=null;
+
+function pd(s){if(!s)return null;const d=new Date(s);d.setHours(0,0,0,0);return d}
+function db(a,b){return Math.round((b-a)/864e5)}
+function fmtD(d){return d?`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`:''}
+
+function getDays(){const days=[];let d=new Date(CHART_START);while(d<=CHART_END){days.push(new Date(d));d.setDate(d.getDate()+1)}return days}
+const allDays=getDays();
+
+function getRows(){
+  const rows=[];
+  phases.forEach((p,pi)=>{
+    rows.push({type:'group',phase:p,pi});
+    if(!p.collapsed) p.tasks.forEach((t,ti)=>{
+      if(currentFilter==='all'||t.status===currentFilter) rows.push({type:'task',task:t,phase:p,pi,ti});
+    });
+  });
+  return rows;
+}
+
+function calcDelay(t){
+  if(!t.aEnd||!t.end)return null;
+  return db(pd(t.end),pd(t.aEnd));
+}
+
+function statusBadge(s){
+  const m={'completed':['完了','status-completed'],'in-progress':['進行中','status-in-progress'],'planned':['予定','status-planned']};
+  const[l,c]=m[s];return `<span class="status-badge ${c}">${l}</span>`;
+}
+function progressBar(p,color){
+  return `<div class="progress-cell"><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${p}%;background:${color}"></div></div><span class="progress-text">${p}%</span></div>`;
+}
+function delayCell(d){
+  if(d===null)return '<div class="cell delay-empty" style="text-align:center">-</div>';
+  if(d>0)return `<div class="cell delay-positive" style="text-align:center">+${d}d</div>`;
+  if(d<0)return `<div class="cell delay-zero" style="text-align:center;color:var(--green)">${d}d</div>`;
+  return '<div class="cell delay-zero" style="text-align:center">0d</div>';
+}
+
+function render(){
+  const rows=getRows();
+  document.getElementById('leftHeaderTable').innerHTML=
+    `<tr><th class="row-num">#</th><th class="col-task">タスク名</th><th class="col-status">状態</th><th class="col-pstart">計画開始</th><th class="col-pend">計画終了</th><th class="col-astart">実績開始</th><th class="col-aend">実績終了</th><th class="col-days">日数</th><th class="col-delay">遅延</th><th class="col-progress">進捗</th></tr>`;
+
+  let lb='',rn=1;
+  rows.forEach((r,i)=>{
+    if(r.type==='group'){
+      const p=r.phase,ct=p.tasks.length,cc=p.tasks.filter(t=>t.status==='completed').length;
+      lb+=`<tr class="group-row" data-ri="${i}"><td class="row-num" onclick="toggleGroup(${r.pi})" style="cursor:pointer">${p.collapsed?'▶':'▼'}</td><td class="col-task" colspan="9"><span style="color:${p.color}">■</span> ${p.name} <span style="color:var(--text3);font-size:10px;margin-left:6px">(${cc}/${ct})</span></td></tr>`;
+    } else {
+      const t=r.task,d=db(pd(t.start),pd(t.end))+1,delay=calcDelay(t);
+      lb+=`<tr class="data-row${selectedRow===i?' selected':''}" data-ri="${i}" onclick="selectRow(${i})"><td class="row-num">${rn}</td><td class="col-task editable" data-col="name"><div class="cell">${t.name}</div></td><td class="col-status" data-col="status"><div class="cell">${statusBadge(t.status)}</div></td><td class="col-pstart editable" data-col="start"><div class="cell">${t.start}</div></td><td class="col-pend editable" data-col="end"><div class="cell">${t.end}</div></td><td class="col-astart editable" data-col="aStart"><div class="cell">${t.aStart||'-'}</div></td><td class="col-aend editable" data-col="aEnd"><div class="cell">${t.aEnd||'-'}</div></td><td class="col-days"><div class="cell" style="text-align:center">${d}</div></td><td class="col-delay">${delayCell(delay)}</td><td class="col-progress">${progressBar(t.progress,r.phase.color)}</td></tr>`;
+      rn++;
+    }
+  });
+  document.getElementById('leftBodyTable').innerHTML=lb;
+
+  // Timeline header
+  let mh='<tr>',dh='<tr>',prevM='',mSpan=0,mCells=[];
+  allDays.forEach((day,di)=>{
+    const mk=`${day.getFullYear()}年${day.getMonth()+1}月`;
+    if(mk!==prevM){if(prevM)mCells.push({l:prevM,s:mSpan});prevM=mk;mSpan=1}else mSpan++;
+    if(di===allDays.length-1)mCells.push({l:mk,s:mSpan});
+  });
+  mCells.forEach(mc=>{mh+=`<th class="day-col month-header-cell" colspan="${mc.s}">${mc.l}</th>`});
+  mh+='</tr>';
+  allDays.forEach(day=>{
+    const isT=day.getTime()===TODAY.getTime(),isW=day.getDay()===0||day.getDay()===6;
+    dh+=`<th class="day-col day-header${isT?' today':isW?' weekend':''}">${day.getDate()}</th>`;
+  });
+  dh+='</tr>';
+  document.getElementById('rightHeaderTable').innerHTML=mh+dh;
+
+  // Gantt bars
+  let rb='';
+  rows.forEach((r,i)=>{
+    rb+='<tr'+(r.type==='group'?' class="group-row"':` class="data-row${selectedRow===i?' selected':''}"`)+'>';
+    allDays.forEach(day=>{
+      const isT=day.getTime()===TODAY.getTime();
+      let cls='day-col gantt-cell'+(isT?' today-col':'');
+      let bars='';
+      if(r.type==='group'){
+        const p=r.phase;
+        const ps=p.tasks.reduce((m,t)=>pd(t.start)<m?pd(t.start):m,pd(p.tasks[0].start));
+        const pe=p.tasks.reduce((m,t)=>pd(t.end)>m?pd(t.end):m,pd(p.tasks[0].end));
+        if(day>=ps&&day<=pe) bars=`<div style="position:absolute;top:14px;height:6px;left:0;width:100%;background:${p.color};opacity:.2;border-radius:1px"></div>`;
+      } else {
+        const t=r.task,color=r.phase.color;
+        // Plan bar (top)
+        const ps=pd(t.start),pe=pd(t.end);
+        if(day>=ps&&day<=pe){
+          const isS=day.getTime()===ps.getTime(),isE=day.getTime()===pe.getTime(),isSi=isS&&isE;
+          const pc=isSi?'single':isS?'start':isE?'end':'middle';
+          bars+=`<div class="bar-plan ${pc}" style="border-color:${color};left:0;width:100%"></div>`;
+        }
+        // Actual bar (bottom)
+        const as=pd(t.aStart),ae=t.aEnd?pd(t.aEnd):(t.status==='in-progress'?TODAY:null);
+        if(as&&ae&&day>=as&&day<=ae){
+          const isS=day.getTime()===as.getTime(),isE=day.getTime()===ae.getTime(),isSi=isS&&isE;
+          const pc=isSi?'single':isS?'start':isE?'end':'middle';
+          bars+=`<div class="bar-actual ${pc}" style="background:${color};left:0;width:100%" title="${t.name} (実績)"></div>`;
+        }
+      }
+      rb+=`<td class="${cls}">${bars}</td>`;
+    });
+    rb+='</tr>';
+  });
+  document.getElementById('rightBodyTable').innerHTML=rb;
+  document.querySelectorAll('#rightHeaderTable,#rightBodyTable').forEach(t=>{t.style.width=(allDays.length*28)+'px'});
+  updateSummary();syncScroll();
+}
+
+function updateSummary(){
+  let total=0,done=0,prog=0,plan=0,delays=0;
+  phases.forEach(p=>p.tasks.forEach(t=>{total++;if(t.status==='completed')done++;else if(t.status==='in-progress')prog++;else plan++;const d=calcDelay(t);if(d!==null&&d>0)delays++}));
+  document.getElementById('summaryInfo').textContent=`全${total} | 完了${done} | 進行中${prog} | 予定${plan} | ${Math.round(done/total*100)}%`;
+  document.getElementById('statusTasks').textContent=`タスク: ${total}件`;
+  document.getElementById('statusProgress').textContent=`完了: ${done}/${total} (${Math.round(done/total*100)}%)`;
+  document.getElementById('todayDate').textContent=fmtD(TODAY);
+  document.getElementById('statusDelay').textContent=delays>0?`⚠ 遅延タスク: ${delays}件`:'✅ 遅延なし';
+}
+
+function syncScroll(){
+  const lb=document.getElementById('leftBody'),rb=document.getElementById('rightBody'),rh=document.getElementById('rightHeader');
+  rb.onscroll=()=>{lb.scrollTop=rb.scrollTop;rh.scrollLeft=rb.scrollLeft};
+  lb.onscroll=()=>{rb.scrollTop=lb.scrollTop};
+}
+function scrollToToday(){const rb=document.getElementById('rightBody');rb.scrollLeft=Math.max(0,db(CHART_START,TODAY)*28-rb.clientWidth/3)}
+function toggleGroup(pi){phases[pi].collapsed=!phases[pi].collapsed;render()}
+function expandAll(){phases.forEach(p=>p.collapsed=false);render()}
+function collapseAll(){phases.forEach(p=>p.collapsed=true);render()}
+function filterStatus(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.toolbar-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  render();scrollToToday();
+}
+
+function selectRow(i){
+  selectedRow=i;const rows=getRows();
+  if(rows[i]&&rows[i].type==='task'){
+    document.getElementById('cellRef').textContent=`B${i+1}`;
+    document.getElementById('formulaInput').value=rows[i].task.name;
+  }
+  render();
+}
+
+document.addEventListener('dblclick',e=>{
+  const td=e.target.closest('td.editable');if(!td)return;
+  const col=td.dataset.col,row=td.closest('tr'),ri=parseInt(row.dataset.ri),rows=getRows();
+  if(!rows[ri]||rows[ri].type!=='task')return;
+  const t=rows[ri].task;
+  const val=t[col]||'';
+  td.classList.add('editing');
+  const input=document.createElement('input');input.className='cell-input';input.value=val;
+  td.appendChild(input);input.focus();input.select();
+  const finish=()=>{const nv=input.value.trim();if(nv!==val)t[col]=nv;td.classList.remove('editing');if(input.parentNode)input.remove();render()};
+  input.onblur=finish;
+  input.onkeydown=ev=>{if(ev.key==='Enter')finish();if(ev.key==='Escape'){input.value=val;finish()}};
+});
+
+document.addEventListener('click',e=>{
+  const td=e.target.closest('td[data-col="status"]');if(!td)return;
+  const row=td.closest('tr'),ri=parseInt(row.dataset.ri),rows=getRows();
+  if(!rows[ri]||rows[ri].type!=='task')return;
+  const t=rows[ri].task,cycle=['planned','in-progress','completed'];
+  t.status=cycle[(cycle.indexOf(t.status)+1)%3];
+  t.progress=t.status==='completed'?100:t.status==='in-progress'?50:0;
+  render();
+});
+
+render();setTimeout(scrollToToday,100);
+</script>
+</body>
+</html>
