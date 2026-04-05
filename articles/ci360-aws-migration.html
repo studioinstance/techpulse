@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="ja"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0K0FCE368"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G0K0FCE368');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4279561450700157" crossorigin="anonymous"></script>
+
+  <title>【2026年最新】SAS CI360からAWSへの移行ガイド：技術的制約・コスト・工数・懸念点を徹底分析 - TechPulse</title>
+  <meta name="description" content="SAS Customer Intelligence 360からAWSへのマーケティング基盤移行を徹底分析。技術的制約、コスト試算、工数見積もり、移行可否判断のポイントまで実務者目線で深掘り解説。">
+  <meta name="keywords" content="SAS CI360, AWS移行, CDP, マーケティングオートメーション, クラウド移行, Amazon Personalize, コスト分析, 2026年">
+  <meta name="author" content="TechPulse">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html">
+  <link rel="alternate" hreflang="ja" href="https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html">
+  <meta property="og:title" content="【2026年最新】SAS CI360からAWSへの移行ガイド：懸念点・コスト・技術制約を徹底分析">
+  <meta property="og:description" content="CI360からAWSへの移行は本当に可能か？技術的制約、コスト、工数、リスクを網羅的に分析。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "【2026年最新】SAS CI360からAWSへの移行ガイド：技術的制約・コスト・工数・懸念点を徹底分析",
+    "datePublished": "2026-04-05",
+    "dateModified": "2026-04-05T10:30:00+09:00",
+    "author": {"@type": "Organization", "name": "TechPulse"},
+    "publisher": {"@type": "Organization", "name": "TechPulse"},
+    "description": "SAS CI360からAWSへのマーケティング基盤移行における技術的制約、コスト、工数、懸念点を網羅的に分析。",
+    "mainEntityOfPage": "https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="article.css">
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a href="../index.html" class="nav-logo">⚡ TechPulse</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">ホーム</a></li>
+      <li><a href="../blog.html" class="active">ブログ</a></li>
+      <li><a href="../about.html">このサイトについて</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div></nav>
+
+  <header class="article-header">
+    <div class="article-container">
+      <span class="category">クラウド × マーケティング基盤</span>
+      <h1>SAS CI360からAWSへの移行ガイド<br>技術的制約・コスト・工数・懸念点を徹底分析</h1>
+      <div class="article-meta-info">
+        <span>📅 2026年4月5日</span>
+        <span>🕐 約20分で読めます</span>
+        <span>🏷️ CI360, AWS, CDP, クラウド移行, マーケティングオートメーション</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-body">
+    <div class="article-wrapper">
+      <article class="article-content">
+        <div class="toc">
+          <h3>📑 目次</h3>
+          <ol>
+            <li><a href="#overview">SAS CI360とは何か：機能と特徴の整理</a></li>
+            <li><a href="#migration-patterns">移行パターン：3つのアプローチ</a></li>
+            <li><a href="#technical-constraints">技術的制約：移行を阻む8つの壁</a></li>
+            <li><a href="#cost-analysis">コスト分析：TCOの全体像</a></li>
+            <li><a href="#effort-estimation">工数見積もり：フェーズ別の実態</a></li>
+            <li><a href="#aws-architecture">AWS側の構成：CI360機能の代替マッピング</a></li>
+            <li><a href="#risks">リスクと懸念点：移行判断のチェックリスト</a></li>
+            <li><a href="#verdict">総合評価：移行すべきか、しないべきか</a></li>
+          </ol>
+        </div>
+
+        <p>SAS Customer Intelligence 360（以下CI360）は、CDP（カスタマーデータプラットフォーム）とマーケティングオートメーションを統合したエンタープライズ向けプラットフォームです。近年、<strong>「CI360からAWSベースの自社基盤へ移行したい」</strong>という声が増えています。</p>
+
+        <p>しかし、この移行は<strong>単純な「リフト＆シフト」では実現できない</strong>複雑なプロジェクトです。本記事では、技術的制約・コスト・工数・リスクを網羅的に分析し、<strong>移行の可否判断に必要な情報</strong>を提供します。</p>
+
+        <div class="info-box info">
+          <div class="info-title">💡 この記事で得られること</div>
+          <p>①CI360の主要機能とアーキテクチャの理解 ②移行パターンごとの技術的制約 ③TCO（総保有コスト）の比較分析 ④フェーズ別の工数見積もり ⑤AWS側での代替アーキテクチャ構成 ⑥移行判断のための実務的チェックリスト</p>
+        </div>
+
+        <!-- ===== Section 1 ===== -->
+        <h2 id="overview">1. SAS CI360とは何か：機能と特徴の整理</h2>
+
+        <h3>📌 CI360の全体像</h3>
+        <p>CI360は<strong>SaaSとして提供</strong>されるマーケティングプラットフォームです。AWS上に構築されたマルチテナント型サービスであり、以下の3つのコア構成要素で成り立っています。</p>
+
+        <pre data-lang="markdown"><code>SAS CI360 の構成要素
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Discover   → デジタル行動データのリアルタイム収集
+             Web/モバイルの行動トラッキング
+             タグベースのイベント収集
+
+Engage     → クロスチャネルのキャンペーン配信
+             メール/SMS/プッシュ/Web/広告の一元管理
+             リアルタイムパーソナライゼーション
+
+Plan       → マーケティングオートメーション
+             ジャーニーオーケストレーション
+             オーディエンスセグメンテーション
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++ SAS独自の高度なAI/ML分析エンジン
++ 予測モデル（離脱予測、アップセル、CLTV等）
++ ハイブリッドデータアーキテクチャ</code></pre>
+
+        <h3>📌 CI360の技術仕様と制約</h3>
+        <pre data-lang="markdown"><code>項目                │ 仕様
+━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━
+APIレート制限       │ 70万リクエスト / 5分 / IP
+リアルタイム処理    │ 最大1,000イベント/秒/テナント
+データモデル        │ SAS独自スキーマ（プロプライエタリ）
+認証方式            │ OAuth 2.0 + SAS独自IAM
+デプロイ形態        │ SaaS（マルチテナント/AWS上）
+カスタマイズ        │ API経由のみ（バックエンド非公開）
+ライセンス          │ サブスクリプション（ユーザー数+データ量）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <div class="ad-space">広告</div>
+
+        <!-- ===== Section 2 ===== -->
+        <h2 id="migration-patterns">2. 移行パターン：3つのアプローチ</h2>
+
+        <p>CI360からAWSへの「移行」は、その目的と範囲によって大きく3パターンに分類されます。</p>
+
+        <h3>📊 パターン比較</h3>
+        <pre data-lang="markdown"><code>パターン          │ 概要                      │ 難易度 │ コスト │ 期間
+━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━┿━━━━━━┿━━━━━━
+A. ハイブリッド    │ CI360を残しつつ            │ ★★☆   │ 中     │ 3-6ヶ月
+   連携強化       │ AWSにデータ基盤を構築      │        │        │
+                  │ S3/Redshiftとの連携を強化  │        │        │
+━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━┿━━━━━━┿━━━━━━
+B. 段階的         │ CI360の機能を段階的に      │ ★★★★  │ 高     │ 9-18ヶ月
+   リプレース     │ AWSネイティブサービスで     │        │        │
+                  │ 置き換え                   │        │        │
+━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━┿━━━━━━┿━━━━━━
+C. 完全移行       │ CI360を完全に廃止し        │ ★★★★★ │ 最高   │ 12-24ヶ月
+   (フル構築)     │ AWSでCDP+MAを             │        │        │
+                  │ ゼロから構築               │        │        │
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <div class="info-box warning">
+          <div class="info-title">⚠️ 重要：Amazon Pinpoint のサービス終了</div>
+          <p>AWSのマルチチャネル配信サービス「Amazon Pinpoint」は<strong>2026年10月30日にサポート終了</strong>が発表されています。移行先のアーキテクチャ設計において、Pinpointに依存しない構成を設計する必要があります。代替として<strong>Amazon SES + SNS + 独自オーケストレーション</strong>の組み合わせ、またはサードパーティ（Braze、Iterable等）の採用を検討してください。</p>
+        </div>
+
+        <!-- ===== Section 3 ===== -->
+        <h2 id="technical-constraints">3. 技術的制約：移行を阻む8つの壁</h2>
+
+        <p>CI360からAWSへの移行で直面する技術的制約を、深刻度順に整理します。</p>
+
+        <h3>🚧 制約① データモデルの非互換性（深刻度：★★★★★）</h3>
+        <p>CI360は<strong>SAS独自のデータスキーマ</strong>を使用しています。顧客プロファイル、セグメント定義、キャンペーンロジック、ジャーニー定義のすべてがSAS固有のフォーマットで管理されており、AWSサービスへの直接移植は不可能です。</p>
+        <ul>
+          <li><strong>顧客IDの解決ロジック</strong>：オンライン/オフライン識別子の紐づけルールを再構築する必要がある</li>
+          <li><strong>セグメント定義</strong>：CI360独自のクエリ文法で定義されたセグメントはSQL等に手動変換が必要</li>
+          <li><strong>ジャーニーフロー</strong>：GUI上で構築したジャーニーのエクスポート形式が限定的</li>
+        </ul>
+
+        <h3>🚧 制約② SAS AI/MLエンジンの代替困難（深刻度：★★★★★）</h3>
+        <p>CI360の最大の価値提案の一つである<strong>予測分析エンジン</strong>は、SASの長年にわたる統計分析のノウハウが凝縮されています。</p>
+        <pre data-lang="markdown"><code>CI360の予測モデル    │ AWS代替候補            │ 移行難易度
+━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━
+顧客離脱予測         │ Amazon SageMaker        │ 高（再学習必要）
+LTV予測             │ SageMaker + カスタム     │ 高
+NBA（次善策推奨）    │ Amazon Personalize      │ 中-高
+セグメント自動生成   │ SageMaker + Redshift    │ 高
+リアルタイムスコア   │ SageMaker Endpoint      │ 中
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>🚧 制約③ リアルタイム処理の再構築（深刻度：★★★★☆）</h3>
+        <p>CI360のリアルタイムインタラクション機能（Webパーソナライゼーション等）をAWSで再現するには、<strong>Kinesis Data Streams + Lambda + DynamoDB</strong>による低レイテンシアーキテクチャの構築が必要です。CI360の「1,000イベント/秒」の処理能力は、AWS側では容易にスケール可能ですが、<strong>ロジックの移植</strong>が最大のボトルネックです。</p>
+
+        <h3>🚧 制約④ バックエンドログへのアクセス不可（深刻度：★★★★☆）</h3>
+        <p>CI360はSaaSのため、<strong>内部のバックエンドログに直接アクセスできません</strong>。移行前の現行動作の詳細分析や、移行後の動作検証における比較テストが困難になります。</p>
+
+        <h3>🚧 制約⑤ キャンペーン履歴データの移行（深刻度：★★★☆☆）</h3>
+        <p>過去のキャンペーン実行履歴、A/Bテスト結果、コンタクト履歴などの<strong>歴史的データの完全移行</strong>は、CI360のエクスポートAPI制限とデータフォーマットの違いにより、完全性の保証が難しくなります。</p>
+
+        <h3>🚧 制約⑥ コンプライアンス・データ主権（深刻度：★★★☆☆）</h3>
+        <ul>
+          <li>PII（個人情報）のリージョン間移動に関する法的制約</li>
+          <li>CI360のハイブリッドモデルで保護されていたデータがAWS上でフル公開されるリスク</li>
+          <li>GDPR/個人情報保護法に準拠したデータ削除フローの再設計</li>
+        </ul>
+
+        <h3>🚧 制約⑦ IAM/認証の再設計（深刻度：★★★☆☆）</h3>
+        <p>CI360の認証・認可の仕組みと、AWS IAM + Cognitoとの統合設計。既存のSSOやActive Directory連携の再構成が必要です。</p>
+
+        <h3>🚧 制約⑧ チャネルコネクタの再構築（深刻度：★★☆☆☆）</h3>
+        <p>CI360が提供するメール、SMS、プッシュ通知、広告連携などの各チャネルコネクタを、AWS側で個別に構築・維持する必要があります。</p>
+
+        <div class="ad-space">広告</div>
+
+        <!-- ===== Section 4 ===== -->
+        <h2 id="cost-analysis">4. コスト分析：TCOの全体像</h2>
+
+        <h3>📊 CI360 vs AWS自社構築のコスト構造比較</h3>
+        <pre data-lang="markdown"><code>コスト項目            │ CI360 (現行)        │ AWS自社構築
+━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━
+初期導入費            │ ライセンス契約のみ    │ 設計・開発費が大
+ライセンス/利用料     │ 年額 高額（数千万～） │ 従量課金（月額変動）
+インフラ費            │ SaaS（含まれる）     │ AWS利用料（別途発生）
+運用保守人件費        │ SAS側で対応（一部）  │ 自社運用チーム必須
+AI/MLモデル開発       │ 含まれる             │ SageMaker + 開発工数
+アップデート費        │ SAS側で自動適用      │ 自社で維持・更新
+チャネル連携維持      │ 含まれる             │ 個別に開発・保守
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>💰 移行プロジェクトのコスト試算（概算）</h3>
+        <pre data-lang="markdown"><code>フェーズ                │ 工数（人月） │ 概算コスト（万円）
+━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━
+1. 現状分析・設計       │  3 - 6      │   900 - 1,800
+2. データ基盤構築       │  4 - 8      │ 1,200 - 2,400
+3. ML/AIモデル移行      │  6 - 12     │ 1,800 - 3,600
+4. チャネル連携構築     │  3 - 6      │   900 - 1,800
+5. テスト・検証         │  3 - 6      │   900 - 1,800
+6. 並行運用・切替       │  2 - 4      │   600 - 1,200
+━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━
+合計                    │ 21 - 42     │ 6,300 - 12,600
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+※ 1人月 = 約300万円（SIer単価）で概算
+※ 規模・複雑度により大幅に変動</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-title">✅ コスト最適化のポイント</div>
+          <p>①AWSの無料利用枠を検証フェーズで最大活用 ②<a href="https://calculator.aws/" target="_blank">AWS料金計算ツール</a>で事前に精密試算 ③段階的移行（パターンA→B）でリスクとコストを分散 ④Composable CDP（Segment、Tealium等）の併用で開発工数を削減</p>
+        </div>
+
+        <!-- ===== Section 5 ===== -->
+        <h2 id="effort-estimation">5. 工数見積もり：フェーズ別の実態</h2>
+
+        <pre data-lang="markdown"><code>フェーズ別タイムライン（段階的リプレース想定：12-18ヶ月）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月 1-3   │ ● 現状棚卸し・アセスメント
+         │   - CI360の全機能・ワークフローの洗い出し
+         │   - データフロー・依存関係のマッピング
+         │   - AWS側の要件定義・アーキテクチャ設計
+         │   ⚠️ ここを省略すると後半で手戻りが膨大に発生
+━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月 4-6   │ ● データ基盤構築
+         │   - S3データレイク設計・構築
+         │   - Redshift/Athena の分析環境構築
+         │   - Identity Resolution ロジックの実装
+         │   - ETL/ELTパイプライン開発（Glue/Step Functions）
+━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月 6-10  │ ● コア機能開発
+         │   - リアルタイムイベント処理（Kinesis + Lambda）
+         │   - ML/AIモデル再構築（SageMaker）
+         │   - セグメンテーション・ジャーニーエンジン開発
+         │   ⚠️ 最も工数がかかるフェーズ
+━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月 10-14 │ ● テスト・検証・チャネル連携
+         │   - 機能テスト・負荷テスト・回帰テスト
+         │   - CI360との結果比較検証
+         │   - 各配信チャネルのコネクタ開発・テスト
+━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+月 14-18 │ ● 並行運用・段階的切替
+         │   - CI360と新基盤の並行運用
+         │   - ビジネスユニット単位の段階的切替
+         │   - CI360契約の終了調整
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>👥 必要な体制</h3>
+        <pre data-lang="markdown"><code>役割                  │ 必要人数 │ スキル要件
+━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━
+プロジェクトマネージャ │ 1名     │ クラウド移行PMの経験
+AWSアーキテクト       │ 1-2名   │ SA Pro認定推奨
+データエンジニア      │ 2-3名   │ Glue/Redshift/Kinesis
+ML/AIエンジニア       │ 1-2名   │ SageMaker / SAS知見
+フロントエンド開発者  │ 1-2名   │ パーソナライズUI
+マーケティングOps     │ 1-2名   │ CI360の業務知識
+QAエンジニア          │ 1-2名   │ 自動テスト・負荷テスト
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+合計                   │ 8-14名  │</code></pre>
+
+        <div class="ad-space">広告</div>
+
+        <!-- ===== Section 6 ===== -->
+        <h2 id="aws-architecture">6. AWS側の構成：CI360機能の代替マッピング</h2>
+
+        <h3>📊 CI360機能 → AWSサービスのマッピング</h3>
+        <pre data-lang="markdown"><code>CI360の機能              │ AWS代替構成                        │ 成熟度
+━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━
+CDP（顧客統合DB）       │ S3 + Glue + Redshift + DynamoDB    │ ★★★★☆
+リアルタイム行動収集    │ Kinesis Data Streams + Lambda       │ ★★★★★
+Identity Resolution     │ DynamoDB + カスタムロジック         │ ★★★☆☆
+セグメンテーション      │ Redshift + Athena + Step Functions │ ★★★★☆
+ジャーニーオーケスト    │ Step Functions + EventBridge       │ ★★★☆☆
+レコメンデーション      │ Amazon Personalize                  │ ★★★★☆
+予測分析（離脱/LTV）   │ Amazon SageMaker                   │ ★★★★☆
+メール配信             │ Amazon SES                          │ ★★★★★
+プッシュ通知           │ Amazon SNS                          │ ★★★★★
+Webパーソナライズ      │ CloudFront + Lambda@Edge            │ ★★★☆☆
+ダッシュボード         │ Amazon QuickSight                   │ ★★★★☆
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>🏗️ AWS CDPリファレンスアーキテクチャ</h3>
+        <pre data-lang="markdown"><code>┌──────────────────────────────────────────────────────────┐
+│                   データ収集レイヤー                      │
+│  Web/App → API Gateway → Kinesis Data Streams           │
+│  CRM/ERP → AppFlow → S3 (Raw Data Lake)                │
+│  IoT     → IoT Core → Kinesis                          │
+└────────────────────┬─────────────────────────────────────┘
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                  データ処理レイヤー                       │
+│  Kinesis → Lambda (リアルタイム変換)                     │
+│  S3 → Glue ETL → Redshift (バッチ処理)                 │
+│  Identity Resolution (DynamoDB + Lambda)                 │
+└────────────────────┬─────────────────────────────────────┘
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│                 分析・ML レイヤー                         │
+│  SageMaker (予測モデル / セグメント)                     │
+│  Personalize (リアルタイムレコメンド)                    │
+│  QuickSight (BI ダッシュボード)                         │
+└────────────────────┬─────────────────────────────────────┘
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│               アクティベーションレイヤー                   │
+│  SES (メール) / SNS (プッシュ) / SMS                    │
+│  Step Functions (ジャーニーオーケストレーション)          │
+│  Lambda@Edge (Webパーソナライゼーション)                 │
+└──────────────────────────────────────────────────────────┘</code></pre>
+
+        <h3>💡 代替アプローチ：Composable CDP</h3>
+        <p>全てをゼロから構築するのではなく、<strong>Composable CDP</strong>の併用で開発工数を大幅に削減できます。</p>
+        <ul>
+          <li><strong>Twilio Segment</strong>：データ収集・統合に特化。S3/Kinesis連携が容易</li>
+          <li><strong>Tealium</strong>：Amazon Personalizeとの深い統合</li>
+          <li><strong>Hightouch / Census</strong>：Reverse ETLでデータウェアハウスから直接配信ツールへ</li>
+        </ul>
+
+        <!-- ===== Section 7 ===== -->
+        <h2 id="risks">7. リスクと懸念点：移行判断のチェックリスト</h2>
+
+        <h3>🔴 高リスク項目</h3>
+        <pre data-lang="markdown"><code>リスク項目                  │ 影響度 │ 発生確率 │ 対策
+━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━┿━━━━━━━━┿━━━━━━━━━━━━━━━
+SASのAI/ML精度を再現できない│ ★★★★★ │ 高       │ SageMaker + 専門家
+移行中のマーケ施策停止      │ ★★★★★ │ 中       │ 並行運用期間の確保
+コストが想定を大幅超過      │ ★★★★☆ │ 高       │ PoC → 段階移行
+スキル不足でプロジェクト停滞│ ★★★★☆ │ 高       │ AWSパートナー活用
+データ移行時の欠損・不整合  │ ★★★★☆ │ 中       │ 検証テストの徹底
+チーム変革への抵抗          │ ★★★☆☆ │ 高       │ 早期のステークホルダー巻込み
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>📋 移行判断チェックリスト</h3>
+        <div class="info-box warning">
+          <div class="info-title">⚠️ 移行を推奨するケース</div>
+          <p>✅ CI360のライセンスコストが事業規模に対して過大<br>
+          ✅ CI360で実現できないカスタマイズ要求が多い<br>
+          ✅ AWSに精通したエンジニアチームが社内に存在する<br>
+          ✅ 12ヶ月以上の移行プロジェクト期間を確保できる<br>
+          ✅ データとMLモデルの自社管理・競争優位性が経営戦略上重要</p>
+        </div>
+
+        <div class="info-box info">
+          <div class="info-title">💡 移行を慎重に検討すべきケース</div>
+          <p>⚠️ CI360の予測分析機能が事業のコアバリューになっている<br>
+          ⚠️ AWS/クラウドアーキテクチャの社内知見が不足している<br>
+          ⚠️ マーケティングチームがCI360のUIに強く依存している<br>
+          ⚠️ 移行予算が6,000万円未満<br>
+          ⚠️ 並行運用期間を確保する余裕がない</p>
+        </div>
+
+        <div class="ad-space">広告</div>
+
+        <!-- ===== Section 8 ===== -->
+        <h2 id="verdict">8. 総合評価：移行すべきか、しないべきか</h2>
+
+        <h3>📊 総合スコアカード</h3>
+        <pre data-lang="markdown"><code>評価軸                  │ 評価     │ コメント
+━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+技術的な移行可否        │ ○ 可能   │ ただし「リプレース」であり
+                        │          │ 「移行」ではない
+コスト合理性            │ △ 条件付き│ 長期的にはメリットあり
+                        │          │ 短期のROIは出にくい
+工数の妥当性            │ △ 注意   │ 21-42人月は最低ライン
+                        │          │ 複雑度により2-3倍の可能性
+リスクの許容度          │ △ 注意   │ AI/ML精度の再現が最大リスク
+                        │          │ 並行運用期間の確保が必須
+スキル調達の実現性      │ △ 課題   │ SAS + AWS双方の知見を持つ
+                        │          │ 人材は市場に少ない
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <h3>🔑 結論</h3>
+        <p><strong>CI360からAWSへの移行は技術的に「可能」ですが、単純な移行ではなく「プラットフォームの再構築」</strong>です。</p>
+
+        <p>最も現実的なアプローチは以下の段階的戦略です：</p>
+        <pre data-lang="markdown"><code>推奨アプローチ：3段階の段階的移行
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1（0-6ヶ月）
+  CI360を維持しつつ、AWSにデータレイクを構築
+  → S3 + Glue + Redshift でデータ基盤を先行整備
+  → CI360からのデータ連携を確立
+
+Step 2（6-12ヶ月）
+  分析・ML機能をAWSに段階的に移管
+  → SageMaker で予測モデルを再構築
+  → Personalize でレコメンド機能を構築
+  → 両環境の精度を比較検証
+
+Step 3（12-18ヶ月）
+  マーケティング実行機能のAWS化
+  → ジャーニーオーケストレーションを Step Functions で構築
+  → チャネル配信を SES/SNS に切替
+  → CI360 の段階的廃止
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-title">✅ 今日からできるネクストステップ</div>
+          <p>①<strong>現状の棚卸し</strong>：CI360で利用中の全機能・ワークフロー・データフローを文書化する<br>
+          ②<strong>AWS試算</strong>：<a href="https://calculator.aws/" target="_blank">AWS料金計算ツール</a>で代替構成のコストを試算する<br>
+          ③<strong>PoC計画</strong>：最もリスクの高い「AI/ML精度の再現性」を検証するPoCを設計する<br>
+          ④<strong>パートナー選定</strong>：SASとAWSの双方に実績のあるSIerを早期に巻き込む<br>
+          ⑤<strong>経営合意</strong>：12-18ヶ月の移行期間と、初年度は並行コストが発生する事実を経営層と共有する</p>
+        </div>
+
+        <!-- Share -->
+        <div class="share-section">
+          <h4>この記事が役に立ったらシェアしよう</h4>
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?url=https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html&text=【2026年】SAS CI360からAWSへの移行ガイド：技術的制約・コスト・工数・懸念点を徹底分析" target="_blank" class="share-btn twitter">𝕏 Post</a>
+            <a href="https://b.hatena.ne.jp/add?mode=confirm&url=https://studioinstance.github.io/techpulse/articles/ci360-aws-migration.html" target="_blank" class="share-btn hatena">B! はてブ</a>
+          </div>
+        </div>
+
+        <!-- Article Nav -->
+        <div class="article-nav">
+          <a href="../blog.html">
+            <div class="nav-label">← 戻る</div>
+            <div class="nav-title">ブログ記事一覧</div>
+          </a>
+          <a href="google-cloud-run.html" class="next">
+            <div class="nav-label">関連記事 →</div>
+            <div class="nav-title">Google Cloud Runの全貌</div>
+          </a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="sidebar-card">
+          <h4>📌 関連記事</h4>
+          <ul>
+            <li><a href="google-cloud-run.html">Google Cloud Runの全貌</a></li>
+            <li><a href="docker-introduction.html">Docker入門ハンズオン</a></li>
+            <li><a href="ai-tools-deep-dive-2026.html">AI活用ツール完全ガイド 2026</a></li>
+            <li><a href="ai-future-and-engineers-2026.html">AI時代にITエンジニアはどう生き残るか？</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>🏷️ タグ</h4>
+          <ul>
+            <li><a href="../blog.html">クラウド</a></li>
+            <li><a href="../blog.html">AWS</a></li>
+            <li><a href="../blog.html">CDP</a></li>
+            <li><a href="../blog.html">マーケティングテック</a></li>
+            <li><a href="../blog.html">移行戦略</a></li>
+          </ul>
+        </div>
+        <div class="ad-space">広告</div>
+      </aside>
+    </div>
+  </section>
+
+    <footer class="footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="../index.html" class="nav-logo">⚡ TechPulse</a><p>テクノロジーの最新トレンドを発信するテックブログ。</p></div>
+      <div class="footer-col"><h4>ナビゲーション</h4><ul><li><a href="../index.html">ホーム</a></li><li><a href="../blog.html">ブログ</a></li><li><a href="../about.html">このサイトについて</a></li></ul></div>
+      <div class="footer-col"><h4>カテゴリ</h4><ul><li><a href="../blog.html">Web開発</a></li><li><a href="../blog.html">AI</a></li><li><a href="../blog.html">クラウド</a></li></ul></div>
+      <div class="footer-col"><h4>リンク</h4><ul><li><a href="../sitemap.xml">サイトマップ</a></li><li><a href="../privacy-policy.html">プライバシーポリシー</a></li><li><a href="../feed.xml">RSSフィード</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 TechPulse. All rights reserved.</span><span>Made with ❤️</span></div>
+  </div></footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('active'));
+  </script>
+  <!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/245633062.js"></script>
+  <!-- End of HubSpot Embed Code -->
+<script src="../scripts/theme-toggle.js"></script>
+<script src="../scripts/tracker.js"></script>
+</body></html>
